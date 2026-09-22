@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DVR CRM Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#F5F7F6; --surface:#FFFFFF; --ink:#18221F; --muted:#5B6863; --line:#D9E0DD; --stroke:#8A9792;
+  --accent:#0E6B5C; --accent-soft:#E1F0EC; --gate:#9A6412; --gate-soft:#F7EDDC; --bad:#A8412F; --bad-soft:#F8E6E1;
+  --info:#2F5E9E; --info-soft:#E3ECF8;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#101614; --surface:#172020; --ink:#E3EAE7; --muted:#9AA8A3; --line:#2A3633; --stroke:#6B7A75;
+    --accent:#5CC0AA; --accent-soft:#1B3530; --gate:#E0B066; --gate-soft:#342A1B; --bad:#E58A77; --bad-soft:#3A221D;
+    --info:#8DB4EA; --info-soft:#1C2A3D;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101614; --surface:#172020; --ink:#E3EAE7; --muted:#9AA8A3; --line:#2A3633; --stroke:#6B7A75;
+  --accent:#5CC0AA; --accent-soft:#1B3530; --gate:#E0B066; --gate-soft:#342A1B; --bad:#E58A77; --bad-soft:#3A221D;
+  --info:#8DB4EA; --info-soft:#1C2A3D;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--ground);color:var(--ink);font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14.5px;line-height:1.5}
+.num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{margin:0;line-height:1.25}
+p{margin:0}
+
+/* shell */
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+aside{background:var(--surface);border-right:1px solid var(--line);padding:18px 12px;display:flex;flex-direction:column;gap:18px;position:sticky;top:0;height:100vh}
+.brand{font-weight:700;padding:0 8px;display:flex;flex-direction:column}
+.brand small{font-weight:500;color:var(--muted);font-size:.78rem}
+nav.side{display:flex;flex-direction:column;gap:2px}
+nav.side button{display:flex;justify-content:space-between;align-items:center;text-align:left;background:none;border:0;padding:8px 10px;border-radius:6px;color:var(--muted)}
+nav.side button:hover{background:var(--ground);color:var(--ink)}
+nav.side button[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.badge{font-size:.72rem;font-weight:600;min-width:20px;text-align:center;padding:1px 6px;border-radius:999px;background:var(--bad);color:var(--surface)}
+.aside-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px;padding:0 8px;font-size:.8rem;color:var(--muted)}
+main{min-width:0;display:flex;flex-direction:column}
+.topbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;padding:12px 24px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:5}
+.topbar h1{font-size:1.15rem;margin-right:auto}
+.who{display:flex;align-items:center;gap:8px;font-size:.85rem;color:var(--muted)}
+.content{padding:22px 24px 60px;display:flex;flex-direction:column;gap:20px}
+.demo-note{font-size:.82rem;background:var(--gate-soft);border-left:3px solid var(--gate);padding:8px 12px;color:var(--ink)}
+
+/* controls */
+.btn{border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:6px;font-size:.88rem;white-space:nowrap}
+.btn:hover{border-color:var(--stroke)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface);font-weight:600}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn.sm{padding:3px 9px;font-size:.8rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+select,input,textarea{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 9px;font-size:.88rem}
+textarea{width:100%;resize:vertical;min-height:60px}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.toolbar .grow{flex:1}
+label.f{display:flex;flex-direction:column;gap:3px;font-size:.8rem;color:var(--muted);font-weight:600}
+label.f input,label.f select{color:var(--ink);font-weight:400}
+label.f.req span::after{content:" *";color:var(--bad)}
+.err{color:var(--bad);font-size:.78rem;font-weight:500}
+
+/* cards / panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.panel h2{font-size:1rem}
+.panel .sub{font-size:.82rem;color:var(--muted)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.kpi{background:var(--surface);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.kpi b{font-family:"IBM Plex Mono",monospace;font-size:1.5rem;font-weight:500}
+.kpi span{font-size:.8rem;color:var(--muted)}
+
+.tag{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:600;padding:1px 8px;border-radius:999px;background:var(--ground);color:var(--muted);border:1px solid var(--line);white-space:nowrap}
+.tag.ok{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.tag.warn{background:var(--gate-soft);color:var(--gate);border-color:transparent}
+.tag.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.tag.info{background:var(--info-soft);color:var(--info);border-color:transparent}
+
+/* reminders */
+.rem{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.rem:first-of-type{border-top:0}
+.rem .ico{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:.8rem;font-weight:700}
+.rem .ico.silent{background:var(--bad-soft);color:var(--bad)}
+.rem .ico.movein{background:var(--gate-soft);color:var(--gate)}
+.rem .ico.view{background:var(--info-soft);color:var(--info)}
+.rem .ico.new{background:var(--accent-soft);color:var(--accent)}
+.rem .t{font-weight:600}
+.rem .d{font-size:.82rem;color:var(--muted)}
+.rem .acts{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.empty{color:var(--muted);font-size:.88rem;padding:10px 0}
+
+/* kanban */
+.board{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;align-items:flex-start}
+.col{flex:0 0 212px;background:var(--surface);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;max-height:calc(100vh - 230px)}
+.col.care{background:var(--gate-soft);border-color:transparent}
+.col.lost{background:var(--bad-soft);border-color:transparent}
+.col.won{background:var(--accent-soft);border-color:transparent}
+.col header{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;font-size:.8rem;font-weight:600;border-bottom:1px solid var(--line)}
+.col header .num{color:var(--muted);font-weight:400}
+.col .list{padding:8px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;min-height:60px}
+.col.drop .list{outline:2px dashed var(--accent);outline-offset:-4px;border-radius:6px}
+.lead{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:9px 10px;display:flex;flex-direction:column;gap:5px;cursor:grab;text-align:left}
+.lead:hover{border-color:var(--stroke)}
+.lead .nm{font-weight:600;font-size:.88rem;display:flex;justify-content:space-between;gap:6px}
+.lead .meta{font-size:.76rem;color:var(--muted)}
+.lead .row{display:flex;flex-wrap:wrap;gap:4px}
+.av{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ground);border:1px solid var(--line);font-size:.68rem;font-weight:700;color:var(--muted);flex:none}
+
+/* tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:nowrap}
+th{font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--ground)}
+tr:last-child td{border-bottom:0}
+tbody tr.click{cursor:pointer}
+tbody tr.click:hover td{background:var(--ground)}
+td.r,th.r{text-align:right}
+tr.stale td{background:var(--gate-soft)}
+
+/* drawer & modal */
+.scrim{position:fixed;inset:0;background:rgba(10,16,14,.42);z-index:20;display:none}
+.scrim.on{display:block}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(640px,100%);background:var(--surface);z-index:21;transform:translateX(100%);transition:transform .2s ease;display:flex;flex-direction:column;border-left:1px solid var(--line)}
+.drawer.on{transform:none}
+.drawer header{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start}
+.drawer header h2{font-size:1.15rem}
+.drawer .body{padding:16px 20px 40px;overflow-y:auto;display:flex;flex-direction:column;gap:18px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line)}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:8px 10px;color:var(--muted);font-size:.86rem}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:600}
+dl.info{margin:0;display:grid;grid-template-columns:130px 1fr;gap:7px 14px;font-size:.88rem}
+dl.info dt{color:var(--muted);font-size:.8rem;font-weight:600;padding-top:1px}
+dl.info dd{margin:0}
+.timeline{display:flex;flex-direction:column}
+.ev{display:grid;grid-template-columns:14px 1fr;gap:10px;padding-bottom:12px;position:relative}
+.ev::before{content:"";position:absolute;left:6px;top:14px;bottom:0;width:1px;background:var(--line)}
+.ev:last-child::before{display:none}
+.ev .dot{width:9px;height:9px;border-radius:50%;background:var(--stroke);margin-top:6px;margin-left:2px}
+.ev.st .dot{background:var(--accent)}
+.ev .when{font-size:.75rem;color:var(--muted)}
+.ev .txt{font-size:.86rem}
+.unitpick{display:flex;flex-direction:column;gap:6px}
+.unitpick label{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:.85rem}
+.modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(520px,calc(100% - 32px));max-height:calc(100vh - 40px);overflow-y:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;z-index:31;padding:20px;display:none;flex-direction:column;gap:14px}
+.modal.on{display:flex}
+.modal-scrim{position:fixed;inset:0;background:rgba(10,16,14,.5);z-index:30;display:none}
+.modal-scrim.on{display:block}
+.modal .form{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal .form .full{grid-column:1/-1}
+.modal .foot{display:flex;justify-content:flex-end;gap:8px}
+.radios{display:flex;flex-direction:column;gap:6px}
+.radios label{display:flex;gap:8px;align-items:center;font-size:.88rem;border:1px solid var(--line);border-radius:6px;padding:7px 10px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:8px;font-size:.88rem;z-index:40;opacity:0;pointer-events:none;transition:opacity .2s;max-width:calc(100% - 32px)}
+.toast.on{opacity:1}
+
+/* charts: single-series bars */
+.bars{display:flex;flex-direction:column;gap:7px}
+.bar{display:grid;grid-template-columns:minmax(90px,190px) 1fr 52px;gap:10px;align-items:center;font-size:.84rem;position:relative}
+.bar .lbl{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar .track{height:14px;position:relative}
+.bar .fill{position:absolute;left:0;top:0;bottom:0;background:var(--accent);border-radius:0 4px 4px 0;min-width:2px}
+.bar.muted .fill{background:var(--stroke)}
+.bar .val{text-align:right;color:var(--muted)}
+.bar:hover .fill{filter:brightness(1.12)}
+.bar:hover .lbl{font-weight:600}
+.tip{position:fixed;z-index:50;background:var(--ink);color:var(--surface);font-size:.78rem;padding:6px 9px;border-radius:6px;pointer-events:none;display:none;max-width:240px}
+.chart-cols{display:flex;align-items:flex-end;gap:14px;height:170px;padding:8px 4px 0;border-bottom:1px solid var(--line)}
+.chart-cols .c{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%}
+.chart-cols .c i{display:block;width:100%;max-width:44px;background:var(--accent);border-radius:4px 4px 0 0}
+.chart-cols .c span{font-size:.75rem;color:var(--muted)}
+.chart-x{display:flex;gap:14px;padding:4px}
+.chart-x span{flex:1;text-align:center;font-size:.75rem;color:var(--muted)}
+details.tbl summary{font-size:.8rem;color:var(--muted);cursor:pointer}
+
+/* import */
+.dropzone{border:2px dashed var(--line);border-radius:8px;padding:22px;text-align:center;color:var(--muted);display:flex;flex-direction:column;gap:8px;align-items:center}
+.imp-err td{background:var(--bad-soft)}
+.imp-fix{color:var(--gate);font-size:.78rem}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:10px 16px;gap:10px}
+  nav.side{flex-direction:row;flex-wrap:wrap}
+  .aside-foot{display:none}
+  .grid2,.grid3{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .content,.topbar{padding-left:16px;padding-right:16px}
+  .modal .form{grid-template-columns:1fr}
+  dl.info{grid-template-columns:1fr;gap:2px}
+  dl.info dd{margin-bottom:6px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand">DVR CRM <small>Rent Team · bản demo</small></div>
+    <nav class="side" id="nav"></nav>
+    <div class="aside-foot">
+      <span>Ngày giả lập: <b class="num" id="todayLbl"></b></span>
+      <button class="btn sm" id="resetBtn">Khôi phục dữ liệu mẫu</button>
+    </div>
+  </aside>
+  <main>
+    <div class="topbar">
+      <h1 id="pageTitle"></h1>
+      <div class="who">
+        <span>Đăng nhập là</span>
+        <select id="userSel" aria-label="Chọn tài khoản"></select>
+      </div>
+      <button class="btn primary" id="newLeadBtn">+ Lead mới</button>
+    </div>
+    <div class="content" id="view"></div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle"></div>
+<div class="modal-scrim" id="mScrim"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+<div class="toast" id="toast" role="status"></div>
+<div class="tip" id="tip"></div>
+
+<script>
+/* ============ Cấu hình & dữ liệu mẫu (hư cấu) ============ */
+const TODAY = new Date('2026-09-21T09:00:00');
+const USD_VND = 26000; // tỷ giá demo
+const STAFF = [
+  {id:'hannah', name:'Hannah', langs:['en','ru']},
+  {id:'nelly',  name:'Nelly',  langs:['en','vi']},
+  {id:'alice',  name:'Alice',  langs:['en','ko']},
+  {id:'saki',   name:'Saki',   langs:['ja','en']},
+];
+const USERS = [...STAFF.map(s=>({id:s.id,name:s.name,role:'staff'})), {id:'manager',name:'Quản lý (Hải)',role:'manager'}];
+const STAGES = [
+  {id:'new',      name:'Mới'},
+  {id:'contacted',name:'Đã liên hệ · đủ chuẩn'},
+  {id:'sent',     name:'Đã gửi căn'},
+  {id:'followup', name:'Đang follow-up'},
+  {id:'viewing',  name:'Hẹn xem nhà'},
+  {id:'nego',     name:'Đàm phán'},
+  {id:'deposit',  name:'Đặt cọc'},
+  {id:'won',      name:'Ký hợp đồng', cls:'won'},
+  {id:'care',     name:'Cần chăm sóc', cls:'care'},
+  {id:'lost',     name:'Mất', cls:'lost'},
+];
+const LOST_REASONS = ['Đã tìm được nhà nơi khác','Không có căn trong ngân sách','Thời hạn thuê quá ngắn (1–3 tháng)','Khách không phản hồi sau nhiều lần','Đổi kế hoạch / không sang Đà Nẵng','Chọn công ty khác'];
+const CHANNELS = ['WhatsApp','Google Form','Zalo','LINE','Email','Website'];
+const AREAS = ['Mỹ An','Sơn Trà','Ngũ Hành Sơn','Hải Châu','An Thượng'];
+
+const d = n => { const x=new Date(TODAY); x.setDate(x.getDate()+n); return x; };
+const iso = x => x.toISOString().slice(0,10);
+
+function seed(){
+  const U = [
+    ['u1','Filmore Da Nang',2,78,32000000,6,64000000,-3,'Chị Mai'],
+    ['u2','Panoma Tower',1,52,18000000,6,36000000,-20,'Anh Tuấn'],
+    ['u3','Wyndham Soleil',2,85,42000000,12,84000000,-5,'Chị Hương'],
+    ['u4','Monarchy B',1,48,15000000,3,30000000,-9,'Anh Phúc'],
+    ['u5','Sam Towers',3,120,55000000,12,110000000,-16,'Ông Kenji'],
+    ['u6','Villa An Thượng 12',4,260,90000000,12,180000000,-2,'Bà Lan'],
+    ['u7','Azura',2,80,28000000,6,56000000,-30,'Anh Long'],
+    ['u8','Blooming Tower',1,55,20000000,6,40000000,-1,'Chị Thảo'],
+    ['u9','Hiyori Garden',2,72,24000000,6,48000000,-11,'Anh Minh'],
+    ['u10','Villa Mỹ An 5',3,180,60000000,12,120000000,-4,'Ông Đức'],
+  ].map(r=>({id:r[0],project:r[1],beds:r[2],area:r[3],price:r[4],minTerm:r[5],deposit:r[6],available:iso(d(Math.abs(r[7])%10)),verified:iso(d(r[7])),owner:r[8]}));
+
+  const L = [
+    // id,name,nat,lang,channel,phone,email,budget,term,movein(offset),area,beds,people,pet,owner,stage,createdOffset,lastContact,followups,importance
+    ['Takeshi Morita','Nhật','ja','LINE','+81 90 1111 2201','t.morita@example.jp',35000000,12,40,'Mỹ An',2,2,false,'saki','viewing',-12,-1,1,'A'],
+    ['Yui Nakamura','Nhật','ja','Email','+81 80 2222 3302','yui.n@example.jp',25000000,6,18,'Hải Châu',2,1,false,'saki','sent',-6,-4,0,'B'],
+    ['Emma Clarke','Úc','en','WhatsApp','+61 412 333 403','emma.c@example.au',30000000,12,60,'Mỹ An',2,3,true,'hannah','followup',-10,-5,2,'B'],
+    ['Oliver Grant','Anh','en','WhatsApp','+44 7700 900404','',52000000,12,25,'Sơn Trà',3,4,false,'hannah','nego',-20,-1,1,'A'],
+    ['Park Ji-woo','Hàn Quốc','ko','Zalo','+82 10 4444 5505','jiwoo.p@example.kr',20000000,6,12,'Ngũ Hành Sơn',1,1,false,'alice','deposit',-15,0,0,'A'],
+    ['Kim Min-seo','Hàn Quốc','ko','WhatsApp','+82 10 5555 6606','',16000000,12,120,'Hải Châu',1,1,false,'alice','care',-40,-25,3,'C'],
+    ['Dmitry Volkov','Nga','ru','WhatsApp','+7 912 666 7707','',12000000,2,5,'An Thượng',1,1,false,'hannah','lost',-30,-22,3,'D'],
+    ['Sophie Martin','Pháp','en','Google Form','+33 6 7777 8808','sophie.m@example.fr',40000000,12,75,'Mỹ An',2,2,false,'nelly','contacted',-2,-1,0,'B'],
+    ['James Walker','Mỹ','en','Email','+1 415 888 9909','j.walker@example.com',62400000,12,33,'Sơn Trà',3,3,true,'nelly','viewing',-9,-2,1,'A'],
+    ['Hiroshi Tanaka','Nhật','ja','Google Form','+81 70 9999 0010','h.tanaka@example.jp',90000000,12,50,'An Thượng',4,5,false,'saki','won',-45,-3,0,'A'],
+    ['Liam Nguyen','Việt kiều (Mỹ)','vi','Zalo','+1 408 101 0111','liam.ng@example.com',22000000,6,28,'Hải Châu',2,2,false,'nelly','followup',-8,-3,1,'B'],
+    ['Anna Petrova','Nga','ru','WhatsApp','+7 903 121 2212','',18000000,6,90,'Mỹ An',1,1,false,'hannah','care',-35,-20,3,'C'],
+    ['Lucas Becker','Đức','en','Website','+49 151 131 3313','l.becker@example.de',28000000,6,22,'Ngũ Hành Sơn',2,2,false,'alice','sent',-5,-3,0,'B'],
+    ['Chloe Wilson','Canada','en','WhatsApp','+1 604 141 4414','',15000000,3,10,'An Thượng',1,1,false,'hannah','lost',-25,-18,2,'D'],
+    ['Aiko Suzuki','Nhật','ja','LINE','+81 90 151 5515','aiko.s@example.jp',30000000,12,15,'Mỹ An',2,2,false,'saki','nego',-18,-1,0,'A'],
+    ['Noah Brown','Úc','en','Google Form','+61 433 161 6616','noah.b@example.au',45000000,12,45,'Sơn Trà',3,4,true,'hannah','new',0,null,0,''],
+    ['Choi Seung-hyun','Hàn Quốc','ko','Zalo','+82 10 171 7717','',24000000,12,20,'Hải Châu',2,2,false,'alice','won',-38,-6,0,'A'],
+    ['Mia Rossi','Ý','en','Email','+39 347 181 8818','mia.r@example.it',19500000,6,35,'Mỹ An',1,1,false,'nelly','followup',-11,-4,3,'C'],
+    ['Ivan Sokolov','Nga','ru','WhatsApp','+7 916 191 9919','',30000000,12,55,'Sơn Trà',2,3,false,'hannah','contacted',-3,-2,0,'B'],
+    ['Ella Thompson','Anh','en','WhatsApp','+44 7700 900200','',10000000,1,7,'An Thượng',1,1,false,'hannah','lost',-28,-26,1,'D'],
+    ['Kenta Ito','Nhật','ja','Google Form','+81 80 212 1221','kenta.i@example.jp',55000000,12,65,'Sơn Trà',3,3,false,'saki','new',0,null,0,''],
+    ['Grace Lee','Singapore','en','Website','+65 9123 2323','grace.l@example.sg',32000000,12,26,'Mỹ An',2,2,false,'alice','viewing',-7,-1,0,'A'],
+  ];
+  const leads = L.map((r,i)=>{
+    const id='L'+String(101+i);
+    const created=d(r[15]);
+    const lead={id,name:r[0],nat:r[1],lang:r[2],channel:r[3],phone:r[4],email:r[5],budget:r[6],term:r[7],movein:iso(d(r[8])),area:r[9],beds:r[10],people:r[11],pet:r[12],owner:r[13],stage:r[14],created:iso(created),lastContact:r[16]===null?null:iso(d(r[16])),followups:r[17],importance:r[18],lostReason:null,sentUnits:[],viewingDate:null,firstResponseH:null,history:[]};
+    lead.history.push({at:created.toISOString(),type:'create',text:`Lead mới từ ${r[3]} · phân công cho ${staffName(r[13])}`});
+    if(r[14]!=='new'){ lead.firstResponseH = [0.5,1,1.5,2,3,4,6,20][i%8]; lead.history.push({at:new Date(created.getTime()+lead.firstResponseH*3600e3).toISOString(),type:'note',text:'Liên hệ lần đầu, xác nhận nhu cầu'}); }
+    if(['sent','followup','viewing','nego','deposit','won'].includes(r[14])){ lead.sentUnits=['u1','u3'].slice(0,1+(i%2)); lead.history.push({at:d(r[15]+1).toISOString(),type:'note',text:'Đã gửi căn: '+lead.sentUnits.map(x=>unitName(x,U)).join(', ')}); }
+    lead.history.push({at:(lead.lastContact?d(r[16]):created).toISOString(),type:'stage',text:'Chuyển sang “'+stageName(r[14])+'”'});
+    return lead;
+  });
+  const byName = n => leads.find(l=>l.name===n);
+  byName('Takeshi Morita').viewingDate = iso(d(1));
+  byName('James Walker').viewingDate = iso(d(1));
+  byName('Grace Lee').viewingDate = iso(d(3));
+  byName('Dmitry Volkov').lostReason='Thời hạn thuê quá ngắn (1–3 tháng)';
+  byName('Chloe Wilson').lostReason='Không có căn trong ngân sách';
+  byName('Ella Thompson').lostReason='Thời hạn thuê quá ngắn (1–3 tháng)';
+  byName('Kim Min-seo').movein = iso(d(24)); // đang chăm sóc, sắp tới ngày dọn vào
+  // Lead lịch sử các tháng trước cho dashboard (chỉ số tổng hợp)
+  const history = [
+    {m:'T5',lead:31,sent:20,view:9,won:2},{m:'T6',lead:36,sent:24,view:11,won:3},
+    {m:'T7',lead:40,sent:27,view:14,won:4},{m:'T8',lead:38,sent:28,view:15,won:5},
+  ];
+  const oldLost = {'Đã tìm được nhà nơi khác':22,'Không có căn trong ngân sách':17,'Thời hạn thuê quá ngắn (1–3 tháng)':14,'Khách không phản hồi sau nhiều lần':11,'Đổi kế hoạch / không sang Đà Nẵng':6,'Chọn công ty khác':4};
+  return {units:U, leads, monthly:history, oldLost, seq:200};
+}
+function staffName(id){ return (USERS.find(u=>u.id===id)||{name:id}).name; }
+function stageName(id){ return (STAGES.find(s=>s.id===id)||{name:id}).name; }
+function unitName(id,list=S.units){ const u=list.find(x=>x.id===id); return u?u.project:id; }
+
+const PAGES_IDS=['today','board','leads','units','dash','import'];
+let S;
+function load(){ try{ const raw=localStorage.getItem('dvr-crm-demo'); if(raw){ S=JSON.parse(raw); return; } }catch(e){} S=seed(); }
+function save(){ try{ localStorage.setItem('dvr-crm-demo',JSON.stringify(S)); }catch(e){} }
+load();
+
+const ui = {page:(PAGES_IDS.includes(location.hash.slice(1))?location.hash.slice(1):'today'), user:'manager', drawer:null, drawerTab:'info', boardOwner:'all', q:'', stageFilter:'all', unitMatch:null, imported:false};
+
+/* ============ Tiện ích ============ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const vnd = n => n==null?'—':(n/1e6).toLocaleString('vi-VN',{maximumFractionDigits:1})+' tr';
+const fdate = s => { if(!s) return '—'; const x=new Date(s); return x.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'}); };
+const fdt = s => { const x=new Date(s); return x.toLocaleDateString('vi-VN',{day:'2-digit',month:'2-digit'})+' '+x.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}); };
+const days = (a,b=TODAY) => Math.round((new Date(iso(b)) - new Date(a))/864e5);
+const initials = n => n.split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+const me = () => USERS.find(u=>u.id===ui.user);
+const isMgr = () => me().role==='manager';
+const canSee = l => isMgr() || l.owner===ui.user;
+const phoneOf = l => canSee(l) ? l.phone : l.phone.replace(/\d(?=[\d ]{4})/g,'•');
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove('on'),2800); }
+function nowStamp(){ const x=new Date(TODAY); const r=new Date(); x.setHours(r.getHours(),r.getMinutes()); return x.toISOString(); }
+function log(l,type,text){ l.history.push({at:nowStamp(),type,text}); }
+function visibleLeads(){ return S.leads.filter(l=>isMgr()||l.owner===ui.user); }
+
+/* ============ Nhắc việc (chạy 8:00 mỗi ngày) ============ */
+function reminders(){
+  const out=[];
+  for(const l of visibleLeads()){
+    if(l.stage==='new') out.push({l,kind:'new',t:'Lead mới chưa liên hệ',d:`Vào lúc ${fdate(l.created)} qua ${l.channel} · mục tiêu phản hồi trong 2 giờ làm việc`});
+    if(['sent','followup'].includes(l.stage) && l.lastContact && days(l.lastContact)>=3)
+      out.push({l,kind:'silent',t:`Khách im lặng ${days(l.lastContact)} ngày`,d:`Follow-up lần ${l.followups+1}`+(l.followups>=3?' · đã quá 3 lần, nên chuyển “Cần chăm sóc”':'')});
+    if(l.stage==='care'){ const n=-days(l.movein); if(n>=0&&n<=30) out.push({l,kind:'movein',t:`Còn ${n} ngày đến ngày dọn vào`,d:`Khách trong danh sách chăm sóc · dự kiến dọn vào ${fdate(l.movein)}`}); }
+    if(l.viewingDate && days(l.viewingDate)===-1) out.push({l,kind:'view',t:'Lịch xem nhà ngày mai',d:`${fdate(l.viewingDate)} · ${l.sentUnits.map(x=>unitName(x)).join(', ')||'chưa chọn căn'}`});
+  }
+  const order={new:0,view:1,silent:2,movein:3};
+  return out.sort((a,b)=>order[a.kind]-order[b.kind]);
+}
+
+/* ============ Điều hướng ============ */
+const PAGES = [
+  {id:'today', name:'Hôm nay'},
+  {id:'board', name:'Bảng trạng thái'},
+  {id:'leads', name:'Khách hàng'},
+  {id:'units', name:'Danh sách căn'},
+  {id:'dash',  name:'Dashboard'},
+  {id:'import',name:'Nhập dữ liệu', mgr:true},
+];
+function renderNav(){
+  const rc=reminders().length;
+  $('#nav').innerHTML = PAGES.filter(p=>!p.mgr||isMgr()).map(p=>`<button data-page="${p.id}" ${ui.page===p.id?'aria-current="page"':''}><span>${p.name}</span>${p.id==='today'&&rc?`<span class="badge num">${rc}</span>`:''}${p.id==='units'&&staleUnits().length?`<span class="badge num">${staleUnits().length}</span>`:''}</button>`).join('');
+  $('#userSel').innerHTML = USERS.map(u=>`<option value="${u.id}" ${u.id===ui.user?'selected':''}>${u.name} — ${u.role==='manager'?'Quản lý':'Nhân viên'}</option>`).join('');
+  $('#todayLbl').textContent = TODAY.toLocaleDateString('vi-VN');
+}
+function render(){
+  if(!isMgr() && PAGES.find(p=>p.id===ui.page).mgr) ui.page='today';
+  renderNav();
+  $('#pageTitle').textContent = PAGES.find(p=>p.id===ui.page).name;
+  const v=$('#view');
+  v.innerHTML = ({today:viewToday,board:viewBoard,leads:viewLeads,units:viewUnits,dash:viewDash,import:viewImport})[ui.page]();
+  if(ui.page==='board') wireBoard();
+  if(ui.drawer) renderDrawer();
+}
+
+/* ============ Trang: Hôm nay ============ */
+function viewToday(){
+  const rs=reminders();
+  const mine=visibleLeads().filter(l=>!['won','lost'].includes(l.stage));
+  const groups=[['new','Lead mới'],['view','Xem nhà ngày mai'],['silent','Khách im lặng ≥ 3 ngày'],['movein','Sắp đến ngày dọn vào']];
+  return `
+  <p class="demo-note">Bản demo chạy hoàn toàn trên trình duyệt, dữ liệu là <b>khách hư cấu</b>. Hôm nay được cố định là ${TODAY.toLocaleDateString('vi-VN')}. Đổi “Đăng nhập là” ở góc trên để xem khác biệt giữa Nhân viên và Quản lý.</p>
+  <div class="kpis">
+    <div class="kpi"><b>${rs.length}</b><span>việc cần làm hôm nay</span></div>
+    <div class="kpi"><b>${mine.length}</b><span>lead ${isMgr()?'cả team':'bạn'} đang giữ</span></div>
+    <div class="kpi"><b>${visibleLeads().filter(l=>l.stage==='care').length}</b><span>khách trong danh sách chăm sóc</span></div>
+    <div class="kpi"><b>${visibleLeads().filter(l=>l.viewingDate&&days(l.viewingDate)<=0&&days(l.viewingDate)>=-7).length}</b><span>lịch xem nhà 7 ngày tới</span></div>
+  </div>
+  <div class="panel">
+    <div><h2>Nhắc việc · 8:00 sáng nay</h2><p class="sub">Thông báo trong CRM và email. Zalo / WhatsApp để giai đoạn sau.</p></div>
+    ${rs.length?groups.map(([k,title])=>{ const items=rs.filter(r=>r.kind===k); if(!items.length) return ''; return `<div><h3 style="font-size:.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:6px 0 2px">${title} · ${items.length}</h3>${items.map(remRow).join('')}</div>`; }).join(''):'<p class="empty">Không còn việc nào. Tốt lắm!</p>'}
+  </div>`;
+}
+function remRow(r){
+  const l=r.l, sym={new:'+',silent:'!',movein:'↺',view:'◎'}[r.kind];
+  let acts=`<button class="btn sm" data-open="${l.id}">Mở hồ sơ</button>`;
+  if(r.kind==='silent') acts = `<button class="btn sm primary" data-fu="${l.id}">Đã follow-up</button>`+(l.followups>=3?`<button class="btn sm" data-move="${l.id}:care">→ Cần chăm sóc</button>`:'')+acts;
+  if(r.kind==='new') acts = `<button class="btn sm primary" data-move="${l.id}:contacted">Đã liên hệ</button>`+acts;
+  if(r.kind==='movein') acts = `<button class="btn sm primary" data-move="${l.id}:contacted">Liên hệ lại · mở lại</button>`+acts;
+  return `<div class="rem"><div class="ico ${r.kind}">${sym}</div><div><div class="t">${esc(l.name)} <span class="tag">${esc(l.nat)}</span> ${isMgr()?`<span class="tag">${staffName(l.owner)}</span>`:''}</div><div class="d">${r.t} · ${esc(r.d)}</div></div><div class="acts">${acts}</div></div>`;
+}
+
+/* ============ Trang: Bảng trạng thái ============ */
+function viewBoard(){
+  let leads=visibleLeads();
+  if(isMgr() && ui.boardOwner!=='all') leads=leads.filter(l=>l.owner===ui.boardOwner);
+  return `
+  <div class="toolbar">
+    ${isMgr()?`<label class="who">Người phụ trách <select id="ownerFilter"><option value="all">Tất cả</option>${STAFF.map(s=>`<option value="${s.id}" ${ui.boardOwner===s.id?'selected':''}>${s.name}</option>`).join('')}</select></label>`:`<span class="sub" style="color:var(--muted);font-size:.85rem">Bạn chỉ thấy lead của mình.</span>`}
+    <span class="grow"></span>
+    <span style="font-size:.8rem;color:var(--muted)">Kéo thả thẻ để đổi trạng thái. Chuyển sang “Mất” bắt buộc chọn lý do.</span>
+  </div>
+  <div class="board">
+    ${STAGES.map(s=>{ const ls=leads.filter(l=>l.stage===s.id); return `<div class="col ${s.cls||''}" data-stage="${s.id}"><header><span>${s.name}</span><span class="num">${ls.length}</span></header><div class="list">${ls.map(card).join('')}</div></div>`; }).join('')}
+  </div>`;
+}
+function card(l){
+  const silent = ['sent','followup'].includes(l.stage)&&l.lastContact&&days(l.lastContact)>=3;
+  return `<div class="lead" draggable="true" data-id="${l.id}" data-open="${l.id}" tabindex="0">
+    <div class="nm"><span>${esc(l.name)}</span><span class="av" title="${staffName(l.owner)}">${initials(staffName(l.owner))}</span></div>
+    <div class="meta">${esc(l.nat)} · ${l.beds}PN · <span class="num">${vnd(l.budget)}</span> · ${l.term} th</div>
+    <div class="row">
+      <span class="tag">${l.channel}</span>
+      ${silent?`<span class="tag bad">im lặng ${days(l.lastContact)} ngày</span>`:''}
+      ${l.viewingDate&&days(l.viewingDate)<=0?`<span class="tag info">xem ${fdate(l.viewingDate)}</span>`:''}
+      ${l.stage==='lost'&&l.lostReason?`<span class="tag bad">${esc(l.lostReason)}</span>`:''}
+      ${l.stage==='care'?`<span class="tag warn">dọn vào ${fdate(l.movein)}</span>`:''}
+    </div>
+  </div>`;
+}
+function wireBoard(){
+  document.querySelectorAll('.lead[draggable]').forEach(c=>{
+    c.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',c.dataset.id);});
+  });
+  document.querySelectorAll('.col').forEach(col=>{
+    col.addEventListener('dragover',e=>{e.preventDefault();col.classList.add('drop');});
+    col.addEventListener('dragleave',()=>col.classList.remove('drop'));
+    col.addEventListener('drop',e=>{e.preventDefault();col.classList.remove('drop');moveStage(e.dataTransfer.getData('text/plain'),col.dataset.stage);});
+  });
+}
+function moveStage(id,stage,opts={}){
+  const l=S.leads.find(x=>x.id===id); if(!l||l.stage===stage) return;
+  if(!canSee(l)){ toast('Bạn không phụ trách lead này.'); return; }
+  if(stage==='lost' && !opts.reason){ openLostModal(l); return; }
+  if(stage==='viewing' && !opts.date){ openViewingModal(l); return; }
+  const from=l.stage; l.stage=stage;
+  if(stage==='lost') l.lostReason=opts.reason;
+  if(stage==='viewing') l.viewingDate=opts.date;
+  if(from==='new' && l.firstResponseH==null){ l.firstResponseH=Math.max(0.2,(new Date(nowStamp())-new Date(l.created))/36e5); }
+  l.lastContact=iso(TODAY);
+  log(l,'stage',`“${stageName(from)}” → “${stageName(stage)}”`+(opts.reason?` · lý do: ${opts.reason}`:'')+(opts.date?` · ngày xem ${fdate(opts.date)}`:''));
+  save(); render(); toast(`${l.name}: chuyển sang “${stageName(stage)}”`);
+}
+
+/* ============ Trang: Khách hàng ============ */
+function viewLeads(){
+  const q=ui.q.trim().toLowerCase();
+  let ls=visibleLeads().filter(l=>!q||(l.name+l.nat+l.phone+l.email).toLowerCase().includes(q));
+  if(ui.stageFilter!=='all') ls=ls.filter(l=>l.stage===ui.stageFilter);
+  ls.sort((a,b)=>b.created.localeCompare(a.created));
+  return `
+  <div class="toolbar">
+    <input id="q" placeholder="Tìm tên, quốc tịch, số điện thoại…" value="${esc(ui.q)}" style="min-width:260px">
+    <select id="stageFilter"><option value="all">Mọi trạng thái</option>${STAGES.map(s=>`<option value="${s.id}" ${ui.stageFilter===s.id?'selected':''}>${s.name}</option>`).join('')}</select>
+    <span class="grow"></span>
+    ${isMgr()?`<button class="btn" id="exportBtn">Xuất CSV (không kèm SĐT)</button>`:`<button class="btn" disabled title="Chỉ Quản lý được xuất dữ liệu">Xuất CSV</button>`}
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Mã</th><th>Tên</th><th>Quốc tịch</th><th>Kênh</th><th>Số liên hệ</th><th class="r">Ngân sách/th</th><th class="r">Thời hạn</th><th>Dọn vào</th><th>Trạng thái</th><th>Phụ trách</th></tr></thead>
+    <tbody>${ls.map(l=>`<tr class="click" data-open="${l.id}"><td class="num">${l.id}</td><td><b>${esc(l.name)}</b></td><td>${esc(l.nat)}</td><td>${l.channel}</td><td class="num">${esc(phoneOf(l))}</td><td class="r num">${vnd(l.budget)}</td><td class="r num">${l.term} th</td><td class="num">${fdate(l.movein)}</td><td>${stageTag(l.stage)}</td><td>${staffName(l.owner)}</td></tr>`).join('')||`<tr><td colspan="10" class="empty">Không có khách phù hợp.</td></tr>`}</tbody>
+  </table></div>
+  <p style="font-size:.8rem;color:var(--muted)">${ls.length} khách · ${isMgr()?'Quản lý xem toàn bộ.':'Nhân viên chỉ xem khách mình phụ trách.'}</p>`;
+}
+function stageTag(s){ const c={won:'ok',lost:'bad',care:'warn',viewing:'info',nego:'info',deposit:'info'}[s]||''; return `<span class="tag ${c}">${stageName(s)}</span>`; }
+
+/* ============ Hồ sơ khách (drawer) ============ */
+function openDrawer(id){ ui.drawer=id; ui.drawerTab='info'; renderDrawer(); $('#drawer').classList.add('on'); $('#scrim').classList.add('on'); }
+function closeDrawer(){ ui.drawer=null; $('#drawer').classList.remove('on'); $('#scrim').classList.remove('on'); }
+function matchUnits(l){ return S.units.filter(u=>u.price<=l.budget*1.1 && u.minTerm<=l.term && u.beds>=l.beds); }
+function renderDrawer(){
+  const l=S.leads.find(x=>x.id===ui.drawer); if(!l) return closeDrawer();
+  const own=canSee(l);
+  const next = {new:'contacted',contacted:'sent',sent:'followup',followup:'viewing',viewing:'nego',nego:'deposit',deposit:'won'}[l.stage];
+  const matches=matchUnits(l);
+  const tab=ui.drawerTab;
+  $('#drawer').innerHTML = `
+  <header>
+    <div style="flex:1;display:flex;flex-direction:column;gap:6px">
+      <span class="num" style="font-size:.78rem;color:var(--muted)">${l.id} · tạo ${fdate(l.created)} · phụ trách ${staffName(l.owner)}</span>
+      <h2 id="dTitle">${esc(l.name)}</h2>
+      <div class="toolbar">${stageTag(l.stage)} <span class="tag">${esc(l.nat)}</span> <span class="tag">${l.channel}</span>${l.importance?`<span class="tag">Mức ${l.importance}</span>`:''}</div>
+    </div>
+    <button class="btn sm" id="closeDrawer" aria-label="Đóng">✕</button>
+  </header>
+  <div class="body">
+    ${own?`<div class="toolbar">
+      ${next?`<button class="btn primary" data-move="${l.id}:${next}">→ ${stageName(next)}</button>`:''}
+      ${!['care','lost','won'].includes(l.stage)?`<button class="btn" data-move="${l.id}:care">Cần chăm sóc</button>`:''}
+      ${l.stage==='care'?`<button class="btn primary" data-move="${l.id}:sent">Nhu cầu khớp lại → gửi căn</button>`:''}
+      ${!['lost','won'].includes(l.stage)?`<button class="btn danger" data-move="${l.id}:lost">Mất…</button>`:''}
+      ${isMgr()?`<select id="reassign" aria-label="Phân công lại">${STAFF.map(s=>`<option value="${s.id}" ${s.id===l.owner?'selected':''}>Giao cho ${s.name}</option>`).join('')}</select>`:''}
+    </div>`:`<p class="demo-note">Bạn chỉ có quyền xem. Lead này do ${staffName(l.owner)} phụ trách.</p>`}
+    <div class="tabs" role="tablist">
+      ${[['info','Hồ sơ'],['units',`Căn phù hợp (${matches.length})`],['hist',`Lịch sử (${l.history.length})`]].map(([k,n])=>`<button role="tab" data-tab="${k}" aria-selected="${tab===k}">${n}</button>`).join('')}
+    </div>
+    ${tab==='info'?`
+      <dl class="info">
+        <dt>Ngôn ngữ</dt><dd>${({ja:'Tiếng Nhật',en:'Tiếng Anh',ko:'Tiếng Hàn',ru:'Tiếng Nga',vi:'Tiếng Việt'})[l.lang]}</dd>
+        <dt>Số liên hệ</dt><dd class="num">${esc(phoneOf(l))} ${!own?'<span class="tag">ẩn</span>':''}</dd>
+        <dt>Email</dt><dd>${own?esc(l.email||'—'):'•••'}</dd>
+        <dt>Ngân sách</dt><dd class="num">${l.budget.toLocaleString('vi-VN')} VND / tháng</dd>
+        <dt>Thời hạn thuê</dt><dd>${l.term} tháng</dd>
+        <dt>Ngày dọn vào</dt><dd>${fdate(l.movein)} <span style="color:var(--muted);font-size:.8rem">(${-days(l.movein)>=0?'còn '+(-days(l.movein))+' ngày':'đã qua'})</span></dd>
+        <dt>Khu vực</dt><dd>${l.area}</dd>
+        <dt>Số phòng · người</dt><dd>${l.beds} PN · ${l.people} người ${l.pet?'· có thú cưng':''}</dd>
+        <dt>Follow-up</dt><dd>${l.followups} lần · liên hệ gần nhất ${fdate(l.lastContact)}</dd>
+        ${l.viewingDate?`<dt>Lịch xem nhà</dt><dd>${fdate(l.viewingDate)}</dd>`:''}
+        ${l.lostReason?`<dt>Lý do mất</dt><dd><span class="tag bad">${esc(l.lostReason)}</span></dd>`:''}
+        <dt>Thời gian phản hồi đầu</dt><dd>${l.firstResponseH==null?'<span class="tag warn">chưa liên hệ</span>':l.firstResponseH.toFixed(1)+' giờ'}</dd>
+      </dl>
+      ${own?`<div style="display:flex;flex-direction:column;gap:6px"><label class="f" for="note">Ghi chú hoạt động</label><textarea id="note" placeholder="VD: Gọi WhatsApp, khách muốn xem cuối tuần…"></textarea><div class="toolbar"><button class="btn primary sm" id="addNote">Lưu ghi chú</button>${['sent','followup'].includes(l.stage)?`<button class="btn sm" data-fu="${l.id}">Ghi nhận follow-up</button>`:''}</div></div>`:''}
+    `:''}
+    ${tab==='units'?`
+      <p class="sub" style="font-size:.84rem;color:var(--muted)">Lọc theo hồ sơ: giá ≤ ${vnd(l.budget*1.1)} (ngân sách +10%), thời hạn tối thiểu ≤ ${l.term} tháng, ≥ ${l.beds} phòng ngủ. Căn chưa xác minh quá 14 ngày được đánh dấu.</p>
+      ${matches.length?`<div class="unitpick">${matches.map(u=>{const st=days(u.verified)>14;return `<label><input type="checkbox" name="pick" value="${u.id}" ${own?'':'disabled'} ${l.sentUnits.includes(u.id)?'checked':''}><span><b>${esc(u.project)}</b> · ${u.beds}PN · ${u.area}m² · tối thiểu ${u.minTerm} th<br><span style="font-size:.78rem;color:var(--muted)">Xác minh ${fdate(u.verified)} · trống từ ${fdate(u.available)}</span></span><span style="text-align:right"><span class="num">${vnd(u.price)}</span><br>${st?'<span class="tag warn">cần xác minh</span>':'<span class="tag ok">đã xác minh</span>'}</span></label>`;}).join('')}</div>
+      ${own?`<div class="toolbar"><button class="btn primary" id="sendUnits">Gửi căn đã chọn cho khách</button><span style="font-size:.8rem;color:var(--muted)">Nên gửi 2–3 căn.</span></div>`:''}`
+      :`<p class="empty">Không có căn khớp. Nếu khách không đổi nhu cầu, cân nhắc chuyển “Cần chăm sóc” hoặc “Mất · Không có căn trong ngân sách”.</p>`}
+    `:''}
+    ${tab==='hist'?`<div class="timeline">${[...l.history].reverse().map(h=>`<div class="ev ${h.type==='stage'?'st':''}"><span class="dot"></span><div><div class="when num">${fdt(h.at)}</div><div class="txt">${esc(h.text)}</div></div></div>`).join('')}</div>`:''}
+  </div>`;
+}
+
+/* ============ Modal ============ */
+function openModal(html){ $('#modal').innerHTML=html; $('#modal').classList.add('on'); $('#mScrim').classList.add('on'); const f=$('#modal').querySelector('input,select,button'); if(f) f.focus(); }
+function closeModal(){ $('#modal').classList.remove('on'); $('#mScrim').classList.remove('on'); }
+function openLostModal(l){
+  openModal(`<h2 style="font-size:1.05rem">Chuyển ${esc(l.name)} sang “Mất”</h2>
+  <p style="font-size:.86rem;color:var(--muted)">Bắt buộc chọn lý do để dashboard biết mất khách ở đâu, vì sao. Nếu khách có thể quay lại, hãy dùng “Cần chăm sóc”.</p>
+  <div class="radios">${LOST_REASONS.map((r,i)=>`<label><input type="radio" name="reason" value="${esc(r)}">${esc(r)}</label>`).join('')}</div>
+  <p class="err" id="lostErr" hidden>Chọn một lý do.</p>
+  <div class="foot"><button class="btn" data-close>Huỷ</button><button class="btn" id="toCare">Chuyển “Cần chăm sóc”</button><button class="btn danger" id="confirmLost">Xác nhận Mất</button></div>`);
+  $('#toCare').onclick=()=>{closeModal();moveStage(l.id,'care');};
+  $('#confirmLost').onclick=()=>{ const r=document.querySelector('input[name=reason]:checked'); if(!r){ $('#lostErr').hidden=false; return; } closeModal(); moveStage(l.id,'lost',{reason:r.value}); };
+}
+function openViewingModal(l){
+  openModal(`<h2 style="font-size:1.05rem">Hẹn xem nhà · ${esc(l.name)}</h2>
+  <label class="f req"><span>Ngày xem</span><input type="date" id="vDate" value="${iso(d(1))}" min="${iso(TODAY)}"></label>
+  <p style="font-size:.82rem;color:var(--muted)">CRM sẽ nhắc bạn lúc 8:00 ngày hôm trước.</p>
+  <div class="foot"><button class="btn" data-close>Huỷ</button><button class="btn primary" id="okView">Lưu lịch</button></div>`);
+  $('#okView').onclick=()=>{ const v=$('#vDate').value; if(!v) return; closeModal(); moveStage(l.id,'viewing',{date:v}); };
+}
+function autoAssign(lang){
+  const load = id => S.leads.filter(l=>l.owner===id && !['won','lost'].includes(l.stage)).length;
+  const cand = STAFF.filter(s=>s.langs.includes(lang)); const pool = cand.length?cand:STAFF;
+  return pool.slice().sort((a,b)=>load(a.id)-load(b.id))[0].id;
+}
+function openNewLead(prefill={}){
+  openModal(`<h2 style="font-size:1.05rem">Thêm lead mới</h2>
+  <p style="font-size:.82rem;color:var(--muted)">Nhập nhanh trên điện thoại cũng dùng form này. Ngân sách ghi USD sẽ tự quy đổi VND (tỷ giá demo ${USD_VND.toLocaleString('vi-VN')}).</p>
+  <div class="form">
+    <label class="f req full"><span>Tên khách</span><input id="nName" value="${esc(prefill.name||'')}"></label>
+    <label class="f"><span>Quốc tịch</span><input id="nNat" value="${esc(prefill.nat||'')}"></label>
+    <label class="f"><span>Ngôn ngữ</span><select id="nLang">${[['en','Anh'],['ja','Nhật'],['ko','Hàn'],['ru','Nga'],['vi','Việt']].map(([v,n])=>`<option value="${v}" ${prefill.lang===v?'selected':''}>${n}</option>`).join('')}</select></label>
+    <label class="f"><span>Kênh</span><select id="nCh">${CHANNELS.map(c=>`<option ${prefill.channel===c?'selected':''}>${c}</option>`).join('')}</select></label>
+    <label class="f"><span>Số điện thoại</span><input id="nPhone" value="${esc(prefill.phone||'')}" placeholder="+81 90 …"></label>
+    <label class="f full"><span>Email</span><input id="nEmail" value="${esc(prefill.email||'')}"></label>
+    <label class="f req"><span>Ngân sách / tháng</span><input id="nBudget" value="${esc(prefill.budget||'')}" placeholder="VD: 25tr, 25000000, $900"></label>
+    <label class="f req"><span>Thời hạn thuê (tháng)</span><input id="nTerm" type="number" min="1" value="${esc(prefill.term||'')}"></label>
+    <label class="f req"><span>Ngày dọn vào</span><input id="nMove" type="date" value="${esc(prefill.movein||'')}"></label>
+    <label class="f"><span>Số phòng ngủ</span><input id="nBeds" type="number" min="1" value="${esc(prefill.beds||2)}"></label>
+    <label class="f"><span>Khu vực</span><select id="nArea">${AREAS.map(a=>`<option ${prefill.area===a?'selected':''}>${a}</option>`).join('')}</select></label>
+    <label class="f"><span>Số người</span><input id="nPeople" type="number" min="1" value="${esc(prefill.people||1)}"></label>
+    <p class="full" id="budgetHint" style="font-size:.8rem;color:var(--muted)"></p>
+    <div class="full" id="dupBox"></div>
+    <p class="err full" id="nErr"></p>
+  </div>
+  <div class="foot"><button class="btn" data-close>Huỷ</button><button class="btn primary" id="saveLead">Tạo hồ sơ & phân công</button></div>`);
+  const upd=()=>{
+    const b=parseBudget($('#nBudget').value); $('#budgetHint').textContent = b?`→ ${b.toLocaleString('vi-VN')} VND / tháng`:'';
+    const ph=$('#nPhone').value.replace(/\D/g,''), em=$('#nEmail').value.trim().toLowerCase();
+    const dup=S.leads.find(l=>(ph.length>6&&l.phone.replace(/\D/g,'')===ph)||(em&&l.email.toLowerCase()===em));
+    $('#dupBox').innerHTML = dup?`<div class="demo-note" style="border-color:var(--bad);background:var(--bad-soft)">Trùng với hồ sơ <b>${esc(dup.name)}</b> (${dup.id}, ${stageName(dup.stage)}, ${staffName(dup.owner)}). Lưu sẽ <b>gộp vào hồ sơ cũ</b> thay vì tạo mới.</div>`:'';
+    return dup;
+  };
+  ['nBudget','nPhone','nEmail'].forEach(i=>$('#'+i).addEventListener('input',upd)); upd();
+  $('#saveLead').onclick=()=>{
+    const name=$('#nName').value.trim(), budget=parseBudget($('#nBudget').value), term=+$('#nTerm').value, movein=$('#nMove').value;
+    const miss=[!name&&'tên',!budget&&'ngân sách',!term&&'thời hạn',!movein&&'ngày dọn vào'].filter(Boolean);
+    if(miss.length){ $('#nErr').textContent='Còn thiếu: '+miss.join(', ')+'.'; return; }
+    const dup=upd();
+    if(dup){ log(dup,'note',`Khách liên hệ lại qua ${$('#nCh').value} · cập nhật ngân sách ${vnd(budget)}, ${term} tháng, dọn vào ${fdate(movein)}`); Object.assign(dup,{budget,term,movein}); if(dup.stage==='lost'||dup.stage==='care'){ log(dup,'stage',`“${stageName(dup.stage)}” → “Mới” (khách quay lại)`); dup.stage='new'; dup.lostReason=null; } save(); closeModal(); render(); openDrawer(dup.id); toast('Đã gộp vào hồ sơ cũ '+dup.id); return; }
+    const lang=$('#nLang').value, owner=autoAssign(lang);
+    const l={id:'L'+(++S.seq),name,nat:$('#nNat').value.trim()||'—',lang,channel:$('#nCh').value,phone:$('#nPhone').value.trim(),email:$('#nEmail').value.trim(),budget,term,movein,area:$('#nArea').value,beds:+$('#nBeds').value||1,people:+$('#nPeople').value||1,pet:false,owner,stage:'new',created:iso(TODAY),lastContact:null,followups:0,importance:'',lostReason:null,sentUnits:[],viewingDate:null,firstResponseH:null,history:[]};
+    log(l,'create',`Lead mới từ ${l.channel} · tự phân công cho ${staffName(owner)} (theo ngôn ngữ & số lead đang giữ)`);
+    S.leads.push(l); save(); closeModal(); render(); toast(`Đã tạo ${l.id} · giao cho ${staffName(owner)}`);
+  };
+}
+function parseBudget(s){
+  s=String(s||'').toLowerCase().replace(/,/g,'').trim(); if(!s) return null;
+  const usd=s.match(/\$\s*([\d.]+)|([\d.]+)\s*usd/); if(usd) return Math.round(parseFloat(usd[1]||usd[2])*USD_VND/1e5)*1e5;
+  const m=s.match(/([\d.]+)\s*(tr|triệu|m|million)\b/); if(m) return Math.round(parseFloat(m[1])*1e6);
+  const n=parseFloat(s.replace(/[^\d.]/g,'')); if(!n) return null; return n<1000?n*1e6:Math.round(n);
+}
+
+/* ============ Trang: Danh sách căn ============ */
+function staleUnits(){ return S.units.filter(u=>days(u.verified)>14); }
+function viewUnits(){
+  const us=[...S.units].sort((a,b)=>a.verified.localeCompare(b.verified));
+  const st=staleUnits().length;
+  return `
+  <div class="kpis">
+    <div class="kpi"><b>${S.units.length}</b><span>căn đang quản lý</span></div>
+    <div class="kpi"><b>${S.units.length-st}</b><span>xác minh trong 14 ngày</span></div>
+    <div class="kpi"><b style="color:${st?'var(--gate)':'inherit'}">${st}</b><span>cần gọi chủ nhà xác minh</span></div>
+    <div class="kpi"><b>${Math.round((S.units.length-st)/S.units.length*100)}%</b><span>tỷ lệ căn còn “tươi”</span></div>
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Dự án</th><th class="r">PN</th><th class="r">m²</th><th class="r">Giá/th</th><th class="r">Tối thiểu</th><th class="r">Cọc</th><th>Trống từ</th><th>Xác minh</th><th>Chủ nhà</th><th></th></tr></thead>
+    <tbody>${us.map(u=>{const age=days(u.verified), stale=age>14;return `<tr class="${stale?'stale':''}"><td><b>${esc(u.project)}</b></td><td class="r num">${u.beds}</td><td class="r num">${u.area}</td><td class="r num">${vnd(u.price)}</td><td class="r num">${u.minTerm} th</td><td class="r num">${vnd(u.deposit)}</td><td class="num">${fdate(u.available)}</td><td>${stale?`<span class="tag warn">${age} ngày trước</span>`:`<span class="tag ok">${age===0?'hôm nay':age+' ngày trước'}</span>`}</td><td>${esc(u.owner)}</td><td><button class="btn sm" data-verify="${u.id}">Xác minh hôm nay</button></td></tr>`;}).join('')}</tbody>
+  </table></div>
+  <p style="font-size:.8rem;color:var(--muted)">Căn quá 14 ngày chưa xác minh được tô màu và không nên gửi cho khách trước khi gọi lại chủ nhà.</p>`;
+}
+
+/* ============ Trang: Dashboard ============ */
+function bars(rows,fmt=v=>v,{max}={}){
+  const m=max??Math.max(1,...rows.map(r=>r.v));
+  return `<div class="bars">${rows.map(r=>`<div class="bar ${r.muted?'muted':''}" data-tip="${esc(r.tip||r.k+': '+fmt(r.v))}"><span class="lbl">${esc(r.k)}</span><span class="track"><span class="fill" style="width:${r.v/m*100}%"></span></span><span class="val num">${fmt(r.v)}</span></div>`).join('')}</div>`;
+}
+function tbl(head,rows){ return `<details class="tbl"><summary>Xem dạng bảng</summary><div class="tablewrap" style="margin-top:6px"><table><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td class="num">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div></details>`; }
+function viewDash(){
+  const ls=visibleLeads();
+  const scope=isMgr()?'cả Rent Team':'của bạn ('+me().name+')';
+  const sep=ls.filter(l=>l.created>='2026-09-01');
+  const reached = st => ls.filter(l=>{const order=STAGES.map(s=>s.id); const idx=order.indexOf(l.stage); if(l.stage==='care'||l.stage==='lost') return st==='lead'||(st==='sent'&&l.sentUnits.length)||false; return st==='lead'||(st==='sent'&&idx>=2)||(st==='view'&&idx>=4)||(st==='won'&&l.stage==='won');}).length;
+  const funnel=[{k:'Lead vào',v:reached('lead')},{k:'Đã gửi căn',v:reached('sent')},{k:'Đã xem nhà',v:reached('view')},{k:'Ký hợp đồng',v:reached('won')}];
+  const fr=ls.filter(l=>l.firstResponseH!=null), avgFR=fr.length?fr.reduce((a,l)=>a+l.firstResponseH,0)/fr.length:0;
+  const won=ls.filter(l=>l.stage==='won').length, closed=ls.filter(l=>['won','lost'].includes(l.stage)).length;
+  // lý do mất: gộp số tháng trước (chỉ Quản lý) + hiện tại
+  const lost={}; LOST_REASONS.forEach(r=>lost[r]=isMgr()?S.oldLost[r]:0); ls.filter(l=>l.stage==='lost'&&l.lostReason).forEach(l=>lost[l.lostReason]++);
+  const lostRows=Object.entries(lost).map(([k,v])=>({k,v})).sort((a,b)=>b.v-a.v);
+  const rate=(key)=>{ const g={}; ls.forEach(l=>{const k=l[key]; g[k]=g[k]||{n:0,w:0}; g[k].n++; if(l.stage==='won') g[k].w++;}); return Object.entries(g).map(([k,x])=>({k:key==='owner'?staffName(k):k,v:x.w/x.n*100,tip:`${key==='owner'?staffName(k):k}: ${x.w}/${x.n} lead ký hợp đồng`,n:x.n,w:x.w})).sort((a,b)=>b.v-a.v); };
+  const pct=v=>Math.round(v)+'%';
+  const loadRows=STAFF.map(s=>({k:s.name,v:S.leads.filter(l=>l.owner===s.id&&!['won','lost'].includes(l.stage)).length,muted:!isMgr()&&s.id!==ui.user}));
+  const monthly=[...S.monthly,{m:'T9*',lead:sep.length+(isMgr()?0:0),sent:0,view:0,won:0}];
+  const mMax=Math.max(...monthly.map(m=>m.lead));
+  return `
+  <p style="font-size:.86rem;color:var(--muted)">Số liệu ${scope}. Dashboard chỉ đọc; ${isMgr()?'Quản lý xem tất cả, lọc theo nhân viên ở Bảng trạng thái.':'nhân viên chỉ xem số của mình.'}</p>
+  <div class="kpis">
+    <div class="kpi"><b>${sep.length}</b><span>lead mới tháng 9</span></div>
+    <div class="kpi"><b>${closed?pct(won/closed*100):'—'}</b><span>tỷ lệ chốt (${won}/${closed} lead đã kết thúc)</span></div>
+    <div class="kpi"><b>${avgFR.toFixed(1)} giờ</b><span>phản hồi đầu tiên trung bình · mục tiêu ≤ 2 giờ</span></div>
+    <div class="kpi"><b>${reminders().filter(r=>r.kind==='silent'&&r.l.followups===0).length}</b><span>lead quá 3 ngày chưa ai nhắc · mục tiêu 0</span></div>
+  </div>
+  <div class="grid2">
+    <div class="panel"><div><h2>Phễu chuyển đổi</h2><p class="sub">Số lead đã đi qua từng bước (dữ liệu demo hiện có)</p></div>
+      ${bars(funnel.map((f,i)=>({...f,tip:`${f.k}: ${f.v} lead`+(i?` · ${funnel[0].v?Math.round(f.v/funnel[0].v*100):0}% so với lead vào`:'')})))}
+      ${tbl(['Bước','Số lead'],funnel.map(f=>[f.k,f.v]))}
+    </div>
+    <div class="panel"><div><h2>Lead mới theo tháng</h2><p class="sub">${isMgr()?'T5–T8 từ dữ liệu import; T9 tính đến ngày 21':'Chỉ Quản lý thấy số các tháng trước'}</p></div>
+      ${isMgr()?`<div class="chart-cols">${monthly.map(m=>`<div class="c" data-tip="${m.m}: ${m.lead} lead${m.won?' · '+m.won+' hợp đồng':''}"><span class="num">${m.lead}</span><i style="height:${m.lead/mMax*120}px"></i></div>`).join('')}</div><div class="chart-x">${monthly.map(m=>`<span>${m.m}</span>`).join('')}</div>
+      ${tbl(['Tháng','Lead','Gửi căn','Xem nhà','Hợp đồng'],S.monthly.map(m=>[m.m,m.lead,m.sent,m.view,m.won]))}`:`<p class="empty">—</p>`}
+    </div>
+    <div class="panel"><div><h2>Lý do mất khách</h2><p class="sub">${isMgr()?'Gồm lead đã import (T5–T8) và tháng này':'Lead của bạn trong tháng'}</p></div>
+      ${bars(lostRows)}
+      ${tbl(['Lý do','Số lead'],lostRows.map(r=>[r.k,r.v]))}
+    </div>
+    <div class="panel"><div><h2>Số lead đang giữ theo nhân viên</h2><p class="sub">Không tính lead đã ký / đã mất. Dùng để phát hiện dồn tải.</p></div>
+      ${bars(loadRows)}
+    </div>
+    <div class="panel"><div><h2>Tỷ lệ chốt theo kênh</h2><p class="sub">Hợp đồng / tổng lead của kênh</p></div>${bars(rate('channel'),pct,{max:100})}${tbl(['Kênh','Hợp đồng','Lead'],rate('channel').map(r=>[r.k,r.w,r.n]))}</div>
+    <div class="panel"><div><h2>Tỷ lệ chốt theo quốc tịch</h2><p class="sub">Hợp đồng / tổng lead của nhóm</p></div>${bars(rate('nat'),pct,{max:100})}${tbl(['Quốc tịch','Hợp đồng','Lead'],rate('nat').map(r=>[r.k,r.w,r.n]))}</div>
+    ${isMgr()?`<div class="panel"><div><h2>Tỷ lệ chốt theo nhân viên</h2><p class="sub">Hợp đồng / tổng lead phụ trách</p></div>${bars(rate('owner'),pct,{max:100})}${tbl(['Nhân viên','Hợp đồng','Lead'],rate('owner').map(r=>[r.k,r.w,r.n]))}</div>`:''}
+  </div>`;
+}
+
+/* ============ Trang: Nhập dữ liệu ============ */
+const IMPORT_ROWS = [
+  {raw:{name:'Hanna Schulz',nat:'German',budget:'17M',term:'1 year',move:'Early Nov 2026',ch:'Whatsapp'}, out:{budget:17000000,term:12,movein:'2026-11-01',channel:'WhatsApp'}},
+  {raw:{name:'Ryo Yamada',nat:'Japanese',budget:'$800 (21 million)',term:'6 months',move:'2026/10/15',ch:'LINE'}, out:{budget:21000000,term:6,movein:'2026-10-15',channel:'LINE'}},
+  {raw:{name:'Marco Bianchi',nat:'Italy',budget:'20~40 million VND',term:'',move:'March',ch:'Email'}, err:'Thiếu thời hạn thuê'},
+  {raw:{name:'Seo-yeon Han',nat:'Korea',budget:'25,000,000VND',term:'Six (6) months to start with',move:'1 Dec',ch:'zalo'}, out:{budget:25000000,term:6,movein:'2026-12-01',channel:'Zalo'}, fix:'Ngân sách dạng khoảng → lấy mức giữa khi có khoảng'},
+  {raw:{name:'Sarah Johnson',nat:'USA',budget:'',term:'12 months',move:'Immediately',ch:'Email'}, err:'Thiếu ngân sách'},
+  {raw:{name:'Alex Morozov',nat:'Russian',budget:'12tr',term:'2 months',move:'Oct',ch:'WhatsApp'}, out:{budget:12000000,term:2,movein:'2026-10-01',channel:'WhatsApp'}},
+];
+function viewImport(){
+  const ok=IMPORT_ROWS.filter(r=>!r.err).length;
+  return `
+  <div class="grid2">
+    <div class="panel"><div><h2>Import Excel · một lần</h2><p class="sub">Dùng để đưa 227 lead cũ từ Google Sheet vào CRM. Có bước xem trước và báo lỗi, không ghi gì cho đến khi bấm xác nhận.</p></div>
+      <div class="dropzone"><span>Kéo file .xlsx vào đây</span><span style="font-size:.8rem">(demo dùng 6 dòng mẫu hư cấu)</span><button class="btn" id="previewImport">Xem trước file mẫu</button></div>
+    </div>
+    <div class="panel"><div><h2>Google Form → CRM</h2><p class="sub">Khách điền form, lead vào thẳng CRM: kiểm tra trùng, chuẩn hoá ngân sách, tự phân công theo ngôn ngữ và số lead đang giữ.</p></div>
+      <div class="toolbar"><button class="btn primary" id="simForm">Giả lập 1 lead từ Google Form</button><button class="btn" id="simDup">Giả lập khách cũ điền lại form</button></div>
+      <p style="font-size:.8rem;color:var(--muted)">Lead mới xuất hiện ở “Hôm nay” của người được phân công.</p>
+    </div>
+  </div>
+  <div id="impPreview">${ui.impPreview?`
+  <div class="panel"><div><h2>Xem trước · ${IMPORT_ROWS.length} dòng</h2><p class="sub">${ok} dòng hợp lệ sẽ được nhập; ${IMPORT_ROWS.length-ok} dòng lỗi cần sửa trong file rồi import lại.</p></div>
+    <div class="tablewrap"><table><thead><tr><th>#</th><th>Tên</th><th>Ngân sách gốc</th><th>→ VND/tháng</th><th>Thời hạn gốc</th><th>→ tháng</th><th>Dọn vào gốc</th><th>→ ngày</th><th>Kết quả</th></tr></thead>
+    <tbody>${IMPORT_ROWS.map((r,i)=>`<tr class="${r.err?'imp-err':''}"><td class="num">${i+2}</td><td>${esc(r.raw.name)}</td><td>${esc(r.raw.budget)||'<i>trống</i>'}</td><td class="num">${r.out?r.out.budget.toLocaleString('vi-VN'):'—'}</td><td>${esc(r.raw.term)||'<i>trống</i>'}</td><td class="num">${r.out?r.out.term:'—'}</td><td>${esc(r.raw.move)}</td><td class="num">${r.out?fdate(r.out.movein):'—'}</td><td>${r.err?`<span class="tag bad">${r.err}</span>`:`<span class="tag ok">hợp lệ</span>`}${r.fix?`<div class="imp-fix">${r.fix}</div>`:''}</td></tr>`).join('')}</tbody></table></div>
+    <div class="toolbar"><button class="btn primary" id="doImport" ${ui.imported?'disabled':''}>${ui.imported?'Đã nhập':'Nhập '+ok+' dòng hợp lệ'}</button><button class="btn" id="cancelImport">Huỷ</button></div>
+  </div>`:''}</div>`;
+}
+const FORM_SAMPLES=[
+  {name:'Haruto Kobayashi',nat:'Nhật',lang:'ja',phone:'+81 90 3030 4040',email:'haruto.k@example.jp',budget:38000000,term:12,movein:iso(d(45)),area:'Mỹ An',beds:2,people:2},
+  {name:'Isabella Garcia',nat:'Tây Ban Nha',lang:'en',phone:'+34 612 505 606',email:'isa.g@example.es',budget:26000000,term:6,movein:iso(d(30)),area:'Sơn Trà',beds:1,people:1},
+  {name:'Lee Do-yun',nat:'Hàn Quốc',lang:'ko',phone:'+82 10 7070 8080',email:'',budget:22000000,term:12,movein:iso(d(20)),area:'Hải Châu',beds:2,people:3},
+];
+function simulateForm(dup){
+  if(dup){ const src=S.leads.find(l=>l.name==='Kim Min-seo'); openNewLead({name:src.name,nat:src.nat,lang:src.lang,channel:'Google Form',phone:src.phone,email:src.email,budget:'22tr',term:12,movein:iso(d(20)),beds:1,area:'Hải Châu',people:1}); return; }
+  const f=FORM_SAMPLES[(S.seq)%FORM_SAMPLES.length];
+  const exists=S.leads.find(l=>l.phone===f.phone);
+  if(exists){ log(exists,'note','Khách điền lại Google Form · đã gộp vào hồ sơ'); save(); toast(`Trùng số điện thoại → gộp vào ${exists.id} (${exists.name})`); render(); return; }
+  const owner=autoAssign(f.lang);
+  const l={id:'L'+(++S.seq),...f,channel:'Google Form',pet:false,owner,stage:'new',created:iso(TODAY),lastContact:null,followups:0,importance:'',lostReason:null,sentUnits:[],viewingDate:null,firstResponseH:null,history:[]};
+  log(l,'create',`Lead mới từ Google Form · tự phân công cho ${staffName(owner)} (ngôn ngữ ${f.lang}, ít lead nhất)`);
+  S.leads.push(l); save(); render(); toast(`Lead ${l.name} vào CRM · giao cho ${staffName(owner)}`);
+}
+
+/* ============ Sự kiện ============ */
+document.addEventListener('click',e=>{
+  const t=e.target.closest('button,[data-open],[data-page]'); if(!t) return;
+  if(t.dataset.page){ ui.page=t.dataset.page; try{history.replaceState(null,'','#'+ui.page);}catch(_){} render(); return; }
+  if(t.dataset.move){ const [id,st]=t.dataset.move.split(':'); moveStage(id,st); return; }
+  if(t.dataset.fu){ const l=S.leads.find(x=>x.id===t.dataset.fu); l.followups++; l.lastContact=iso(TODAY); if(l.stage==='sent'){ log(l,'stage','“Đã gửi căn” → “Đang follow-up”'); l.stage='followup'; } log(l,'note',`Follow-up lần ${l.followups}`); save(); render(); toast(`Đã ghi follow-up lần ${l.followups} cho ${l.name}`+(l.followups>3?' · đã quá 3 lần':'')); return; }
+  if(t.dataset.verify){ const u=S.units.find(x=>x.id===t.dataset.verify); u.verified=iso(TODAY); save(); render(); toast(`${u.project}: đã xác minh còn trống hôm nay`); return; }
+  if(t.dataset.tab){ ui.drawerTab=t.dataset.tab; renderDrawer(); return; }
+  if(t.hasAttribute('data-close')){ closeModal(); return; }
+  if(t.dataset.open && !t.closest('#drawer')){ openDrawer(t.dataset.open); return; }
+  switch(t.id){
+    case 'closeDrawer': closeDrawer(); break;
+    case 'newLeadBtn': openNewLead(); break;
+    case 'resetBtn': S=seed(); save(); ui.impPreview=false; ui.imported=false; closeDrawer(); render(); toast('Đã khôi phục dữ liệu mẫu'); break;
+    case 'exportBtn': { const rows=[['id','name','nationality','channel','budget_vnd','term','movein','stage','owner','lost_reason']].concat(visibleLeads().map(l=>[l.id,l.name,l.nat,l.channel,l.budget,l.term,l.movein,stageName(l.stage),staffName(l.owner),l.lostReason||''])); const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n'); const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob(['﻿'+csv],{type:'text/csv'})); a.download='dvr-leads-demo.csv'; a.click(); toast('Đã xuất CSV — cột số điện thoại & email không được xuất'); break; }
+    case 'addNote': { const l=S.leads.find(x=>x.id===ui.drawer), v=$('#note').value.trim(); if(!v) return; log(l,'note',v); l.lastContact=iso(TODAY); save(); renderDrawer(); toast('Đã lưu ghi chú'); break; }
+    case 'sendUnits': { const l=S.leads.find(x=>x.id===ui.drawer); const ids=[...document.querySelectorAll('input[name=pick]:checked')].map(i=>i.value); if(!ids.length){ toast('Chọn ít nhất 1 căn'); return; } const stale=ids.filter(id=>days(S.units.find(u=>u.id===id).verified)>14); l.sentUnits=ids; log(l,'note','Đã gửi căn: '+ids.map(x=>unitName(x)).join(', ')); if(['new','contacted','care'].includes(l.stage)){ log(l,'stage',`“${stageName(l.stage)}” → “Đã gửi căn”`); l.stage='sent'; } l.lastContact=iso(TODAY); save(); render(); toast(stale.length?`Đã gửi · lưu ý ${stale.map(x=>unitName(x)).join(', ')} chưa xác minh quá 14 ngày`:`Đã gửi ${ids.length} căn · CRM sẽ nhắc nếu khách im lặng 3 ngày`); break; }
+    case 'previewImport': ui.impPreview=true; render(); break;
+    case 'cancelImport': ui.impPreview=false; render(); break;
+    case 'doImport': { IMPORT_ROWS.filter(r=>!r.err).forEach(r=>{ const lang={Japanese:'ja',Korea:'ko',Russian:'ru'}[r.raw.nat]||'en'; const owner=autoAssign(lang); const l={id:'L'+(++S.seq),name:r.raw.name,nat:r.raw.nat,lang,channel:r.out.channel,phone:'',email:'',budget:r.out.budget,term:r.out.term,movein:r.out.movein,area:'Mỹ An',beds:1,people:1,pet:false,owner,stage:'care',created:iso(d(-60)),lastContact:iso(d(-40)),followups:1,importance:'',lostReason:null,sentUnits:[],viewingDate:null,firstResponseH:3,history:[]}; log(l,'create','Import từ Google Sheet 2026 · trạng thái cũ “Lost” (không có lý do) → “Cần chăm sóc”'); S.leads.push(l); }); ui.imported=true; save(); render(); toast(`Đã nhập ${IMPORT_ROWS.filter(r=>!r.err).length} lead vào “Cần chăm sóc”`); break; }
+    case 'simForm': simulateForm(false); break;
+    case 'simDup': simulateForm(true); break;
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ if($('#modal').classList.contains('on')) closeModal(); else if(ui.drawer) closeDrawer(); }
+  if(e.key==='Enter' && e.target.matches('.lead')) openDrawer(e.target.dataset.open);
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='userSel'){ ui.user=e.target.value; ui.boardOwner='all'; closeDrawer(); render(); toast('Đang xem với tài khoản '+me().name); }
+  if(e.target.id==='ownerFilter'){ ui.boardOwner=e.target.value; render(); }
+  if(e.target.id==='stageFilter'){ ui.stageFilter=e.target.value; render(); }
+  if(e.target.id==='reassign'){ const l=S.leads.find(x=>x.id===ui.drawer); log(l,'note',`Phân công lại: ${staffName(l.owner)} → ${staffName(e.target.value)}`); l.owner=e.target.value; save(); render(); toast('Đã phân công lại'); }
+});
+document.addEventListener('input',e=>{ if(e.target.id==='q'){ ui.q=e.target.value; const pos=e.target.selectionStart; render(); const q=$('#q'); q.focus(); q.setSelectionRange(pos,pos); } });
+$('#scrim').onclick=closeDrawer; $('#mScrim').onclick=closeModal;
+// tooltip cho biểu đồ
+const tip=$('#tip');
+document.addEventListener('mousemove',e=>{ const h=e.target.closest('[data-tip]'); if(!h){ tip.style.display='none'; return; } tip.textContent=h.dataset.tip; tip.style.display='block'; tip.style.left=Math.min(e.clientX+12,innerWidth-250)+'px'; tip.style.top=(e.clientY+14)+'px'; });
+
+render();
+</script>
+</body>
+</html>
