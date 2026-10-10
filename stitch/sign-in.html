@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DVR CRM — Sign in</title>
+  <!-- Google Fonts: Be Vietnam Pro & IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <!-- Material Symbols Outlined -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS with forms plugin -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            ground: "#F5F7F6",
+            surface: "#FFFFFF",
+            ink: "#18221F",
+            muted: "#5B6863",
+            line: "#D9E0DD",
+            stroke: "#7C8A85",
+            accent: "#0E6B5C",
+            "accent-hover": "#0a5246",
+            "accent-soft": "#E1F0EC"
+          },
+          fontFamily: {
+            sans: ["'Be Vietnam Pro'", "sans-serif"],
+            mono: ["'IBM Plex Mono'", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-ground text-ink min-h-screen antialiased flex flex-col items-center justify-center p-4 selection:bg-accent-soft selection:text-ink font-sans">
+
+  <!-- Main Container -->
+  <main class="w-full flex flex-col items-center">
+    
+    <!-- Sign In Card: 360px wide, 8px radius, 1px #D9E0DD border, no shadow -->
+    <div class="w-[360px] max-w-full bg-surface border border-line rounded-[8px] p-7 flex flex-col">
+      
+      <!-- Header / Wordmark Section -->
+      <div class="text-left mb-6">
+        <div class="flex items-center gap-2 mb-1.5">
+          <div aria-hidden="true" class="w-6 h-6 bg-accent text-white rounded-[4px] flex items-center justify-center font-mono text-[11px] font-semibold tracking-tight">
+            DVR
+          </div>
+          <span class="text-[17px] font-bold text-ink tracking-tight leading-none">DVR CRM</span>
+        </div>
+        <p class="text-[12px] text-muted font-normal leading-tight">
+          Da Nang Villa Realty · Rent Team
+        </p>
+      </div>
+
+      <!-- Sign In Form -->
+      <form class="flex flex-col gap-4" onsubmit="event.preventDefault();">
+        
+        <!-- Email field -->
+        <div class="flex flex-col gap-1.5">
+          <label for="email" class="text-[12.8px] font-semibold text-ink leading-tight">
+            Email
+          </label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="agent@danangvillarealty.com"
+            autocomplete="email"
+            class="w-full px-3 py-2 text-[14px] text-ink bg-surface border border-line rounded-[6px] placeholder:text-muted/60 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
+          />
+        </div>
+
+        <!-- Password field with toggle -->
+        <div class="flex flex-col gap-1.5">
+          <div class="flex items-center justify-between">
+            <label for="password" class="text-[12.8px] font-semibold text-ink leading-tight">
+              Password
+            </label>
+            <a href="#" class="text-[12px] text-muted hover:text-accent underline underline-offset-2 transition-colors">
+              Forgot password?
+            </a>
+          </div>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="••••••••••••"
+              autocomplete="current-password"
+              class="w-full pl-3 pr-10 py-2 text-[14px] text-ink bg-surface border border-line rounded-[6px] placeholder:text-muted/60 focus:outline-none focus:ring-1 focus:ring-accent focus:border-accent transition-colors"
+            />
+            <button 
+              type="button" 
+              aria-label="Toggle password visibility"
+              onclick="const p = document.getElementById('password'); const isPass = p.type === 'password'; p.type = isPass ? 'text' : 'password'; this.querySelector('span').textContent = isPass ? 'visibility_off' : 'visibility';"
+              class="absolute inset-y-0 right-0 flex items-center pr-3 text-muted hover:text-ink transition-colors"
+            >
+              <span class="material-symbols-outlined text-[18px]">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Primary Action Button: full-width teal #0E6B5C -->
+        <button 
+          type="submit" 
+          class="mt-1 w-full py-2.5 px-4 bg-accent hover:bg-accent-hover text-white text-[13px] font-semibold rounded-[6px] transition-colors focus:outline-none focus:ring-2 focus:ring-accent/30 text-center"
+        >
+          Sign in
+        </button>
+
+      </form>
+
+      <!-- Thin divider "or" -->
+      <div class="relative my-5 flex items-center justify-center">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-line"></div>
+        </div>
+        <span class="relative bg-surface px-2.5 text-[11.5px] text-muted font-normal uppercase tracking-wider">
+          or
+        </span>
+      </div>
+
+      <!-- Secondary outlined button "Sign in with Google" -->
+      <!-- Subdued treatment so it does not visually outrank password path -->
+      <button 
+        type="button" 
+        class="w-full py-2.5 px-4 bg-surface hover:bg-ground border border-line text-ink text-[13px] font-medium rounded-[6px] transition-colors flex items-center justify-center gap-2.5 focus:outline-none focus:ring-1 focus:ring-line"
+      >
+        <!-- Standard Google 4-color G mark SVG -->
+        <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24" aria-hidden="true">
+          <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+          <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+          <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+          <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+        </svg>
+        <span>Sign in with Google</span>
+      </button>
+
+    </div>
+
+    <!-- Language switch below card -->
+    <nav aria-label="Language selection" class="mt-5 flex items-center justify-center gap-2 text-[12px] text-muted">
+      <button type="button" class="font-medium text-ink hover:text-accent transition-colors">English</button>
+      <span class="text-line select-none">·</span>
+      <button type="button" class="hover:text-ink transition-colors">Tiếng Việt</button>
+      <span class="text-line select-none">·</span>
+      <button type="button" class="hover:text-ink transition-colors">日本語</button>
+    </nav>
+
+    <!-- Operational Instance Subtle Footer -->
+    <footer class="mt-8 text-center text-[11px] text-muted/70">
+      Da Nang Villa Realty · Internal CRM
+    </footer>
+
+  </main>
+
+</body>
+</html>

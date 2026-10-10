@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DVR CRM — Dashboard</title>
+<!-- Google Fonts: Be Vietnam Pro & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Container Queries and Forms plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "bad-soft-dark": "#3A221D",
+            "stroke-dark": "#6B7A75",
+            "gate-dark": "#E0B066",
+            "outline-variant": "#bec9c5",
+            "surface-container-highest": "#e1e3e2",
+            "on-error-container": "#93000a",
+            "error-container": "#ffdad6",
+            "error": "#ba1a1a",
+            "tertiary-fixed-dim": "#ffb4a2",
+            "surface-container-low": "#f2f4f3",
+            "measure-track-dark": "#2A3633",
+            "primary-fixed-dim": "#86d5c3",
+            "muted": "#5B6863",
+            "stroke": "#7C8A85",
+            "on-tertiary-fixed": "#3a0b02",
+            "on-primary": "#ffffff",
+            "surface-container-lowest": "#ffffff",
+            "accent-dark": "#5CC0AA",
+            "surface-variant": "#e1e3e2",
+            "on-surface": "#191c1c",
+            "inverse-on-surface": "#eff1f0",
+            "on-primary-container": "#99e8d5",
+            "on-primary-fixed-variant": "#005144",
+            "info-soft": "#E3ECF8",
+            "secondary-container": "#8cb7fd",
+            "ink": "#18221F",
+            "scrim-dark": "#000000",
+            "accent-soft-dark": "#1B3530",
+            "secondary-fixed": "#d5e3ff",
+            "info-dark": "#8DB4EA",
+            "surface-tint": "#0d6a5b",
+            "on-primary-fixed": "#00201a",
+            "on-secondary": "#ffffff",
+            "inverse-primary": "#86d5c3",
+            "accent": "#0E6B5C",
+            "surface-bright": "#f8faf9",
+            "ground": "#F5F7F6",
+            "on-tertiary-container": "#ffcec2",
+            "inverse-surface": "#2e3131",
+            "ground-dark": "#101614",
+            "ink-dark": "#E3EAE7",
+            "info-soft-dark": "#1C2A3D",
+            "on-error": "#ffffff",
+            "bad": "#A8412F",
+            "secondary-fixed-dim": "#a8c8ff",
+            "tertiary-container": "#8f4c3b",
+            "on-surface-variant": "#3f4946",
+            "measure-target-dark": "#8E9D97",
+            "on-background": "#191c1c",
+            "primary-container": "#0e6b5c",
+            "on-secondary-container": "#0f4786",
+            "tertiary": "#723526",
+            "surface-container": "#eceeed",
+            "scrim": "#18221F",
+            "gate-soft": "#F7EDDC",
+            "info": "#2F5E9E",
+            "outline": "#6f7976",
+            "accent-soft": "#E1F0EC",
+            "surface": "#FFFFFF",
+            "bad-soft": "#F8E6E1",
+            "background": "#f8faf9",
+            "secondary": "#305f9f",
+            "primary-fixed": "#a2f2de",
+            "on-secondary-fixed-variant": "#0e4785",
+            "tertiary-fixed": "#ffdad2",
+            "measure-track": "#D9E0DD",
+            "surface-dim": "#d8dad9",
+            "line-dark": "#2A3633",
+            "bad-dark": "#E58A77",
+            "on-secondary-fixed": "#001b3c",
+            "gate-soft-dark": "#342A1B",
+            "measure-target": "#6A7873",
+            "gate": "#8D5A0D",
+            "primary": "#005145",
+            "on-tertiary": "#ffffff",
+            "muted-dark": "#9AA8A3",
+            "line": "#D9E0DD",
+            "surface-container-high": "#e6e9e8",
+            "surface-dark": "#172020",
+            "on-tertiary-fixed-variant": "#723526"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "gutter": "16px",
+            "sidebar": "220px",
+            "space-xl": "24px",
+            "margin": "24px",
+            "touch-min": "40px",
+            "space-xs": "4px",
+            "space-sm": "8px",
+            "drawer": "640px",
+            "space-md": "12px",
+            "space-lg": "16px",
+            "gutter-mobile": "16px",
+            "board-column": "212px"
+          },
+          "fontFamily": {
+            "page-title": ["'Be Vietnam Pro', sans-serif"],
+            "label": ["'Be Vietnam Pro', sans-serif"],
+            "caption": ["'Be Vietnam Pro', sans-serif"],
+            "overline": ["'Be Vietnam Pro', sans-serif"],
+            "section-title": ["'Be Vietnam Pro', sans-serif"],
+            "kpi": ["'IBM Plex Mono', monospace"],
+            "body": ["'Be Vietnam Pro', sans-serif"],
+            "numeric": ["'IBM Plex Mono', monospace"]
+          },
+          "fontSize": {
+            "page-title": ["18px", { "lineHeight": "1.25", "fontWeight": "700" }],
+            "label": ["12.8px", { "lineHeight": "1.4", "fontWeight": "600" }],
+            "caption": ["12px", { "lineHeight": "1.45", "fontWeight": "400" }],
+            "overline": ["11.5px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "section-title": ["16px", { "lineHeight": "1.3", "fontWeight": "700" }],
+            "kpi": ["26px", { "lineHeight": "1.1", "fontWeight": "500" }],
+            "body": ["14.5px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "numeric": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Figure links underline interaction: thickens on hover without jumping */
+    .fig-link {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2.5px;
+      color: #18221F;
+      transition: text-decoration-thickness 120ms ease-in-out;
+    }
+    .fig-link:hover {
+      text-decoration-thickness: 2.5px;
+    }
+  </style>
+</head>
+<body class="bg-ground text-ink min-h-screen antialiased flex selection:bg-accent-soft selection:text-ink">
+<!-- ========================================================================= -->
+<!-- SHARED COMPONENT 1: SideNavBar                                            -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-sidebar bg-ground border-r border-line z-30 select-none"><div class="flex flex-col justify-between h-full p-space-sm select-none">
+<div class="flex flex-col gap-space-sm">
+<!-- Brand / Monogram Emblem -->
+<div class="px-space-md py-space-sm flex items-center gap-2.5">
+<div aria-hidden="true" class="w-7 h-7 bg-primary text-on-primary rounded flex items-center justify-center font-kpi text-xs font-semibold tracking-tight">
+        DVR
+      </div>
+<div class="flex flex-col leading-tight">
+<span class="font-page-title text-page-title font-bold text-ink tracking-tight">DVR CRM</span>
+<span class="font-caption text-caption text-muted text-[11px] leading-none">Rent Team</span>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav aria-label="Main Navigation" class="flex flex-col gap-0.5 mt-2">
+<!-- Tab 1: Today with rust badge 7 -->
+<a class="flex items-center justify-between px-space-md py-space-sm text-muted hover:text-ink font-label text-label transition-colors" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+<span>Today</span>
+</div>
+<span class="font-numeric text-[11px] px-1.5 py-0.5 rounded-full bg-bad-soft text-bad font-medium">7</span>
+</a>
+<!-- Tab 2: Pipeline -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-muted hover:text-ink font-label text-label transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="view_kanban">view_kanban</span>
+<span>Pipeline</span>
+</a>
+<!-- Tab 3: Leads -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-muted hover:text-ink font-label text-label transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Leads</span>
+</a>
+<!-- Tab 4: Units (with badge 4) -->
+<a class="flex items-center justify-between px-space-md py-space-sm text-muted hover:text-ink font-label text-label transition-colors group" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined" data-icon="home_work">home_work</span>
+<span>Units</span>
+</div>
+<span class="font-numeric text-[11px] px-1.5 py-0.5 rounded-full bg-line text-muted">4</span>
+</a>
+<!-- Tab 5: Dashboard (ACTIVE MATCH) -->
+<a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm bg-accent-soft text-primary border-l-2 border-primary rounded-none font-label text-label" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="analytics">analytics</span>
+<span>Dashboard</span>
+</a>
+<!-- Tab 6: Import -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-muted hover:text-ink font-label text-label transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="upload_file">upload_file</span>
+<span>Import</span>
+</a>
+</nav>
+</div>
+</div></aside>
+<!-- ========================================================================= -->
+<!-- MAIN WORKSPACE CONTAINER (Fluid with fixed 220px left offset)            -->
+<!-- ========================================================================= -->
+<div class="flex-1 min-w-0 pl-sidebar">
+<!-- ======================================================================= -->
+<!-- SHARED COMPONENT 2: TopNavBar                                           -->
+<!-- ======================================================================= -->
+<header class="sticky top-0 right-0 h-14 w-full bg-surface z-20 border-b border-line"><div class="flex items-center justify-between px-margin w-full h-full">
+<h1 class="font-page-title text-page-title font-bold text-ink">Dashboard</h1>
+<button class="inline-flex items-center gap-1.5 bg-accent hover:bg-primary text-on-primary px-3 py-1.5 rounded font-label text-label transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+<span>+ New lead</span>
+</button>
+</div></header>
+<!-- ======================================================================= -->
+<!-- DASHBOARD CONTENT CANVAS                                                -->
+<!-- ======================================================================= -->
+<main class="p-margin max-w-[1400px] mx-auto flex flex-col gap-5"><!-- 1. SAMPLE DATA / PREVIEW TRIAL BANNER -->
+<div class="bg-gate-soft border-l-[3px] border-gate rounded-r-md px-4 py-2.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-ink font-caption text-caption">
+<div class="flex items-center gap-2.5 flex-wrap">
+<span class="font-numeric text-[11px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded bg-gate/15 text-gate border border-gate/20">Sample data</span>
+<span class="text-ink">Fictional figures. Agents in the workload and close-rate views are labeled Agent A–D (PRD anonymization decision).</span>
+</div>
+<label class="inline-flex items-center gap-2 cursor-pointer select-none text-ink text-[12px] whitespace-nowrap self-start sm:self-auto">
+<input checked="" class="rounded text-accent focus:ring-accent border-line cursor-pointer" type="checkbox"/>
+<span>Preview trial (before Go-live)</span>
+</label>
+</div>
+<!-- 2. KPI STRIP (4 flat cells, no icons, no vs comparisons) -->
+<section aria-label="Key Performance Indicators" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+<!-- Cell 1: Leads this month -->
+<div class="bg-surface border border-line rounded-xl p-4 flex flex-col justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-muted">LEADS THIS MONTH</span>
+<div class="mt-2">
+<div class="font-kpi text-kpi text-ink tracking-tight font-medium">11 leads</div>
+<div class="font-caption text-caption text-muted mt-1">1–8 Oct · Sep 29 leads · Aug 38 leads</div>
+</div>
+</div>
+<!-- Cell 2: Close rate raw / qualified basis -->
+<div class="bg-surface border border-line rounded-xl p-4 flex flex-col justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-muted">CLOSE RATE · RAW / QUALIFIED BASIS</span>
+<div class="mt-2">
+<div class="font-kpi text-[19px] leading-tight text-ink tracking-tight font-medium">
+        13 of 162 <span class="text-caption font-caption text-muted">raw · 8.0%</span>
+</div>
+<div class="font-kpi text-[19px] leading-tight text-ink tracking-tight font-medium mt-0.5">
+        9 of 61 <span class="text-caption font-caption text-muted">Qualified · 14.8%</span>
+</div>
+<div class="font-caption text-caption text-muted mt-1.5">since 1 Jan · counts first, both bases together</div>
+</div>
+</div>
+<!-- Cell 3: Avg first response -->
+<div class="bg-surface border border-line rounded-xl p-4 flex flex-col justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-muted">AVG FIRST RESPONSE</span>
+<div class="mt-2">
+<div class="font-kpi text-kpi text-ink tracking-tight font-medium">3.3 h</div>
+<div class="mt-2.5 relative">
+<div class="w-full bg-measure-track h-[3px] rounded-full overflow-hidden">
+<div class="bg-measure-target h-[3px]" style="width: 66%;"></div>
+</div>
+<div class="absolute -top-1 left-[40%] w-[1.5px] h-[7px] bg-ink" title="Target threshold ≤ 2 h"></div>
+</div>
+<div class="font-caption text-caption text-muted mt-1.5">
+<span>3.3 h · past target · target ≤ 2 h</span>
+</div>
+</div>
+</div>
+<!-- Cell 4: Leads silent > 3 days -->
+<div class="bg-surface border border-line rounded-xl p-4 flex flex-col justify-between">
+<span class="font-overline text-overline uppercase tracking-wider text-muted">LEADS SILENT &gt; 3 DAYS</span>
+<div class="mt-2">
+<div class="font-kpi text-kpi text-ink tracking-tight font-medium">2 leads</div>
+<div class="font-caption text-caption text-muted mt-1">no Reminder acted on · Yui Nakamura, Sho Yamada</div>
+</div>
+</div>
+</section>
+<!-- 3. TRIAL INSTRUMENTS PANEL -->
+<section aria-label="Trial Instruments" class="bg-surface border border-line rounded-xl p-4 flex flex-col gap-3">
+<div class="flex items-baseline justify-between border-b border-line pb-2.5">
+<div class="flex items-center gap-2">
+<span class="font-overline text-overline uppercase tracking-wider text-muted">Trial instruments</span>
+<span class="text-muted">—</span>
+<h3 class="font-section-title text-[14px] text-ink">Next-step Skips by Stage (team)</h3>
+</div>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 py-1 font-body text-caption">
+<div class="border border-line rounded p-2.5 bg-ground/40 flex flex-col justify-between">
+<span class="text-muted text-[11.5px]">Contacted</span>
+<span class="font-kpi text-[16px] text-ink font-medium mt-1">6 of 14 cards</span>
+</div>
+<div class="border border-line rounded p-2.5 bg-ground/40 flex flex-col justify-between">
+<span class="text-muted text-[11.5px]">Units sent</span>
+<span class="font-kpi text-[16px] text-ink font-medium mt-1">2 of 9</span>
+</div>
+<div class="border border-line rounded p-2.5 bg-ground/40 flex flex-col justify-between">
+<span class="text-muted text-[11.5px]">Following up</span>
+<span class="font-kpi text-[16px] text-ink font-medium mt-1">3 of 11</span>
+</div>
+<div class="border border-line rounded p-2.5 bg-ground/40 flex flex-col justify-between">
+<span class="text-muted text-[11.5px]">Viewing booked</span>
+<span class="font-kpi text-[16px] text-ink font-medium mt-1">1 of 5</span>
+</div>
+<div class="border border-line rounded p-2.5 bg-ground/40 flex flex-col justify-between">
+<span class="text-muted text-[11.5px]">Negotiating</span>
+<span class="font-kpi text-[16px] text-ink font-medium mt-1">0 of 3</span>
+</div>
+</div>
+<div class="text-muted font-caption text-[11.5px] pt-1">
+    Tunes the Stage → next-step map; reviewed at week 6. Team level only — never split per Agent.
+  </div>
+</section>
+<!-- 4. FULL-WIDTH WORKLOAD PANEL -->
+<section aria-label="Workload" class="bg-surface border border-line rounded-xl p-5 flex flex-col gap-4">
+<!-- Header & Controls -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-line">
+<div>
+<h2 class="font-section-title text-section-title text-ink">Workload</h2>
+<p class="font-caption text-caption text-muted mt-0.5">Active carrying capacity, pipeline distribution, and follow-up adherence</p>
+</div>
+<div class="flex items-center gap-2.5 flex-wrap">
+<!-- Segmented Toggle -->
+<div class="inline-flex p-0.5 bg-ground border border-line rounded">
+<button class="px-2.5 py-1 font-caption text-caption font-semibold rounded bg-surface text-ink border border-line/60" type="button">Week</button>
+<button class="px-2.5 py-1 font-caption text-caption font-medium rounded text-muted hover:text-ink transition-colors" type="button">Last 4 weeks</button>
+</div>
+<!-- Week dropdown -->
+<div class="relative inline-flex items-center">
+<select class="bg-ground text-ink border border-line rounded px-2.5 py-1 font-body text-caption font-medium focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary pr-7 cursor-pointer appearance-none">
+<option>28 Sep–4 Oct</option>
+<option>21 Sep–27 Sep</option>
+</select>
+<span class="material-symbols-outlined pointer-events-none absolute right-1.5 text-muted text-[16px]" data-icon="expand_more">expand_more</span>
+</div>
+<!-- Sort toggle -->
+<button class="px-2.5 py-1 font-caption text-caption font-medium rounded bg-ground border border-line text-muted hover:text-ink" type="button">
+        Sort: Name | <strong class="font-semibold text-ink">Weighted load</strong>
+</button>
+</div>
+</div>
+<!-- Team line summary chips row -->
+<div class="flex items-center gap-2 flex-wrap text-muted font-caption text-[11.5px]">
+<span class="px-2.5 py-1 rounded bg-ground/50 border border-line text-ink">Fallback-owned 2</span>
+<span class="px-2.5 py-1 rounded bg-ground/50 border border-line text-ink">Language mismatch 1</span>
+<span class="px-2.5 py-1 rounded bg-ground/50 border border-line text-ink">New past 2 h target 3</span>
+<span class="px-2.5 py-1 rounded bg-ground/50 border border-line text-ink">Captured before intake 1</span>
+</div>
+<!-- Workload Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[840px]">
+<thead>
+<tr class="border-b border-line text-muted">
+<th class="py-2 text-center font-overline text-overline uppercase tracking-wider font-semibold border-r border-line bg-ground/50" colspan="5">CARRYING NOW</th>
+<th class="py-2 text-center font-overline text-overline uppercase tracking-wider font-semibold border-r border-line bg-ground/30" colspan="1">FOLLOW-UPS</th>
+<th class="py-2 text-center font-overline text-overline uppercase tracking-wider font-semibold border-r border-line bg-ground/50" colspan="4">SELECTED WEEK</th>
+<th class="py-2 text-center font-overline text-overline uppercase tracking-wider font-semibold bg-ground/30" colspan="1">LOST</th>
+</tr>
+<tr class="border-b border-line text-muted font-overline text-[11px] uppercase tracking-wider">
+<th class="py-2 font-normal px-2">Agent</th>
+<th class="py-2 font-normal px-2">Availability</th>
+<th class="py-2 text-right font-normal px-2 w-14">Open</th>
+<th class="py-2 text-right font-normal px-2 w-16">Weighted</th>
+<th class="py-2 font-normal border-r border-line px-2 w-36">By stage</th>
+<th class="py-2 font-normal border-r border-line px-2 w-28 text-center">Stale</th>
+<th class="py-2 text-right font-normal px-2 w-14">Raised</th>
+<th class="py-2 text-right font-normal px-2 w-16">Inherited</th>
+<th class="py-2 text-right font-normal px-2 w-24">Became overdue</th>
+<th class="py-2 text-right font-normal border-r border-line px-2 w-24">Overdue &gt;1d now</th>
+<th class="py-2 text-right font-normal px-2">Median contacts</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line">
+<!-- Agent A -->
+<tr class="hover:bg-ground/50 transition-colors">
+<td class="py-3 px-2 font-label text-label font-medium text-ink">Agent A</td>
+<td class="py-3 px-2 font-caption text-caption text-ink">Available</td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">17</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">20.25</a></td>
+<td class="py-3 px-2 border-r border-line">
+<div class="w-full bg-measure-track h-2 rounded-sm flex overflow-hidden">
+<div class="bg-measure-target h-full" style="width: 35%;"></div>
+<div class="bg-stroke h-full" style="width: 45%;"></div>
+<div class="bg-outline-variant h-full" style="width: 20%;"></div>
+</div>
+<div class="font-caption text-caption text-muted text-[11px] mt-1">4 viewing/neg.</div>
+</td>
+<td class="py-3 px-2 border-r border-line text-center text-muted font-numeric">—</td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">14</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">2</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">6</a></td>
+<td class="py-3 px-2 text-right border-r border-line"><a class="font-numeric text-numeric fig-link" href="#">6</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">2 by reason ▸</a></td>
+</tr>
+<!-- Agent B -->
+<tr class="hover:bg-ground/50 transition-colors">
+<td class="py-3 px-2 font-label text-label font-medium text-ink">Agent B</td>
+<td class="py-3 px-2 font-caption text-caption text-ink">Available</td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">14</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">14.75</a></td>
+<td class="py-3 px-2 border-r border-line">
+<div class="w-full bg-measure-track h-2 rounded-sm flex overflow-hidden">
+<div class="bg-measure-target h-full" style="width: 25%;"></div>
+<div class="bg-stroke h-full" style="width: 50%;"></div>
+<div class="bg-outline-variant h-full" style="width: 25%;"></div>
+</div>
+<div class="font-caption text-caption text-muted text-[11px] mt-1">3 viewing/neg.</div>
+</td>
+<td class="py-3 px-2 border-r border-line text-center font-caption text-caption text-ink">1 Negotiating</td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">9</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">0</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">2</a></td>
+<td class="py-3 px-2 text-right border-r border-line"><a class="font-numeric text-numeric fig-link" href="#">1</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">3 by reason ▸</a></td>
+</tr>
+<!-- Agent C -->
+<tr class="hover:bg-ground/50 transition-colors">
+<td class="py-3 px-2 font-label text-label font-medium text-ink">Agent C</td>
+<td class="py-3 px-2 font-caption text-caption text-ink">
+<span>◐ Limited through 9 Oct</span>
+<span class="block italic text-muted text-[11px]">Sales team event Thu–Fri</span>
+</td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">6</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">5.25</a></td>
+<td class="py-3 px-2 border-r border-line">
+<div class="w-full bg-measure-track h-2 rounded-sm flex overflow-hidden">
+<div class="bg-measure-target h-full" style="width: 0%;"></div>
+<div class="bg-stroke h-full" style="width: 60%;"></div>
+<div class="bg-outline-variant h-full" style="width: 40%;"></div>
+</div>
+<div class="font-caption text-caption text-muted text-[11px] mt-1">0 viewing/neg.</div>
+</td>
+<td class="py-3 px-2 border-r border-line text-center text-muted font-numeric">—</td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">3</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">0</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">0</a></td>
+<td class="py-3 px-2 text-right border-r border-line"><a class="font-numeric text-numeric fig-link" href="#">0</a></td>
+<td class="py-3 px-2 text-right text-muted font-caption text-caption">no Lost in period</td>
+</tr>
+<!-- Agent D -->
+<tr class="hover:bg-ground/50 transition-colors">
+<td class="py-3 px-2 font-label text-label font-medium text-ink">Agent D</td>
+<td class="py-3 px-2 font-caption text-caption text-ink">
+<span>○ Away through 14 Oct</span>
+<span class="block italic text-muted text-[11px]">Covering the Hội An office</span>
+</td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">7</a></td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">8.25</a></td>
+<td class="py-3 px-2 border-r border-line">
+<div class="w-full bg-measure-track h-2 rounded-sm flex overflow-hidden">
+<div class="bg-measure-target h-full" style="width: 30%;"></div>
+<div class="bg-stroke h-full" style="width: 45%;"></div>
+<div class="bg-outline-variant h-full" style="width: 25%;"></div>
+</div>
+<div class="font-caption text-caption text-muted text-[11px] mt-1">2 viewing/neg.</div>
+</td>
+<td class="py-3 px-2 border-r border-line text-center font-caption text-caption text-ink">1 Viewing booked</td>
+<td class="py-3 px-2 border-r border-line text-center text-muted font-caption text-caption" colspan="4">not counted · Away</td>
+<td class="py-3 px-2 text-right"><a class="font-numeric text-numeric fig-link" href="#">4 by reason ▸</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 5. FULL-WIDTH CLOSE RATE PANEL -->
+<section aria-label="Close Rate and Qualification Audit" class="bg-surface border border-line rounded-xl p-5 flex flex-col gap-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-line">
+<div>
+<h2 class="font-section-title text-section-title text-ink">Close rate &amp; qualification</h2>
+<p class="font-caption text-caption text-muted mt-0.5">Audit of leads passing qualification criteria vs raw inbound intake</p>
+</div>
+<div class="inline-flex p-0.5 bg-ground border border-line rounded self-start sm:self-auto">
+<button class="px-2.5 py-1 font-caption text-caption font-semibold rounded bg-surface text-ink border border-line/60" type="button">Since Go-live</button>
+<button class="px-2.5 py-1 font-caption text-caption font-medium rounded text-muted hover:text-ink transition-colors" type="button">Last 4 weeks</button>
+</div>
+</div>
+<!-- Criteria Callout banner with 3px amber spine -->
+<div class="bg-gate-soft border-l-[3px] border-gate rounded-r-md px-4 py-3 flex flex-col gap-1">
+<div class="flex items-start justify-between gap-4 flex-wrap">
+<div class="font-body text-caption text-ink font-medium">
+        Team override rate: 14 of 50 determinations (28%), above 25%.
+      </div>
+<a class="font-label text-caption text-ink underline hover:text-gate transition-colors whitespace-nowrap" href="#">
+        Review the Qualification criteria
+      </a>
+</div>
+<p class="font-caption text-caption text-muted">
+      A high override rate is a reason to look at the criteria and the Leads, not a conclusion about a person.
+    </p>
+</div>
+<!-- Close rate table per Agent -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-line text-muted font-overline text-[11px] uppercase tracking-wider">
+<th class="py-2 font-normal">Agent</th>
+<th class="py-2 font-normal text-left px-4">Close rate · raw / qualified basis</th>
+<th class="py-2 font-normal text-right px-4">Override rate</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line font-body text-caption">
+<!-- Agent A -->
+<tr class="hover:bg-ground/50 transition-colors">
+<td class="py-3 font-medium text-ink">Agent A</td>
+<td class="py-3 px-4 text-left font-numeric">
+<span class="text-ink font-medium">2 of 18</span> raw · 11%  /  <span class="text-ink font-medium">2 of 7</span> Qualified · too few to compare
+          </td>
+<td class="py-3 px-4 text-right font-numeric text-ink">3 of 12 · 25% team 28%</td>
+</tr>
+<!-- Agent B -->
+<tr class="hover:bg-ground/50 transition-colors">
+<td class="py-3 font-medium text-ink">Agent B</td>
+<td class="py-3 px-4 text-left font-numeric">
+<span class="text-ink font-medium">3 of 9</span> raw · too few to compare  /  <span class="text-ink font-medium">3 of 5</span> Qualified · too few to compare
+          </td>
+<td class="py-3 px-4 text-right font-numeric text-ink">5 of 11 · 45%</td>
+</tr>
+<!-- Agent C -->
+<tr class="hover:bg-ground/50 transition-colors">
+<td class="py-3 font-medium text-ink">Agent C</td>
+<td class="py-3 px-4 text-left font-numeric">
+<span class="text-ink font-medium">1 of 6</span> raw · too few  /  <span class="text-ink font-medium">1 of 3</span> Qualified · too few
+          </td>
+<td class="py-3 px-4 text-right font-numeric text-ink">1 of 8 · too few</td>
+</tr>
+<!-- Agent D -->
+<tr class="hover:bg-ground/50 transition-colors">
+<td class="py-3 font-medium text-ink">Agent D</td>
+<td class="py-3 px-4 text-left font-numeric">
+<span class="text-ink font-medium">2 of 11</span> raw · 18%  /  <span class="text-ink font-medium">2 of 9</span> Qualified · too few
+          </td>
+<td class="py-3 px-4 text-right font-numeric text-ink">5 of 19 · 26%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- 6. TWO-COLUMN GRID OF TEAM-LEVEL CHARTS (6 PANELS) -->
+<section aria-label="Team-level Visual Analytics" class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+<!-- PANEL 1: Milestone funnel -->
+<div class="bg-surface border border-line rounded-xl p-5 flex flex-col justify-between">
+<div class="flex items-center justify-between pb-3 border-b border-line mb-4">
+<div>
+<h3 class="font-section-title text-section-title text-ink">Milestone funnel</h3>
+<p class="font-caption text-caption text-muted mt-0.5">Progression through conversion stages</p>
+</div>
+<span class="font-numeric text-caption text-muted">227 leads in 2026</span>
+</div>
+<div class="relative pl-3 border-l-2 border-line space-y-3 my-auto">
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Leads in</span>
+<span class="font-numeric text-caption text-ink">227 <span class="text-muted text-[11px]">(100%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 100%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Contacted</span>
+<span class="font-numeric text-caption text-ink">198 <span class="text-muted text-[11px]">(87%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 87.2%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Units sent</span>
+<span class="font-numeric text-caption text-ink">141 <span class="text-muted text-[11px]">(62%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 62.1%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Viewing booked</span>
+<span class="font-numeric text-caption text-ink">63 <span class="text-muted text-[11px]">(28%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 27.8%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Negotiating · deposit</span>
+<span class="font-numeric text-caption text-ink">27 <span class="text-muted text-[11px]">(12%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 11.9%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Signed</span>
+<span class="font-numeric text-caption text-ink">13 <span class="text-muted text-[11px]">(6%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 5.7%;"></div>
+</div>
+</div>
+</div>
+<div class="pt-3 mt-3 border-t border-line flex items-center justify-end">
+<a class="font-caption text-[11.5px] text-muted underline decoration-line cursor-pointer hover:text-ink" href="#">Show as table</a>
+</div>
+</div>
+<!-- PANEL 2: Monthly volume -->
+<div class="bg-surface border border-line rounded-xl p-5 flex flex-col justify-between">
+<div class="flex items-center justify-between pb-3 border-b border-line mb-4">
+<div>
+<h3 class="font-section-title text-section-title text-ink">Monthly volume</h3>
+<p class="font-caption text-caption text-muted mt-0.5">Inbound leads by calendar month</p>
+</div>
+<span class="font-numeric text-caption text-muted">Jun – Oct</span>
+</div>
+<div class="h-44 flex items-end justify-between gap-4 pt-6 pb-2 px-3 border-b border-line my-auto">
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<span class="font-numeric text-xs font-medium text-ink">36</span>
+<div class="w-full max-w-[36px] bg-accent rounded-t-sm" style="height: 90%;"></div>
+<span class="font-caption text-caption text-muted">Jun</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<span class="font-numeric text-xs font-medium text-ink">40</span>
+<div class="w-full max-w-[36px] bg-accent rounded-t-sm" style="height: 100%;"></div>
+<span class="font-caption text-caption text-muted">Jul</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<span class="font-numeric text-xs font-medium text-ink">38</span>
+<div class="w-full max-w-[36px] bg-accent rounded-t-sm" style="height: 95%;"></div>
+<span class="font-caption text-caption text-muted">Aug</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<span class="font-numeric text-xs font-medium text-ink">29</span>
+<div class="w-full max-w-[36px] bg-accent rounded-t-sm" style="height: 72%;"></div>
+<span class="font-caption text-caption text-muted">Sep</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 h-full justify-end">
+<span class="font-numeric text-xs font-medium text-ink">11</span>
+<div class="w-full max-w-[36px] bg-accent rounded-t-sm" style="height: 28%;"></div>
+<span class="font-caption text-caption text-muted">Oct</span>
+</div>
+</div>
+<div class="pt-3 flex items-center justify-end">
+<a class="font-caption text-[11.5px] text-muted underline decoration-line cursor-pointer hover:text-ink" href="#">Show as table</a>
+</div>
+</div>
+<!-- PANEL 3: Loss reasons -->
+<div class="bg-surface border border-line rounded-xl p-5 flex flex-col justify-between">
+<div class="flex items-center justify-between pb-3 border-b border-line mb-3">
+<div>
+<h3 class="font-section-title text-section-title text-ink">Loss reasons</h3>
+<p class="font-caption text-caption text-muted mt-0.5">Categorized drop-offs</p>
+</div>
+<span class="font-numeric text-caption text-muted">Team level · 149 Lost in 2026</span>
+</div>
+<div class="space-y-2.5 my-auto">
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>No reply after repeated contact</span>
+<span class="font-numeric text-caption text-ink">50 <span class="text-muted text-[11px]">(34%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 33.6%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>No unit within budget</span>
+<span class="font-numeric text-caption text-ink">38 <span class="text-muted text-[11px]">(26%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 25.5%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Lease term too short</span>
+<span class="font-numeric text-caption text-ink">24 <span class="text-muted text-[11px]">(16%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 16.1%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Found a place elsewhere</span>
+<span class="font-numeric text-caption text-ink">19 <span class="text-muted text-[11px]">(13%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 12.8%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Changed plans</span>
+<span class="font-numeric text-caption text-ink">12 <span class="text-muted text-[11px]">(8%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 8.1%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex items-center justify-between font-label text-label text-ink">
+<span>Chose another agency</span>
+<span class="font-numeric text-caption text-ink">6 <span class="text-muted text-[11px]">(4%)</span></span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-sm overflow-hidden">
+<div class="bg-accent h-full rounded-sm" style="width: 4.0%;"></div>
+</div>
+</div>
+</div>
+<div class="pt-3 mt-2 border-t border-line flex items-center justify-end">
+<a class="font-caption text-[11.5px] text-muted underline decoration-line cursor-pointer hover:text-ink" href="#">Show as table</a>
+</div>
+</div>
+<!-- PANEL 4: Close rate by Channel -->
+<div class="bg-surface border border-line rounded-xl p-5 flex flex-col justify-between">
+<div class="flex items-center justify-between pb-3 border-b border-line mb-2">
+<div>
+<h3 class="font-section-title text-section-title text-ink">Close rate by Channel</h3>
+<p class="font-caption text-caption text-muted mt-0.5">Inbound intake channel efficacy</p>
+</div>
+<span class="font-numeric text-caption text-muted">5 channels</span>
+</div>
+<div class="overflow-x-auto my-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-line font-overline text-[11px] uppercase tracking-wider text-muted">
+<th class="py-2 font-normal">Channel</th>
+<th class="py-2 text-right font-normal">Closed / Total</th>
+<th class="py-2 text-right font-normal">Rate</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line/60 font-body text-caption">
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">WhatsApp</td>
+<td class="py-2 text-right font-numeric text-ink">5 of 48</td>
+<td class="py-2 text-right font-numeric text-ink">10%</td>
+</tr>
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">LINE</td>
+<td class="py-2 text-right font-numeric text-ink">4 of 22</td>
+<td class="py-2 text-right font-numeric text-ink">18%</td>
+</tr>
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">Zalo</td>
+<td class="py-2 text-right font-numeric text-ink">2 of 19</td>
+<td class="py-2 text-right font-numeric text-ink">11%</td>
+</tr>
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">Google Form</td>
+<td class="py-2 text-right font-numeric text-ink">2 of 41</td>
+<td class="py-2 text-right font-numeric text-ink">5%</td>
+</tr>
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">Email</td>
+<td class="py-2 text-right font-numeric text-ink">0 of 9</td>
+<td class="py-2 text-right font-numeric text-muted">too few</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pt-3 border-t border-line flex items-center justify-end">
+<a class="font-caption text-[11.5px] text-muted underline decoration-line cursor-pointer hover:text-ink" href="#">Show as table</a>
+</div>
+</div>
+<!-- PANEL 5: Close rate by nationality -->
+<div class="bg-surface border border-line rounded-xl p-5 flex flex-col justify-between">
+<div class="flex items-center justify-between pb-3 border-b border-line mb-2">
+<div>
+<h3 class="font-section-title text-section-title text-ink">Close rate by nationality</h3>
+<p class="font-caption text-caption text-muted mt-0.5">never split per person</p>
+</div>
+<span class="font-numeric text-caption text-muted">5 markets</span>
+</div>
+<div class="overflow-x-auto my-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-line font-overline text-[11px] uppercase tracking-wider text-muted">
+<th class="py-2 font-normal">Nationality</th>
+<th class="py-2 text-right font-normal">Closed / Total</th>
+<th class="py-2 text-right font-normal">Rate</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-line/60 font-body text-caption">
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">Japan</td>
+<td class="py-2 text-right font-numeric text-ink">5 of 38</td>
+<td class="py-2 text-right font-numeric text-ink">13%</td>
+</tr>
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">South Korea</td>
+<td class="py-2 text-right font-numeric text-ink">3 of 31</td>
+<td class="py-2 text-right font-numeric text-ink">10%</td>
+</tr>
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">Australia</td>
+<td class="py-2 text-right font-numeric text-ink">2 of 24</td>
+<td class="py-2 text-right font-numeric text-ink">8%</td>
+</tr>
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">Russia</td>
+<td class="py-2 text-right font-numeric text-ink">1 of 28</td>
+<td class="py-2 text-right font-numeric text-ink">4%</td>
+</tr>
+<tr class="hover:bg-ground/60 transition-colors">
+<td class="py-2 font-medium text-ink">UK</td>
+<td class="py-2 text-right font-numeric text-ink">2 of 7</td>
+<td class="py-2 text-right font-numeric text-muted">too few</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="pt-3 border-t border-line flex items-center justify-end">
+<a class="font-caption text-[11.5px] text-muted underline decoration-line cursor-pointer hover:text-ink" href="#">Show as table</a>
+</div>
+</div>
+<!-- PANEL 6: First response panel -->
+<div class="bg-surface border border-line rounded-xl p-5 flex flex-col justify-between">
+<div class="flex items-center justify-between pb-3 border-b border-line mb-3">
+<div>
+<h3 class="font-section-title text-section-title text-ink">First response</h3>
+<p class="font-caption text-caption text-muted mt-0.5">Team-wide speed to contact</p>
+</div>
+<span class="font-caption text-caption text-muted">Current cycle</span>
+</div>
+<div class="my-auto flex flex-col gap-3.5">
+<div>
+<div class="font-kpi text-kpi text-ink font-medium tracking-tight">3.3 h</div>
+<div class="font-caption text-caption text-muted mt-0.5">past target ≤ 2 h</div>
+</div>
+<div class="border-t border-line pt-3 flex flex-col gap-2 font-body text-caption">
+<div class="flex items-center justify-between">
+<span class="text-muted">Returned to New, uncontacted:</span>
+<span class="font-numeric font-medium text-ink">1</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-muted">Captured live, excluded from the average:</span>
+<span class="font-numeric font-medium text-ink">4</span>
+</div>
+</div>
+</div>
+<div class="pt-3 border-t border-line flex items-center justify-end">
+<a class="font-caption text-[11.5px] text-muted underline decoration-line cursor-pointer hover:text-ink" href="#">Show as table</a>
+</div>
+</div>
+</section>
+<!-- Bottom subtle operational note -->
+<footer class="text-center py-4 text-muted font-caption text-[11.5px]">
+  DVR CRM · Da Nang Villa Realty — Quiet Operational Interface · Data refreshed automatically
+</footer></main>
+</div>
+</body></html>

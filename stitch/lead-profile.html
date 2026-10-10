@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DVR CRM - Lead Profile | Da Nang Villa Realty</title>
+<!-- Google Fonts: Be Vietnam Pro, IBM Plex Mono & IBM Plex Sans JP -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans+JP:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 with Container Queries & Forms -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration Verbatim -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "accent-dark": "#5CC0AA",
+            "error": "#ba1a1a",
+            "bad-soft": "#F8E6E1",
+            "measure-target-dark": "#8E9D97",
+            "tertiary-fixed": "#ffdad2",
+            "ground-dark": "#101614",
+            "on-tertiary-fixed-variant": "#723526",
+            "on-secondary-fixed": "#001b3c",
+            "outline": "#6f7976",
+            "background": "#f8faf9",
+            "secondary": "#305f9f",
+            "measure-track-dark": "#2A3633",
+            "surface-dim": "#d8dad9",
+            "on-surface-variant": "#3f4946",
+            "tertiary-fixed-dim": "#ffb4a2",
+            "info-dark": "#8DB4EA",
+            "inverse-surface": "#2e3131",
+            "ink": "#18221F",
+            "primary-fixed-dim": "#86d5c3",
+            "on-surface": "#191c1c",
+            "on-tertiary": "#ffffff",
+            "stroke": "#7C8A85",
+            "primary-container": "#0e6b5c",
+            "on-secondary-container": "#0f4786",
+            "scrim": "#18221F",
+            "surface-variant": "#e1e3e2",
+            "on-tertiary-fixed": "#3a0b02",
+            "on-background": "#191c1c",
+            "on-tertiary-container": "#ffcec2",
+            "surface-tint": "#0d6a5b",
+            "line": "#D9E0DD",
+            "error-container": "#ffdad6",
+            "tertiary-container": "#8f4c3b",
+            "secondary-container": "#8cb7fd",
+            "on-primary-fixed-variant": "#005144",
+            "surface-dark": "#172020",
+            "gate-soft-dark": "#342A1B",
+            "muted-dark": "#9AA8A3",
+            "info-soft": "#E3ECF8",
+            "inverse-primary": "#86d5c3",
+            "bad-soft-dark": "#3A221D",
+            "line-dark": "#2A3633",
+            "muted": "#5B6863",
+            "secondary-fixed": "#d5e3ff",
+            "info-soft-dark": "#1C2A3D",
+            "on-error-container": "#93000a",
+            "gate-dark": "#E0B066",
+            "surface-container-high": "#e6e9e8",
+            "tertiary": "#723526",
+            "on-primary": "#ffffff",
+            "ink-dark": "#E3EAE7",
+            "on-primary-fixed": "#00201a",
+            "primary": "#005145",
+            "surface-container-low": "#f2f4f3",
+            "bad": "#A8412F",
+            "measure-track": "#D9E0DD",
+            "surface-container-highest": "#e1e3e2",
+            "surface-container": "#eceeed",
+            "on-secondary": "#ffffff",
+            "surface": "#FFFFFF",
+            "on-error": "#ffffff",
+            "inverse-on-surface": "#eff1f0",
+            "gate": "#8D5A0D",
+            "accent-soft-dark": "#1B3530",
+            "measure-target": "#6A7873",
+            "surface-bright": "#f8faf9",
+            "gate-soft": "#F7EDDC",
+            "ground": "#F5F7F6",
+            "secondary-fixed-dim": "#a8c8ff",
+            "on-secondary-fixed-variant": "#0e4785",
+            "scrim-dark": "#000000",
+            "info": "#2F5E9E",
+            "primary-fixed": "#a2f2de",
+            "outline-variant": "#bec9c5",
+            "bad-dark": "#E58A77",
+            "accent-soft": "#E1F0EC",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-container": "#99e8d5",
+            "accent": "#0E6B5C",
+            "stroke-dark": "#6B7A75"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-md": "12px",
+            "space-sm": "8px",
+            "gutter-mobile": "16px",
+            "space-lg": "16px",
+            "board-column": "212px",
+            "space-xs": "4px",
+            "touch-min": "40px",
+            "space-xl": "24px",
+            "margin": "24px",
+            "drawer": "640px",
+            "sidebar": "220px",
+            "gutter": "16px"
+          },
+          "fontFamily": {
+            "page-title": ["'Be Vietnam Pro', 'IBM Plex Sans JP'"],
+            "numeric": ["'IBM Plex Mono', 'IBM Plex Sans JP'"],
+            "label": ["'Be Vietnam Pro', 'IBM Plex Sans JP'"],
+            "kpi": ["'IBM Plex Mono', 'IBM Plex Sans JP'"],
+            "body": ["'Be Vietnam Pro', 'IBM Plex Sans JP'"],
+            "overline": ["'Be Vietnam Pro', 'IBM Plex Sans JP'"],
+            "caption": ["'Be Vietnam Pro', 'IBM Plex Sans JP'"],
+            "section-title": ["'Be Vietnam Pro', 'IBM Plex Sans JP'"]
+          },
+          "fontSize": {
+            "page-title": ["18px", { "lineHeight": "1.25", "fontWeight": "700" }],
+            "numeric": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+            "label": ["12.8px", { "lineHeight": "1.4", "fontWeight": "600" }],
+            "kpi": ["26px", { "lineHeight": "1.1", "fontWeight": "500" }],
+            "body": ["14.5px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "overline": ["11.5px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "caption": ["12px", { "lineHeight": "1.45", "fontWeight": "400" }],
+            "section-title": ["16px", { "lineHeight": "1.3", "fontWeight": "700" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Absolute Flat Restraint: Zero shadows anywhere */
+    * {
+      box-shadow: none !important;
+    }
+    /* Clean custom thin scrollbar for high-density UI */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5F7F6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D9E0DD;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #7C8A85;
+    }
+  </style>
+</head>
+<body class="bg-ground text-ink font-body text-body antialiased select-none overflow-hidden h-screen w-screen">
+<!-- ========================================================================= -->
+<!-- 1. LEFT SIDE NAVIGATION BAR (220px Fixed Left)                            -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-sidebar bg-ground dark:bg-ground-dark border-r border-line dark:border-line-dark z-20 flex flex-col justify-start p-space-sm select-none">
+<div class="flex flex-col gap-space-sm">
+<!-- Monogram & Brand Header -->
+<div class="flex items-center gap-space-sm px-space-sm py-space-xs">
+<div aria-label="DVR Realty monogram emblem" class="w-7 h-7 rounded-sm bg-primary text-surface flex items-center justify-center font-bold text-xs">
+          DVR
+        </div>
+<div class="flex flex-col leading-none">
+<span class="font-page-title text-page-title font-bold text-ink dark:text-ink-dark text-sm">DVR CRM</span>
+<span class="font-caption text-caption text-muted text-[11px] mt-0.5">Rent Team</span>
+</div>
+</div>
+<!-- Main Navigation Tabs -->
+<nav aria-label="Primary destinations" class="flex flex-col gap-0.5 mt-2">
+<!-- Tab: Today with small rust count badge "7" -->
+<a class="flex items-center justify-between px-space-md py-space-sm text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark font-label text-label transition-colors" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+<span>Today</span>
+</div>
+<span class="bg-bad-soft text-bad font-numeric text-[11px] font-semibold px-1.5 py-0.2 rounded-sm">7</span>
+</a>
+<!-- Tab: Pipeline (ACTIVE) -->
+<a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm bg-accent-soft dark:bg-accent-soft-dark text-primary dark:text-accent-dark border-l-2 border-primary dark:border-accent-dark rounded-none font-label text-label" href="#">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">view_kanban</span>
+<span>Pipeline</span>
+</a>
+<!-- Tab: Leads -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark font-label text-label transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">group</span>
+<span>Leads</span>
+</a>
+<!-- Tab: Units with neutral count badge "4" -->
+<a class="flex items-center justify-between px-space-md py-space-sm text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark font-label text-label transition-colors" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px]">home_work</span>
+<span>Units</span>
+</div>
+<span class="bg-surface-container text-muted font-numeric text-[11px] px-1.5 py-0.2 rounded-sm">4</span>
+</a>
+<!-- Tab: Dashboard -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark font-label text-label transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">analytics</span>
+<span>Dashboard</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- 2. TOP STICKY HEADER (Shared Component: TopNavBar)                        -->
+<!-- ========================================================================= -->
+<header class="sticky top-0 right-0 h-14 pl-sidebar w-full z-10 bg-surface dark:bg-surface-dark border-b border-line dark:border-line-dark flex items-center justify-between px-margin select-none">
+<div class="flex items-center gap-4">
+<h1 class="text-ink dark:text-ink-dark font-page-title text-page-title text-base font-bold">Pipeline</h1>
+</div>
+<div class="flex items-center">
+<!-- Primary Action CTA: Exactly one button "+ New lead" -->
+<button class="bg-accent text-surface font-label text-label text-xs px-3 py-1.5 rounded-sm hover:bg-primary-container transition-colors font-semibold">
+        + New lead
+      </button>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- 3. PIPELINE BOARD BACKGROUND (10 Visible Columns Under Scrim)             -->
+<!-- ========================================================================= -->
+<div class="ml-sidebar flex flex-col h-[calc(100vh-3.5rem)] bg-ground overflow-hidden">
+<!-- Subheader hint bar -->
+<div class="px-margin py-2 border-b border-line bg-surface/50 text-[11px] text-muted font-caption select-none">
+    10 leads · click a card to open it, tick the checkbox (or Ctrl/Cmd-click) to select, Shift-click to extend within a column. Drag also works on desktop.
+  </div>
+<!-- 10 Columns Horizontal Scrollable Board -->
+<main class="flex-1 overflow-x-auto p-margin flex gap-4 select-none">
+<!-- Column 1: New -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">New</span>
+<span class="font-numeric text-xs text-primary bg-accent-soft px-1.5 py-0.2 rounded-sm font-semibold">2</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">100M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<!-- Active lead: Kenta Ito (Highlighted/Active in New column) -->
+<div class="bg-surface border-2 border-primary p-2.5 rounded-sm relative bg-accent-soft/20">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-accent"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Kenta Ito</span>
+<span class="text-[10px] font-numeric text-muted">Just now</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Apartment · 55M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-line text-[11px]">
+<span class="bg-info-soft text-info px-1.5 py-0.5 rounded-sm font-label text-[10px]">New</span>
+<span class="font-numeric text-muted">Saki</span>
+</div>
+</div>
+<!-- Lead Card 2 -->
+<div class="bg-surface border border-line p-2.5 rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-secondary"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Ryo Kobayashi</span>
+<span class="text-[10px] font-numeric text-muted">1h ago</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Ocean Villa 3BR · 45M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-low text-[11px]">
+<span class="bg-surface-container text-muted px-1.5 py-0.5 rounded-sm font-label text-[10px]">Web</span>
+<span class="font-numeric text-muted">Hannah</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 2: Contacted -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Contacted</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">1</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">22M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="bg-surface border border-line p-2.5 rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-secondary"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Haruto Sato</span>
+<span class="text-[10px] font-numeric text-muted">2h ago</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Monarchy 2BR · 22M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-low text-[11px]">
+<span class="bg-info-soft text-info px-1.5 py-0.5 rounded-sm font-label text-[10px]">LINE</span>
+<span class="font-numeric text-muted">Saki</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Units sent -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Units sent</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">1</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">35M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="bg-surface border border-line p-2.5 rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-secondary"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Marc Dupont</span>
+<span class="text-[10px] font-numeric text-muted">5h ago</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Azura 2BR · 35M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-low text-[11px]">
+<span class="bg-surface-container text-muted px-1.5 py-0.5 rounded-sm font-label text-[10px]">Email</span>
+<span class="font-numeric text-muted">Hannah</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 4: Following up -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Following up</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">1</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">28M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="bg-surface border border-line p-2.5 rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-secondary"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">David Miller</span>
+<span class="text-[10px] font-numeric text-muted">1d ago</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Hiyori 2BR · 28M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-low text-[11px]">
+<span class="bg-info-soft text-info px-1.5 py-0.5 rounded-sm font-label text-[10px]">WhatsApp</span>
+<span class="font-numeric text-muted">Hannah</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 5: Viewing booked -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Viewing booked</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">1</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">30M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="bg-surface border border-line p-2.5 rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-accent"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Yuki Tanaka</span>
+<span class="text-[10px] font-numeric text-accent font-semibold">Tomorrow</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Filmore 2BR · 30M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-line text-[11px]">
+<span class="bg-accent-soft text-primary px-1.5 py-0.5 rounded-sm font-label text-[10px] font-semibold">Confirmed</span>
+<span class="font-numeric text-muted">Saki</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 6: Negotiating -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Negotiating</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">1</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">32M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="bg-surface border border-line p-2.5 rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-gate"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Eun-Ji Park</span>
+<span class="text-[10px] font-numeric text-gate">Dep pending</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Azura Riverview · 32M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-low text-[11px]">
+<span class="bg-gate-soft text-gate px-1.5 py-0.5 rounded-sm font-label text-[10px]">Contract v2</span>
+<span class="font-numeric text-muted">Saki</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 7: Deposit paid -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Deposit paid</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">1</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">40M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="bg-surface border border-line p-2.5 rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-primary"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Lucas Silva</span>
+<span class="text-[10px] font-numeric text-muted">3d ago</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Son Tra Villa 3BR · 40M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-low text-[11px]">
+<span class="bg-accent-soft text-primary px-1.5 py-0.5 rounded-sm font-label text-[10px]">Dep receipt</span>
+<span class="font-numeric text-muted">Hannah</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 8: Signed -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Signed</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">1</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">60M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="bg-surface border border-line p-2.5 rounded-sm relative opacity-85">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-primary"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Alex Rivera</span>
+<span class="text-[10px] font-numeric text-muted">Signed 08 Oct</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Ocean Villa 4BR · 60M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-low text-[11px]">
+<span class="bg-accent-soft text-primary px-1.5 py-0.5 rounded-sm font-label text-[10px]">12 mo</span>
+<span class="font-numeric text-muted">Hannah</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 9: Nurture -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Nurture</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">1</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">18M VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="bg-surface border border-line p-2.5 rounded-sm relative">
+<div class="absolute left-0 top-0 bottom-0 w-[3px] bg-stroke"></div>
+<div class="flex justify-between items-start mb-1">
+<span class="font-label text-xs font-bold text-ink">Chloe Martin</span>
+<span class="text-[10px] font-numeric text-muted">Jan move-in</span>
+</div>
+<p class="text-xs text-muted font-body mb-2">Studio Son Tra · 18M VND</p>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-low text-[11px]">
+<span class="bg-surface-container text-muted px-1.5 py-0.5 rounded-sm font-label text-[10px]">Follow Dec</span>
+<span class="font-numeric text-muted">Saki</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 10: Lost -->
+<div class="w-board-column flex-shrink-0 flex flex-col max-h-full">
+<div class="flex items-center justify-between pb-2 border-b border-line mb-3">
+<div class="flex items-center gap-2">
+<span class="font-label text-xs text-ink font-bold">Lost</span>
+<span class="font-numeric text-xs text-muted bg-surface-container px-1.5 py-0.2 rounded-sm">0</span>
+</div>
+<span class="text-[11px] font-numeric text-muted">0 VND</span>
+</div>
+<div class="flex flex-col gap-2.5 overflow-y-auto pr-1">
+<div class="border border-dashed border-line p-4 rounded-sm text-center text-muted text-xs font-caption">
+          No lost leads
+        </div>
+</div>
+</div>
+</main>
+</div>
+<!-- ========================================================================= -->
+<!-- 4. SCRIM OVERLAY (42% dark scrim #18221F over pipeline canvas)             -->
+<!-- ========================================================================= -->
+<div aria-hidden="true" class="fixed inset-0 bg-[#18221F] bg-opacity-[0.42] z-30 transition-opacity pointer-events-none"></div>
+<!-- ========================================================================= -->
+<!-- 5. RIGHT-SIDE LEAD PROFILE DRAWER (640px wide, Flat, Surface-on-Ground)   -->
+<!-- ========================================================================= -->
+<aside aria-label="Lead profile for Kenta Ito" aria-modal="true" class="fixed top-0 bottom-0 right-0 h-screen w-drawer max-w-full bg-surface border-l border-line z-40 flex flex-col select-none" role="dialog">
+<!-- ----------------------------------------------------------------------- -->
+<!-- DRAWER HEADER                                                           -->
+<!-- ----------------------------------------------------------------------- -->
+<div class="px-space-xl pt-5 pb-3 border-b border-line flex flex-col gap-2.5 bg-surface">
+<!-- Line 1: Name, ID & Close Button -->
+<div class="flex items-center justify-between">
+<div class="flex items-baseline gap-2">
+<h2 class="font-page-title text-[18px] font-bold text-ink tracking-tight">Kenta Ito</h2>
+<span class="font-numeric text-xs text-muted">L281</span>
+</div>
+<!-- Close button: "×" top-right -->
+<button aria-label="Close drawer" class="w-7 h-7 flex items-center justify-center rounded-sm text-muted hover:text-ink hover:bg-surface-container-low transition-colors text-lg leading-none">
+        ×
+      </button>
+</div>
+<!-- Line 2: Dashed pill, Stage tag, Owner -->
+<div class="flex items-center gap-2 text-xs">
+<!-- Dashed-outline unconfirmed pill -->
+<span class="border border-dashed border-[#0E6B5C] text-[#0E6B5C] bg-[#E1F0EC]/30 px-2 py-0.5 rounded-full font-label text-[11.5px] leading-none">
+        Proposed: Qualified
+      </span>
+<!-- Blue stage tag "New" -->
+<span class="bg-[#E3ECF8] text-[#2F5E9E] px-2 py-0.5 rounded-sm font-label text-[11px] font-semibold leading-none">
+        New
+      </span>
+<!-- Muted text -->
+<span class="text-muted text-[12px] font-caption">
+        Owner Saki · P-B
+      </span>
+</div>
+<!-- Line 3: Compact Action Row -->
+<div class="flex items-center gap-1.5 pt-1">
+<!-- Filled teal primary button -->
+<button class="bg-[#0E6B5C] text-white font-label font-semibold text-xs px-3 py-1.5 rounded-sm hover:bg-[#0c594d] transition-colors flex items-center gap-1">
+        → Contacted
+      </button>
+<!-- Secondary button: Nurture -->
+<button class="border border-line bg-surface hover:bg-surface-container-low text-ink text-xs px-3 py-1.5 rounded-sm transition-colors font-label">
+        Nurture
+      </button>
+<!-- Rust-outlined button: Lost… -->
+<button class="border border-bad text-bad hover:bg-bad-soft bg-transparent text-xs px-3 py-1.5 rounded-sm transition-colors font-label font-semibold">
+        Lost…
+      </button>
+<!-- Secondary button: Message -->
+<button class="border border-line bg-surface hover:bg-surface-container-low text-ink text-xs px-3 py-1.5 rounded-sm transition-colors font-label">
+        Message
+      </button>
+</div>
+</div>
+<!-- ----------------------------------------------------------------------- -->
+<!-- DRAWER NAVIGATION TABS (No count badges)                                -->
+<!-- ----------------------------------------------------------------------- -->
+<div class="px-space-xl flex gap-6 border-b border-line bg-surface text-xs font-label">
+<!-- Tab 1: Profile (Active) -->
+<button class="py-2.5 text-accent border-b-2 border-accent font-bold -mb-px flex items-center">
+<span>Profile</span>
+</button>
+<!-- Tab 2: Matching units -->
+<button class="py-2.5 text-muted hover:text-ink transition-colors flex items-center">
+<span>Matching units</span>
+</button>
+<!-- Tab 3: History -->
+<button class="py-2.5 text-muted hover:text-ink transition-colors flex items-center">
+<span>History</span>
+</button>
+</div>
+<!-- ----------------------------------------------------------------------- -->
+<!-- DRAWER BODY: Two Clean Columns of Label/Value Pairs                     -->
+<!-- ----------------------------------------------------------------------- -->
+<div class="flex-1 overflow-y-auto px-space-xl py-6 bg-surface">
+<div class="grid grid-cols-2 gap-x-8">
+<!-- LEFT COLUMN: CONTACT & OWNERSHIP -->
+<div class="flex flex-col">
+<!-- OVERLINE: CONTACT -->
+<h3 class="font-overline text-[11.5px] uppercase tracking-wider font-semibold text-muted mb-3">
+          CONTACT
+        </h3>
+<div class="space-y-3.5">
+<!-- Phone -->
+<div>
+<div class="text-muted text-[12px] font-caption">Phone</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-numeric text-ink text-[14px]">+81 00 0000 0006</span>
+<button class="border border-line bg-surface hover:bg-surface-container-low text-ink text-[11px] px-1.5 py-0.5 rounded-sm transition-colors font-label">
+                Open chat ▾
+              </button>
+</div>
+</div>
+<!-- Email -->
+<div>
+<div class="text-muted text-[12px] font-caption">Email</div>
+<div class="font-body text-ink text-[14px] mt-0.5">kenta.i@example.jp</div>
+</div>
+<!-- LINE ID -->
+<div>
+<div class="text-muted text-[12px] font-caption">LINE ID</div>
+<div class="font-body text-ink text-[14px] mt-0.5">—</div>
+</div>
+<!-- Messenger -->
+<div>
+<div class="text-muted text-[12px] font-caption">Messenger</div>
+<div class="font-body text-ink text-[14px] mt-0.5">—</div>
+</div>
+<!-- Nationality -->
+<div>
+<div class="text-muted text-[12px] font-caption">Nationality</div>
+<div class="font-body text-ink text-[14px] mt-0.5">Japan</div>
+</div>
+<!-- Lead Language -->
+<div>
+<div class="text-muted text-[12px] font-caption">Lead Language</div>
+<div class="font-body text-ink text-[14px] mt-0.5">Japanese</div>
+</div>
+<!-- Lead Source -->
+<div>
+<div class="text-muted text-[12px] font-caption">Lead Source</div>
+<div class="font-body text-ink text-[14px] mt-0.5">Google Form</div>
+</div>
+</div>
+<!-- OVERLINE: OWNERSHIP -->
+<h3 class="font-overline text-[11.5px] uppercase tracking-wider font-semibold text-muted mt-6 mb-3">
+          OWNERSHIP
+        </h3>
+<div class="space-y-3.5">
+<!-- Owner -->
+<div>
+<div class="text-muted text-[12px] font-caption">Owner</div>
+<div class="font-body text-ink text-[14px] mt-0.5">Saki</div>
+</div>
+<!-- Priority -->
+<div>
+<div class="text-muted text-[12px] font-caption">Priority</div>
+<div class="font-numeric text-ink text-[14px] mt-0.5">B</div>
+</div>
+<!-- Shared with -->
+<div>
+<div class="text-muted text-[12px] font-caption">Shared with</div>
+<div class="font-body text-muted text-[14px] mt-0.5">Not shared</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: RENTAL NEEDS -->
+<div class="flex flex-col">
+<!-- OVERLINE: RENTAL NEEDS -->
+<h3 class="font-overline text-[11.5px] uppercase tracking-wider font-semibold text-muted mb-3">
+          RENTAL NEEDS
+        </h3>
+<div class="space-y-3.5">
+<!-- Budget -->
+<div>
+<div class="text-muted text-[12px] font-caption">Budget</div>
+<div class="font-numeric text-ink text-[14px] mt-0.5">55,000,000 VND / month</div>
+<div class="text-muted text-[11px] font-caption mt-0.5">entered as “55tr”</div>
+</div>
+<!-- Property type -->
+<div>
+<div class="text-muted text-[12px] font-caption">Property type</div>
+<div class="font-body text-ink text-[14px] mt-0.5">Apartment</div>
+</div>
+<!-- Term -->
+<div>
+<div class="text-muted text-[12px] font-caption">Term</div>
+<div class="font-numeric text-ink text-[14px] mt-0.5">12 months</div>
+</div>
+<!-- Move-in -->
+<div>
+<div class="text-muted text-[12px] font-caption">Move-in</div>
+<div class="flex items-center gap-1.5 mt-0.5">
+<span class="font-numeric text-ink text-[14px]">12 Dec</span>
+<span class="text-muted text-[11px] font-caption">· precision: exact date</span>
+</div>
+</div>
+<!-- Area -->
+<div>
+<div class="text-muted text-[12px] font-caption">Area</div>
+<div class="font-body text-ink text-[14px] mt-0.5">Sơn Trà</div>
+</div>
+<!-- Bedrooms · occupants -->
+<div>
+<div class="text-muted text-[12px] font-caption">Bedrooms · occupants</div>
+<div class="font-numeric text-ink text-[14px] mt-0.5">3 · 3</div>
+</div>
+<!-- Children -->
+<div>
+<div class="text-muted text-[12px] font-caption">Children</div>
+<div class="font-body text-ink text-[14px] mt-0.5">No</div>
+</div>
+<!-- Pets -->
+<div>
+<div class="text-muted text-[12px] font-caption">Pets</div>
+<div class="font-body text-ink text-[14px] mt-0.5">No</div>
+</div>
+<!-- Required amenities -->
+<div>
+<div class="text-muted text-[12px] font-caption">Required amenities</div>
+<div class="font-body text-ink text-[14px] mt-0.5">Balcony</div>
+</div>
+<!-- Other requirements -->
+<div>
+<div class="text-muted text-[12px] font-caption">Other requirements</div>
+<div class="font-body text-ink text-[14px] mt-0.5">近くにスーパーがあると助かります</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</body></html>

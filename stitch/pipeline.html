@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DVR CRM - Pipeline</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts: Be Vietnam Pro & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-container": "#0e6b5c",
+            "primary-fixed": "#a2f2de",
+            "inverse-primary": "#86d5c3",
+            "info-dark": "#8DB4EA",
+            "on-secondary-fixed": "#001b3c",
+            "error-container": "#ffdad6",
+            "info": "#2F5E9E",
+            "error": "#ba1a1a",
+            "bad-dark": "#E58A77",
+            "stroke": "#7C8A85",
+            "muted": "#5B6863",
+            "inverse-surface": "#2e3131",
+            "surface-dark": "#172020",
+            "ink-dark": "#E3EAE7",
+            "surface-container-low": "#f2f4f3",
+            "primary": "#005145",
+            "accent-dark": "#5CC0AA",
+            "surface-container": "#eceeed",
+            "outline": "#6f7976",
+            "on-tertiary": "#ffffff",
+            "surface-variant": "#e1e3e2",
+            "on-primary-fixed-variant": "#005144",
+            "on-error": "#ffffff",
+            "surface-tint": "#0d6a5b",
+            "secondary-container": "#8cb7fd",
+            "on-tertiary-fixed-variant": "#723526",
+            "ground-dark": "#101614",
+            "on-secondary": "#ffffff",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#99e8d5",
+            "measure-target-dark": "#8E9D97",
+            "accent-soft": "#E1F0EC",
+            "surface-container-high": "#e6e9e8",
+            "on-primary-fixed": "#00201a",
+            "on-background": "#191c1c",
+            "on-tertiary-container": "#ffcec2",
+            "secondary-fixed-dim": "#a8c8ff",
+            "on-surface": "#191c1c",
+            "muted-dark": "#9AA8A3",
+            "outline-variant": "#bec9c5",
+            "inverse-on-surface": "#eff1f0",
+            "surface": "#FFFFFF",
+            "info-soft": "#E3ECF8",
+            "line-dark": "#2A3633",
+            "secondary": "#305f9f",
+            "scrim": "#18221F",
+            "on-error-container": "#93000a",
+            "stroke-dark": "#6B7A75",
+            "secondary-fixed": "#d5e3ff",
+            "on-tertiary-fixed": "#3a0b02",
+            "bad-soft": "#F8E6E1",
+            "gate-soft-dark": "#342A1B",
+            "surface-container-highest": "#e1e3e2",
+            "tertiary-fixed-dim": "#ffb4a2",
+            "bad-soft-dark": "#3A221D",
+            "info-soft-dark": "#1C2A3D",
+            "background": "#f8faf9",
+            "scrim-dark": "#000000",
+            "tertiary-container": "#8f4c3b",
+            "on-surface-variant": "#3f4946",
+            "accent": "#0E6B5C",
+            "on-secondary-container": "#0f4786",
+            "measure-track": "#D9E0DD",
+            "accent-soft-dark": "#1B3530",
+            "primary-fixed-dim": "#86d5c3",
+            "gate-soft": "#F7EDDC",
+            "gate-dark": "#E0B066",
+            "tertiary-fixed": "#ffdad2",
+            "surface-container-lowest": "#ffffff",
+            "measure-track-dark": "#2A3633",
+            "bad": "#A8412F",
+            "ground": "#F5F7F6",
+            "tertiary": "#723526",
+            "measure-target": "#6A7873",
+            "line": "#D9E0DD",
+            "surface-dim": "#d8dad9",
+            "surface-bright": "#f8faf9",
+            "ink": "#18221F",
+            "gate": "#8D5A0D",
+            "on-secondary-fixed-variant": "#0e4785"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "sm": "6px",
+            "md": "8px",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin": "24px",
+            "space-xl": "24px",
+            "space-md": "12px",
+            "space-lg": "16px",
+            "sidebar": "220px",
+            "gutter": "16px",
+            "touch-min": "40px",
+            "space-sm": "8px",
+            "gutter-mobile": "16px",
+            "drawer": "640px",
+            "space-xs": "4px",
+            "board-column": "212px"
+          },
+          "fontFamily": {
+            "kpi": ["'IBM Plex Mono'", "monospace"],
+            "body": ["'Be Vietnam Pro'", "sans-serif"],
+            "section-title": ["'Be Vietnam Pro'", "sans-serif"],
+            "caption": ["'Be Vietnam Pro'", "sans-serif"],
+            "page-title": ["'Be Vietnam Pro'", "sans-serif"],
+            "numeric": ["'IBM Plex Mono'", "monospace"],
+            "overline": ["'Be Vietnam Pro'", "sans-serif"],
+            "label": ["'Be Vietnam Pro'", "sans-serif"]
+          },
+          "fontSize": {
+            "kpi": ["26px", { "lineHeight": "1.1", "fontWeight": "500" }],
+            "body": ["14.5px", { "lineHeight": "1.5", "fontWeight": "400" }],
+            "section-title": ["16px", { "lineHeight": "1.3", "fontWeight": "700" }],
+            "caption": ["12px", { "lineHeight": "1.45", "fontWeight": "400" }],
+            "page-title": ["18px", { "lineHeight": "1.25", "fontWeight": "700" }],
+            "numeric": ["14px", { "lineHeight": "1.4", "fontWeight": "400" }],
+            "overline": ["11.5px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "label": ["12.8px", { "lineHeight": "1.4", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Absolute Flat styling - suppress default shadows */
+    * {
+      box-shadow: none !important;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #F5F7F6;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #D9E0DD;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #7C8A85;
+    }
+    .material-symbols-outlined {
+      font-size: 18px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-ground text-ink font-body h-full flex overflow-hidden antialiased select-none">
+<!-- ==================== LEFT SIDEBAR ==================== -->
+<aside class="fixed top-0 left-0 w-sidebar h-screen z-40 p-space-md flex flex-col justify-start border-r border-line bg-ground">
+<!-- Brand Header -->
+<div class="flex items-center gap-2.5 px-2 pt-1 pb-4">
+<div class="w-8 h-8 rounded bg-primary text-surface flex items-center justify-center font-bold text-sm tracking-tight border border-primary">
+    DV
+  </div>
+<div>
+<h1 class="text-page-title font-page-title text-ink font-bold tracking-tight leading-tight">DVR CRM</h1>
+<p class="text-caption font-caption text-muted leading-none">Rent Team</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-1">
+<!-- Today -->
+<a class="flex items-center justify-between px-space-md py-space-sm text-muted hover:text-ink hover:bg-surface-container font-label text-label rounded-sm transition-colors duration-150" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined">calendar_today</span>
+<span>Today</span>
+</div>
+<span class="px-1.5 py-0.5 bg-bad-soft text-bad font-numeric text-xs font-semibold rounded-full">7</span>
+</a>
+<!-- Pipeline (ACTIVE) -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm bg-accent-soft text-accent font-label text-label rounded-sm border-l-2 border-accent font-semibold transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">view_kanban</span>
+<span>Pipeline</span>
+</a>
+<!-- Leads -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-muted hover:text-ink hover:bg-surface-container font-label text-label rounded-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Leads</span>
+</a>
+<!-- Units -->
+<a class="flex items-center justify-between px-space-md py-space-sm text-muted hover:text-ink hover:bg-surface-container font-label text-label rounded-sm transition-colors duration-150" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined">home_work</span>
+<span>Units</span>
+</div>
+<span class="px-1.5 py-0.5 bg-line text-muted font-numeric text-xs font-semibold rounded-full">4</span>
+</a>
+<!-- Dashboard -->
+<a class="flex items-center gap-space-sm px-space-md py-space-sm text-muted hover:text-ink hover:bg-surface-container font-label text-label rounded-sm transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Dashboard</span>
+</a>
+</nav>
+</aside>
+<!-- ==================== MAIN CONTENT WRAPPER ==================== -->
+<div class="ml-[220px] flex-1 flex flex-col h-screen min-w-0 bg-ground">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-30 h-14 flex items-center justify-between px-6 bg-surface border-b border-line shrink-0">
+<div class="flex items-center gap-4">
+<h2 class="text-[18px] font-bold text-ink tracking-tight">Pipeline</h2>
+</div>
+<button class="flex items-center gap-1.5 px-3.5 py-1.5 bg-accent hover:bg-[#0c594d] text-white rounded text-xs font-medium transition-colors shadow-none">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>+ New lead</span>
+</button>
+</header>
+<!-- Quiet Hint Line Bar -->
+<div class="text-xs text-[#5B6863] py-2 px-6 bg-transparent border-b border-[#D9E0DD]/60 flex items-center shrink-0">
+  10 leads · click a card to open it, tick the checkbox (or Ctrl/Cmd-click) to select, Shift-click to extend within a column. Drag also works on desktop.
+</div>
+<!-- ==================== KANBAN BOARD CONTAINER ==================== -->
+<main class="flex-1 overflow-x-auto overflow-y-hidden p-4 custom-scrollbar min-h-[calc(100vh-100px)]">
+<div class="flex items-start gap-3 flex-nowrap min-w-max pb-2">
+<!-- 1. Stage: New (count: 2) -->
+<section class="w-board-column flex-shrink-0 bg-ground border border-line rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-ink tracking-wide uppercase font-label">
+<span>New</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-surface text-muted text-[11px] font-medium border border-line">2</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Card 1 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Kenta Ito</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 3BR · 55M · 12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in 12 Dec</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">Google Form</span>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Ryo Kobayashi</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 28M · 6–12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in Nov 2026</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">LINE</span>
+</div>
+</article>
+</div>
+</section>
+<!-- 2. Stage: Contacted (count: 2) -->
+<section class="w-board-column flex-shrink-0 bg-ground border border-line rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-ink tracking-wide uppercase font-label">
+<span>Contacted</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-surface text-muted text-[11px] font-medium border border-line">2</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Card 1 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Haruto Sato</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 40M · 6–12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in Oct 2026</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">WhatsApp</span>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Olivia Brown</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">H</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">UK · 3BR · 29M · 3–6 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in ASAP</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted/70">P-C</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">Website</span>
+<span class="bg-[#E3ECF8] text-[#2F5E9E] text-[10.5px] px-1.5 py-0.5 rounded font-medium">Shared with you · view</span>
+</div>
+</article>
+</div>
+</section>
+<!-- 3. Stage: Units sent (count: 3) -->
+<section class="w-board-column flex-shrink-0 bg-ground border border-line rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-ink tracking-wide uppercase font-label">
+<span>Units sent</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-surface text-muted text-[11px] font-medium border border-line">3</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Card 1 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Yui Nakamura</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 25M · 6 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in 10 Nov</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">Email</span>
+<span class="bg-[#F8E6E1] text-[#A8412F] text-[10.5px] px-1.5 py-0.5 rounded font-medium">silent 5 days</span>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Riku Watanabe</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 30M · 6–12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in 20 Oct</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">LINE</span>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Jack Wilson</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">H</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Australia · 1BR · 36M · 6–12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in Not decided</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">Zalo</span>
+<span class="bg-[#E3ECF8] text-[#2F5E9E] text-[10.5px] px-1.5 py-0.5 rounded font-medium">Shared with you · view</span>
+</div>
+</article>
+</div>
+</section>
+<!-- 4. Stage: Following up (count: 2) -->
+<section class="w-board-column flex-shrink-0 bg-ground border border-line rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-ink tracking-wide uppercase font-label">
+<span>Following up</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-surface text-muted text-[11px] font-medium border border-line">2</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Card 1 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Sho Yamada</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 1BR · 18M · 6 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in ASAP</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted/70">P-C</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">WhatsApp</span>
+<span class="bg-[#F8E6E1] text-[#A8412F] text-[10.5px] px-1.5 py-0.5 rounded font-medium">silent 4 days</span>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Mei Inoue</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 22M · 6–12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in Dec 2026</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">Referral</span>
+</div>
+</article>
+</div>
+</section>
+<!-- 5. Stage: Viewing booked (count: 2) -->
+<section class="w-board-column flex-shrink-0 bg-ground border border-line rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-ink tracking-wide uppercase font-label">
+<span>Viewing booked</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-surface text-muted text-[11px] font-medium border border-line">2</span>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Card 1 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Takeshi Morita</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 35M · 12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in 1 Nov</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-accent-soft text-accent">P-A</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">LINE</span>
+<span class="bg-[#E3ECF8] text-[#2F5E9E] text-[10.5px] px-1.5 py-0.5 rounded font-medium">viewing 09/10</span>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Emi Kato</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 42M · 12–24 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in Nov 2026</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">Website</span>
+</div>
+</article>
+</div>
+</section>
+<!-- 6. Stage: Negotiating (count: 1) -->
+<section class="w-board-column flex-shrink-0 bg-ground border border-line rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-ink tracking-wide uppercase font-label">
+<span>Negotiating</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-surface text-muted text-[11px] font-medium border border-line">1</span>
+</div>
+<div class="flex flex-col gap-2">
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Aiko Suzuki</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 30M · 12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in 1 Nov</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-accent-soft text-accent">P-A</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">LINE</span>
+</div>
+</article>
+</div>
+</section>
+<!-- 7. Stage: Deposit paid (count: 1) -->
+<section class="w-board-column flex-shrink-0 bg-ground border border-line rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-ink tracking-wide uppercase font-label">
+<span>Deposit paid</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-surface text-muted text-[11px] font-medium border border-line">1</span>
+</div>
+<div class="flex flex-col gap-2">
+<article class="bg-surface border border-line rounded-md p-2.5 text-[13px] leading-tight flex flex-col gap-1.5 hover:border-stroke transition-colors cursor-pointer shadow-none">
+<div class="flex items-center justify-between gap-1">
+<div class="flex items-center gap-1.5 min-w-0">
+<input class="w-3.5 h-3.5 rounded-[3px] border-stroke text-accent focus:ring-0 cursor-pointer" type="checkbox"/>
+<h4 class="font-semibold text-ink text-[13.5px] truncate hover:underline">Ren Fujita</h4>
+</div>
+<span class="w-[18px] h-[18px] rounded-full bg-[#ecefee] text-muted text-[10px] font-semibold flex items-center justify-center shrink-0">S</span>
+</div>
+<p class="font-numeric text-[12px] text-muted">Japan · 2BR · 35M · 12 mo</p>
+<div class="text-[11.5px] text-muted flex items-center gap-1">
+<span>Move-in 8 Oct</span>
+</div>
+<div class="flex flex-wrap gap-1 items-center pt-0.5">
+<span class="font-numeric text-[10.5px] font-semibold px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">P-B</span>
+<span class="text-[10.5px] px-1.5 py-0.5 rounded bg-[#eceeec] text-muted">LINE</span>
+</div>
+</article>
+</div>
+</section>
+<!-- 8. Stage: Signed (count: 0) -->
+<section class="w-board-column flex-shrink-0 bg-[#E1F0EC]/60 border border-[#5CC0AA]/40 rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-[#0E6B5C] tracking-wide uppercase font-label">
+<span>Signed</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-white/70 text-[#0E6B5C] text-[11px] font-medium border border-[#5CC0AA]/40">0</span>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center py-8 border border-dashed border-[#5CC0AA]/30 rounded-md">
+<p class="text-xs text-[#0E6B5C]/70 font-medium">No active leads</p>
+</div>
+</section>
+<!-- 9. Stage: Nurture (count: 0) -->
+<section class="w-board-column flex-shrink-0 bg-[#F7EDDC]/70 border border-[#E0B066]/40 rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-[#8D5A0D] tracking-wide uppercase font-label">
+<span>Nurture</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-white/70 text-[#8D5A0D] text-[11px] font-medium border border-[#E0B066]/40">0</span>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center py-8 border border-dashed border-[#E0B066]/30 rounded-md">
+<p class="text-xs text-[#8D5A0D]/70 font-medium">No active leads</p>
+</div>
+</section>
+<!-- 10. Stage: Lost (count: 0) -->
+<section class="w-board-column flex-shrink-0 bg-[#F8E6E1]/70 border border-[#E58A77]/40 rounded-lg p-2 flex flex-col gap-2 max-h-[calc(100vh-120px)] overflow-y-auto custom-scrollbar">
+<div class="flex items-center justify-between px-2 py-1.5 text-xs font-semibold text-[#A8412F] tracking-wide uppercase font-label">
+<span>Lost</span>
+<span class="font-numeric px-1.5 py-0.5 rounded-full bg-white/70 text-[#A8412F] text-[11px] font-medium border border-[#E58A77]/40">0</span>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center py-8 border border-dashed border-[#E58A77]/30 rounded-md">
+<p class="text-xs text-[#A8412F]/70 font-medium">No active leads</p>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

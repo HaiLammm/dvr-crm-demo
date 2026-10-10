@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>DVR CRM — Today</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ground: '#F5F7F6',
+            surface: '#FFFFFF',
+            ink: '#18221F',
+            muted: '#5B6863',
+            line: '#D9E0DD',
+            stroke: '#7C8A85',
+            accent: '#0E6B5C',
+            'accent-soft': '#E1F0EC',
+            gate: '#8D5A0D',
+            'gate-soft': '#F7EDDC',
+            bad: '#A8412F',
+            'bad-soft': '#F8E6E1',
+            info: '#2F5E9E',
+            'info-soft': '#E3ECF8',
+          },
+          fontFamily: {
+            sans: ["'Be Vietnam Pro'", "'IBM Plex Sans JP'", "system-ui", "sans-serif"],
+            mono: ["'IBM Plex Mono'", "'IBM Plex Sans JP'", "monospace"],
+          },
+          minHeight: {
+            touch: '40px',
+          },
+          height: {
+            touch: '40px',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Reset & iOS touch styling */
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #F5F7F6;
+      color: #18221F;
+      font-family: 'Be Vietnam Pro', 'IBM Plex Sans JP', system-ui, sans-serif;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+    .spined-box {
+      border-radius: 0 8px 8px 0;
+    }
+    /* Tabular figures for alignment */
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-ground flex justify-center selection:bg-accent-soft selection:text-accent">
+
+  <!-- Mobile Device Shell 390px wide -->
+  <div class="w-full max-w-[390px] min-h-screen bg-ground flex flex-col border-x border-line relative pb-12 shadow-none">
+    
+    <!-- Top Bar (Sticky, 56px, touch targets >= 40px) -->
+    <header class="sticky top-0 z-30 bg-surface border-b border-line px-4 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <!-- Hamburger Menu Button (min 40x40 touch target) -->
+        <button type="button" aria-label="Open menu" class="w-10 h-10 -ml-2 rounded-md flex items-center justify-center text-ink hover:bg-ground active:bg-line/40 transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+
+        <!-- Page Title & Availability Pill -->
+        <div class="flex items-center gap-2">
+          <h1 class="text-[17px] font-bold text-ink leading-tight tracking-tight">Today</h1>
+          
+          <!-- Availability Pill (neutral, no color) -->
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-line bg-ground text-[11px] font-medium text-muted tracking-tight">
+            <span class="text-xs leading-none">◐</span>
+            <span>Limited through 18 Oct</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- + New Lead Button (Primary Accent, min 40x40 touch target) -->
+      <button type="button" aria-label="New lead" class="h-10 px-3 bg-accent text-white rounded-[6px] font-semibold text-[13px] flex items-center gap-1 active:opacity-90 hover:bg-[#0a5549] transition-all">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        <span class="text-xs">Lead</span>
+      </button>
+    </header>
+
+    <!-- Main Content Stream (16px gutters) -->
+    <main class="p-4 flex flex-col gap-3.5 flex-1">
+
+      <!-- Collapsed KPI Strip (40px-tall bordered control row) -->
+      <button type="button" class="w-full h-10 px-3.5 bg-surface rounded-[6px] border border-line flex items-center justify-between text-left hover:bg-surface active:bg-ground transition-colors group">
+        <div class="flex items-center gap-1.5 text-[12.8px] leading-none text-muted font-normal select-none">
+          <span class="font-mono font-medium text-ink tabular-nums">14</span>
+          <span class="text-muted">open</span>
+          <span class="text-line mx-0.5">·</span>
+          <span class="font-mono font-medium text-ink tabular-nums">5</span>
+          <span class="text-muted">to contact</span>
+          <span class="text-line mx-0.5">·</span>
+          <span class="font-mono font-semibold text-bad tabular-nums">2</span>
+          <span class="font-medium text-bad">overdue</span>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-stroke transition-transform group-active:translate-y-0.5">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+
+      <!-- Updates Panel -->
+      <div class="bg-surface border border-line rounded-[8px] p-3 flex flex-col gap-2">
+        <div class="text-[11px] font-bold text-muted uppercase tracking-[0.05em] leading-tight">
+          UPDATES
+        </div>
+
+        <div class="flex flex-col gap-1.5 text-[13px] leading-snug">
+          <!-- Text Link Line 1 -->
+          <a href="#" class="text-ink hover:underline flex items-start gap-1.5 py-0.5">
+            <span class="text-stroke select-none">•</span>
+            <span><strong class="font-medium text-ink">Kenta Ito</strong> replied on LINE — move to Following up?</span>
+          </a>
+          <!-- Text Link Line 2 -->
+          <a href="#" class="text-ink hover:underline flex items-start gap-1.5 py-0.5">
+            <span class="text-stroke select-none">•</span>
+            <span><strong class="font-medium text-ink">Filmore 2BR</strong> verified 16 days ago — check before sending</span>
+          </a>
+        </div>
+
+        <!-- Disclosure Button -->
+        <button type="button" class="mt-0.5 self-start text-[12px] font-semibold text-muted hover:text-ink flex items-center gap-1 py-1 px-1 -ml-1 rounded active:bg-ground">
+          <span>+3 more</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="text-muted">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Reminder Group 1: NEW LEADS (Spined with Teal 3px and #E1F0EC band) -->
+      <section class="spined-box bg-surface border-y border-r border-line border-l-[3px] border-l-accent overflow-hidden">
+        <!-- Header Band -->
+        <div class="bg-accent-soft px-3.5 py-2 flex items-center justify-between border-b border-line">
+          <span class="text-[11.5px] font-bold uppercase tracking-[0.05em] text-accent">
+            NEW LEADS
+          </span>
+          <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded-full bg-white text-accent border border-accent/20 tabular-nums">
+            2
+          </span>
+        </div>
+
+        <!-- Group Body: Row 1 (Kenta Ito) -->
+        <div class="p-3.5 flex flex-col gap-3">
+          <!-- Lead Info -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[15px] font-bold text-ink leading-tight">Kenta Ito</span>
+              <span class="text-[11px] text-muted">15m ago</span>
+            </div>
+            <!-- Mono details -->
+            <div class="font-mono text-[12.5px] text-muted tracking-tight tabular-nums">
+              Japan · 2BR · 25–30M VND
+            </div>
+          </div>
+
+          <!-- Actions on their own line below: 40px min touch height -->
+          <div class="flex items-center justify-between gap-2 pt-1 border-t border-line/60">
+            <!-- Outline "Message" button -->
+            <button type="button" class="h-touch px-4 rounded-[6px] border border-stroke text-ink font-semibold text-[13px] bg-white hover:bg-ground active:bg-line/40 transition-colors flex items-center justify-center">
+              Message
+            </button>
+
+            <!-- Teal Split Button "Contacted · LINE | ▾" -->
+            <div class="inline-flex rounded-[6px] overflow-hidden bg-accent text-white shadow-none">
+              <button type="button" class="h-touch px-3.5 text-[13px] font-semibold hover:bg-[#0a5549] active:bg-[#08453b] transition-colors flex items-center gap-1.5 border-r border-white/20">
+                <span>Contacted · LINE</span>
+              </button>
+              <button type="button" aria-label="More options" class="h-touch w-9 flex items-center justify-center hover:bg-[#0a5549] active:bg-[#08453b] transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Reminder Group 2: SILENT (Spined with Rust 3px and #F8E6E1 band) -->
+      <section class="spined-box bg-surface border-y border-r border-line border-l-[3px] border-l-bad overflow-hidden">
+        <!-- Header Band -->
+        <div class="bg-bad-soft px-3.5 py-2 flex items-center justify-between border-b border-line">
+          <span class="text-[11.5px] font-bold uppercase tracking-[0.05em] text-bad">
+            SILENT
+          </span>
+          <span class="font-mono text-xs font-semibold px-2 py-0.5 rounded-full bg-white text-bad border border-bad/20 tabular-nums">
+            2
+          </span>
+        </div>
+
+        <!-- Group Body: Row 1 (David Miller) -->
+        <div class="p-3.5 flex flex-col gap-3">
+          <!-- Lead Info -->
+          <div>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[15px] font-bold text-ink leading-tight">David Miller</span>
+              <!-- Rust Overdue Label -->
+              <span class="inline-flex items-center gap-1 text-[11.5px] font-medium text-bad">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span>Overdue · 2 working days</span>
+              </span>
+            </div>
+            <!-- Mono details -->
+            <div class="font-mono text-[12.5px] text-muted tracking-tight tabular-nums">
+              USA · Studio · 15M VND · Zalo
+            </div>
+          </div>
+
+          <!-- Actions on their own line below: 40px touch height -->
+          <div class="flex items-center justify-between gap-2 pt-1 border-t border-line/60">
+            <!-- Outline "Message" button -->
+            <button type="button" class="h-touch px-4 rounded-[6px] border border-stroke text-ink font-semibold text-[13px] bg-white hover:bg-ground active:bg-line/40 transition-colors flex items-center justify-center">
+              Message
+            </button>
+
+            <!-- Teal Split Button "Followed up · Zalo | ▾" -->
+            <div class="inline-flex rounded-[6px] overflow-hidden bg-accent text-white shadow-none">
+              <button type="button" class="h-touch px-3.5 text-[13px] font-semibold hover:bg-[#0a5549] active:bg-[#08453b] transition-colors flex items-center gap-1.5 border-r border-white/20">
+                <span>Followed up · Zalo</span>
+              </button>
+              <button type="button" aria-label="More options" class="h-touch w-9 flex items-center justify-center hover:bg-[#0a5549] active:bg-[#08453b] transition-colors">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Second item in Silent or Additional Context for scrolling demonstration -->
+      <div class="text-center py-2">
+        <span class="text-[11px] font-mono text-muted uppercase tracking-wider">Operational Instance VN-03 · Da Nang</span>
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

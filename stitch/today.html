@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DVR CRM - Today</title>
+<!-- Typography: Be Vietnam Pro & IBM Plex Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration verbatim as mandated -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary": "#005145",
+            "measure-target": "#6A7873",
+            "on-primary-fixed-variant": "#005144",
+            "secondary-fixed-dim": "#a8c8ff",
+            "surface": "#FFFFFF",
+            "muted-dark": "#9AA8A3",
+            "surface-dim": "#d8dad9",
+            "surface-tint": "#0d6a5b",
+            "measure-track": "#D9E0DD",
+            "secondary-container": "#8cb7fd",
+            "outline-variant": "#bec9c5",
+            "gate-dark": "#E0B066",
+            "info-soft": "#E3ECF8",
+            "gate-soft": "#F7EDDC",
+            "gate": "#8D5A0D",
+            "accent-soft-dark": "#1B3530",
+            "on-primary-container": "#99e8d5",
+            "scrim-dark": "#000000",
+            "on-background": "#191c1c",
+            "surface-container": "#eceeed",
+            "secondary-fixed": "#d5e3ff",
+            "on-secondary": "#ffffff",
+            "primary-container": "#0e6b5c",
+            "tertiary-fixed-dim": "#ffb4a2",
+            "surface-container-low": "#f2f4f3",
+            "bad-soft": "#F8E6E1",
+            "primary-fixed-dim": "#86d5c3",
+            "inverse-primary": "#86d5c3",
+            "background": "#f8faf9",
+            "info-dark": "#8DB4EA",
+            "surface-container-highest": "#e1e3e2",
+            "on-primary": "#ffffff",
+            "on-surface": "#191c1c",
+            "gate-soft-dark": "#342A1B",
+            "scrim": "#18221F",
+            "tertiary": "#723526",
+            "inverse-on-surface": "#eff1f0",
+            "on-error": "#ffffff",
+            "info": "#2F5E9E",
+            "on-secondary-fixed": "#001b3c",
+            "ink-dark": "#E3EAE7",
+            "error": "#ba1a1a",
+            "surface-container-lowest": "#ffffff",
+            "stroke": "#7C8A85",
+            "measure-track-dark": "#2A3633",
+            "on-tertiary-container": "#ffcec2",
+            "tertiary-container": "#8f4c3b",
+            "on-primary-fixed": "#00201a",
+            "on-secondary-fixed-variant": "#0e4785",
+            "on-tertiary": "#ffffff",
+            "line": "#D9E0DD",
+            "surface-container-high": "#e6e9e8",
+            "secondary": "#305f9f",
+            "ink": "#18221F",
+            "tertiary-fixed": "#ffdad2",
+            "on-secondary-container": "#0f4786",
+            "surface-dark": "#172020",
+            "on-error-container": "#93000a",
+            "on-surface-variant": "#3f4946",
+            "error-container": "#ffdad6",
+            "accent": "#0E6B5C",
+            "ground-dark": "#101614",
+            "accent-soft": "#E1F0EC",
+            "on-tertiary-fixed-variant": "#723526",
+            "surface-bright": "#f8faf9",
+            "bad": "#A8412F",
+            "surface-variant": "#e1e3e2",
+            "muted": "#5B6863",
+            "bad-dark": "#E58A77",
+            "accent-dark": "#5CC0AA",
+            "measure-target-dark": "#8E9D97",
+            "inverse-surface": "#2e3131",
+            "bad-soft-dark": "#3A221D",
+            "line-dark": "#2A3633",
+            "outline": "#6f7976",
+            "info-soft-dark": "#1C2A3D",
+            "on-tertiary-fixed": "#3a0b02",
+            "stroke-dark": "#6B7A75",
+            "ground": "#F5F7F6",
+            "primary-fixed": "#a2f2de"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-sm": "8px",
+            "sidebar": "220px",
+            "margin": "24px",
+            "space-xs": "4px",
+            "space-lg": "16px",
+            "space-xl": "24px",
+            "gutter": "16px",
+            "drawer": "640px",
+            "touch-min": "40px",
+            "gutter-mobile": "16px",
+            "board-column": "212px",
+            "space-md": "12px"
+          },
+          "fontFamily": {
+            "label": ["'Be Vietnam Pro', sans-serif"],
+            "page-title": ["'Be Vietnam Pro', sans-serif"],
+            "numeric": ["'IBM Plex Mono', monospace"],
+            "kpi": ["'IBM Plex Mono', monospace"],
+            "overline": ["'Be Vietnam Pro', sans-serif"],
+            "section-title": ["'Be Vietnam Pro', sans-serif"],
+            "caption": ["'Be Vietnam Pro', sans-serif"],
+            "body": ["'Be Vietnam Pro', sans-serif"]
+          },
+          "fontSize": {
+            "label": ["12px", { "lineHeight": "1.4", "fontWeight": "600" }],
+            "page-title": ["18px", { "lineHeight": "1.25", "fontWeight": "700" }],
+            "numeric": ["13px", { "lineHeight": "1.4", "fontWeight": "400" }],
+            "kpi": ["24px", { "lineHeight": "1.1", "fontWeight": "500" }],
+            "overline": ["11px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "section-title": ["15px", { "lineHeight": "1.3", "fontWeight": "700" }],
+            "caption": ["12px", { "lineHeight": "1.45", "fontWeight": "400" }],
+            "body": ["13.5px", { "lineHeight": "1.5", "fontWeight": "400" }]
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-ground text-ink min-h-screen antialiased selection:bg-accent-soft selection:text-accent font-body">
+<!-- ========================================================================= -->
+<!-- FIXED LEFT SIDEBAR                                                        -->
+<!-- ========================================================================= -->
+<aside class="fixed top-0 left-0 h-screen w-sidebar bg-ground border-r border-line z-30 select-none">
+<div class="flex flex-col h-full p-space-sm select-none">
+<!-- Brand Header -->
+<div class="px-space-md py-space-sm flex items-center gap-2.5 mb-2">
+<div class="w-7 h-7 bg-ink text-surface flex items-center justify-center rounded-sm font-page-title text-[11px] font-bold tracking-tight">
+    DVR
+  </div>
+<div class="leading-tight">
+<h1 class="font-page-title text-[15px] font-bold text-ink tracking-tight">DVR CRM</h1>
+<p class="font-caption text-[11px] text-muted">Rent Team</p>
+</div>
+</div>
+<!-- Navigation Tabs -->
+<nav class="space-y-0.5">
+<!-- 1. Today (Active) -->
+<a class="flex items-center justify-between px-space-md py-2 bg-accent-soft text-accent border-l-2 border-accent rounded-none font-label text-xs transition-colors" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[17px]">calendar_today</span>
+<span>Today</span>
+</div>
+<span class="bg-[#F8E6E1] text-[#A8412F] text-[11px] font-mono font-semibold px-1.5 py-0.5 rounded-full">7</span>
+</a>
+<!-- 2. Pipeline (Inactive) -->
+<a class="flex items-center gap-2 px-space-md py-2 text-muted hover:text-ink font-label text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px]">view_kanban</span>
+<span>Pipeline</span>
+</a>
+<!-- 3. Leads (Inactive) -->
+<a class="flex items-center gap-2 px-space-md py-2 text-muted hover:text-ink font-label text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px]">group</span>
+<span>Leads</span>
+</a>
+<!-- 4. Units (Inactive with neutral badge 4) -->
+<a class="flex items-center justify-between px-space-md py-2 text-muted hover:text-ink font-label text-xs transition-colors" href="#">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[17px]">home_work</span>
+<span>Units</span>
+</div>
+<span class="bg-line text-muted font-mono text-[11px] font-semibold px-1.5 py-0.5 rounded-full">4</span>
+</a>
+<!-- 5. Dashboard (Inactive) -->
+<a class="flex items-center gap-2 px-space-md py-2 text-muted hover:text-ink font-label text-xs transition-colors" href="#">
+<span class="material-symbols-outlined text-[17px]">analytics</span>
+<span>Dashboard</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- STICKY TOP APP BAR                                                        -->
+<!-- ========================================================================= -->
+<header class="sticky top-0 right-0 h-12 pl-sidebar w-full bg-surface border-b border-line z-20 select-none">
+<div class="flex items-center justify-between px-margin w-full h-full">
+<!-- Left: Title -->
+<h2 class="font-page-title text-[16px] text-ink font-bold">Today</h2>
+<!-- Right: Action CTA -->
+<div>
+<button class="bg-[#0e6b5c] hover:bg-[#0c594d] text-white font-medium text-xs px-3 py-1.5 rounded-md transition-colors flex items-center gap-1 active:translate-y-px" type="button">
+<span class="text-sm font-semibold">+</span>
+<span>New lead</span>
+</button>
+</div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- MAIN WORKSPACE CONTENT CANVAS                                             -->
+<!-- ========================================================================= -->
+<main class="pl-sidebar min-h-screen bg-ground pb-12">
+<div class="max-w-[1220px] mx-auto p-margin space-y-4">
+<!-- 1. Page Header: Date & Status Pill -->
+<section class="flex items-center gap-3 pt-1">
+<h1 class="font-page-title text-[18px] font-bold text-ink leading-tight">Today · Thu 8 Oct</h1>
+<!-- Availability pill -->
+<div class="border border-[#D9E0DD] bg-white rounded-full px-2.5 py-0.5 text-xs text-[#18221F] font-medium flex items-center gap-1.5 select-none">
+<span class="w-2 h-2 rounded-full bg-emerald-600 inline-block"></span>
+<span>Available</span>
+</div>
+</section>
+<!-- 2. KPI Strip: 2 Balanced Flat Cells -->
+<section class="bg-surface border border-line rounded-lg divide-x divide-line grid grid-cols-2 p-0">
+<!-- Cell 1: MY LEADS -->
+<div class="p-3.5 pb-3 flex flex-col justify-between">
+<div>
+<div class="font-overline text-overline uppercase text-muted tracking-wider mb-1.5">MY LEADS</div>
+<!-- Value row -->
+<div class="font-numeric text-ink flex items-center gap-2.5">
+<div class="flex items-baseline gap-1">
+<span class="font-bold text-[17px]">14</span>
+<span class="font-caption text-caption text-muted">· open</span>
+</div>
+<span class="h-3.5 w-[1px] bg-line"></span>
+<div class="flex items-baseline gap-1">
+<span class="font-bold text-[17px]">14.75</span>
+<span class="font-caption text-caption text-muted">· weighted load</span>
+</div>
+</div>
+<!-- Composition Bar -->
+<div aria-label="Lead distribution bar" class="h-2 rounded-[3px] bg-line flex overflow-hidden my-2" role="progressbar">
+<div class="bg-[#6A7873] h-full" style="width: 54%;" title="In progress: 54%"></div>
+<div class="bg-[#9AA8A3] h-full" style="width: 23%;" title="Viewing / negotiating: 23%"></div>
+<div class="bg-[#C4CECB] h-full" style="width: 23%;" title="Nurture: 23%"></div>
+</div>
+</div>
+<!-- Legend -->
+<p class="font-numeric text-caption text-muted pt-0.5">
+In progress 8 · Viewing / negotiating 3 · Nurture 3
+</p>
+</div>
+<!-- Cell 2: REMINDERS -->
+<div class="p-3.5 pb-3 flex flex-col justify-between">
+<div>
+<div class="font-overline text-overline uppercase text-muted tracking-wider mb-1.5">REMINDERS</div>
+<!-- Value row -->
+<div class="font-numeric flex items-center gap-2.5">
+<div class="flex items-baseline gap-1">
+<span class="font-bold text-[17px] text-ink">5</span>
+<span class="font-caption text-caption text-muted">· to contact</span>
+</div>
+<span class="h-3.5 w-[1px] bg-line"></span>
+<div class="flex items-baseline gap-1">
+<span class="font-bold text-[17px] text-bad">2</span>
+<span class="font-caption text-caption text-bad">· of them overdue</span>
+</div>
+</div>
+<!-- Discrete Overdue Marks: exactly 2 rust dots and NO gray dots -->
+<div class="flex items-center gap-1.5 my-2 h-2">
+<div class="w-2 h-2 rounded-full bg-[#A8412F]" title="Overdue Item 1"></div>
+<div class="w-2 h-2 rounded-full bg-[#A8412F]" title="Overdue Item 2"></div>
+</div>
+</div>
+<!-- Overdue caption -->
+<p class="font-numeric text-caption text-bad pt-0.5">
+Overdue: silent 2 · oldest 2 working days
+</p>
+</div>
+</section>
+<!-- 3. "UPDATES" Panel -->
+<section class="bg-surface border border-line rounded-lg p-3 space-y-1.5">
+<h3 class="font-overline text-overline text-muted uppercase tracking-wider">UPDATES</h3>
+<div class="flex flex-col space-y-1 pl-0.5">
+<a class="font-body text-[13px] text-[#18221F] underline hover:text-accent cursor-pointer transition-colors" href="#">
+    Alice added new details to Haruto Sato
+  </a>
+<a class="font-body text-[13px] text-[#18221F] underline hover:text-accent cursor-pointer transition-colors" href="#">
+    Emi Kato's viewing awaits its outcome
+  </a>
+<a class="font-body text-[13px] text-[#18221F] underline hover:text-accent cursor-pointer transition-colors" href="#">
+    Hannah shared Olivia Brown with you · view
+  </a>
+</div>
+</section>
+<!-- 4. Reminder Groups (Spined Blocks) -->
+<section class="space-y-3">
+<!-- GROUP 1: NEW (count 2, teal spine 3px) -->
+<article class="bg-surface border border-line border-l-[3px] border-l-[#0e6b5c] rounded-r-md overflow-hidden">
+<div class="bg-accent-soft text-[#0e6b5c] px-3.5 py-1 text-xs font-label flex justify-between items-center border-b border-line">
+<span class="tracking-wide">NEW</span>
+<span class="font-mono font-bold">2</span>
+</div>
+<div class="divide-y divide-line">
+<!-- Row 1: Kenta Ito -->
+<div class="px-3.5 py-2 flex items-center justify-between text-body">
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full ring-2 ring-accent bg-transparent mt-1.5 shrink-0"></span>
+<div>
+<div class="flex items-center leading-snug">
+<span class="underline font-semibold text-[#18221F] text-[13.5px]">Kenta Ito</span>
+<span class="bg-gray-100 text-gray-600 text-[11px] px-1.5 py-0.5 rounded font-normal ml-2">Japan</span>
+</div>
+<p class="font-caption text-caption text-muted mt-0.5 font-numeric">
+          Came in 8 Oct 06:40 via Google Form · 55M · 12 mo · Sơn Trà, 3BR · reply within 2 working hours
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0 ml-4">
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs px-2.5 py-1 rounded-[2px] transition-colors" type="button">
+        Message
+      </button>
+<div class="inline-flex rounded-[2px] shadow-sm">
+<button class="bg-[#0e6b5c] hover:bg-[#0c594d] text-white font-label text-xs px-2.5 py-1 rounded-[2px] flex items-center gap-0.5 transition-colors" type="button">
+<span>Contacted</span>
+<span class="material-symbols-outlined text-[14px]">arrow_drop_down</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Row 2: Ryo Kobayashi -->
+<div class="px-3.5 py-2 flex items-center justify-between text-body">
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full ring-2 ring-accent bg-transparent mt-1.5 shrink-0"></span>
+<div>
+<div class="flex items-center leading-snug">
+<span class="underline font-semibold text-[#18221F] text-[13.5px]">Ryo Kobayashi</span>
+<span class="bg-gray-100 text-gray-600 text-[11px] px-1.5 py-0.5 rounded font-normal ml-2">Japan</span>
+</div>
+<p class="font-caption text-caption text-muted mt-0.5 font-numeric">
+          Came in 7 Oct 16:10 via LINE · 28M · 6–12 mo · Mỹ An, 2BR · reply within 2 working hours
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0 ml-4">
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs px-2.5 py-1 rounded-[2px] transition-colors" type="button">
+        Message
+      </button>
+<div class="inline-flex rounded-[2px] bg-[#0e6b5c] hover:bg-[#0c594d] text-white">
+<button class="font-label text-xs px-2.5 py-1 transition-colors" type="button">
+          Contacted · LINE
+        </button>
+<button class="px-1 border-l border-white/20 flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[13px]">arrow_drop_down</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- GROUP 2: VIEWING TOMORROW (count 1, blue spine 3px) -->
+<article class="bg-surface border border-line border-l-[3px] border-l-info rounded-r-md overflow-hidden">
+<div class="bg-info-soft text-info px-3.5 py-1 text-xs font-label flex justify-between items-center border-b border-line">
+<span class="tracking-wide">VIEWING TOMORROW</span>
+<span class="font-mono font-bold">1</span>
+</div>
+<div>
+<div class="px-3.5 py-2 flex items-center justify-between text-body">
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full bg-info mt-1.5 shrink-0"></span>
+<div>
+<div class="flex items-center leading-snug">
+<span class="underline font-semibold text-[#18221F] text-[13.5px]">Takeshi Morita</span>
+<span class="bg-gray-100 text-gray-600 text-[11px] px-1.5 py-0.5 rounded font-normal ml-2">Japan</span>
+</div>
+<p class="font-caption text-caption text-muted mt-0.5 font-numeric">
+          Viewing tomorrow 10:00 · Filmore Da Nang 2BR · verified 3 days ago
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0 ml-4">
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs px-2.5 py-1 rounded-[2px] transition-colors" type="button">
+        Message
+      </button>
+<button class="bg-[#0e6b5c] hover:bg-[#0c594d] text-white font-label text-xs px-3 py-1 rounded-[2px] font-medium transition-colors" type="button">
+        ✓ Unit checked
+      </button>
+</div>
+</div>
+</div>
+</article>
+<!-- GROUP 3: SILENT (count 2, rust bad spine 3px) -->
+<article class="bg-surface border border-line border-l-[3px] border-l-bad rounded-r-md overflow-hidden">
+<div class="bg-bad-soft text-bad px-3.5 py-1 text-xs font-label flex justify-between items-center border-b border-line">
+<span class="tracking-wide">SILENT</span>
+<span class="font-mono font-bold">2</span>
+</div>
+<div class="divide-y divide-line">
+<!-- Row 1: Yui Nakamura -->
+<div class="px-3.5 py-2 flex items-center justify-between text-body">
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full bg-bad mt-1.5 shrink-0"></span>
+<div>
+<div class="flex items-center leading-snug">
+<span class="underline font-semibold text-[#18221F] text-[13.5px]">Yui Nakamura</span>
+<span class="bg-gray-100 text-gray-600 text-[11px] px-1.5 py-0.5 rounded font-normal ml-2">Japan</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption text-caption text-muted font-numeric">
+            Silent 5 days · 2nd follow-up · last contact 3 Oct
+          </span>
+<span class="font-numeric text-caption text-bad flex items-center gap-0.5 font-medium">
+<span>🕒</span>
+<span>Overdue · 2 working days</span>
+</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0 ml-4">
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs px-2.5 py-1 rounded-[2px] transition-colors" type="button">
+        Message
+      </button>
+<div class="inline-flex rounded-[2px] bg-[#0e6b5c] hover:bg-[#0c594d] text-white">
+<button class="font-label text-xs px-2.5 py-1 transition-colors" type="button">
+          Followed up · LINE
+        </button>
+<button class="px-1 border-l border-white/20 flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[13px]">arrow_drop_down</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Row 2: Sho Yamada -->
+<div class="px-3.5 py-2 flex items-center justify-between text-body">
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full bg-bad mt-1.5 shrink-0"></span>
+<div>
+<div class="flex items-center leading-snug">
+<span class="underline font-semibold text-[#18221F] text-[13.5px]">Sho Yamada</span>
+<span class="bg-gray-100 text-gray-600 text-[11px] px-1.5 py-0.5 rounded font-normal ml-2">Japan</span>
+</div>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="font-caption text-caption text-muted font-numeric">
+            Silent 4 days · 4th follow-up · last contact 4 Oct
+          </span>
+<span class="font-numeric text-caption text-bad font-medium">
+            Overdue · 1 working day
+          </span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0 ml-4">
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs px-2.5 py-1 rounded-[2px] transition-colors" type="button">
+        Message
+      </button>
+<div class="inline-flex rounded-[2px] bg-[#0e6b5c] hover:bg-[#0c594d] text-white">
+<button class="font-label text-xs px-2.5 py-1 transition-colors" type="button">
+          Followed up · WhatsApp
+        </button>
+<button class="px-1 border-l border-white/20 flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[13px]">arrow_drop_down</span>
+</button>
+</div>
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs px-2.5 py-1 rounded-[2px] transition-colors" type="button">
+        → Nurture
+      </button>
+</div>
+</div>
+</div>
+</article>
+<!-- GROUP 4: MOVE-IN APPROACHING (count 1, amber spine 3px) -->
+<article class="bg-surface border border-line border-l-[3px] border-l-gate rounded-r-md overflow-hidden">
+<div class="bg-gate-soft text-gate px-3.5 py-1 text-xs font-label flex justify-between items-center border-b border-line">
+<span class="tracking-wide">MOVE-IN APPROACHING</span>
+<span class="font-mono font-bold">1</span>
+</div>
+<div>
+<div class="px-3.5 py-2 flex items-center justify-between text-body">
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full bg-gate mt-1.5 shrink-0"></span>
+<div>
+<div class="flex items-center leading-snug">
+<span class="underline font-semibold text-[#18221F] text-[13.5px]">Mika Hasegawa</span>
+<span class="bg-gray-100 text-gray-600 text-[11px] px-1.5 py-0.5 rounded font-normal ml-2">Japan</span>
+</div>
+<p class="font-caption text-caption text-muted mt-0.5 font-numeric">
+          30 days to move-in · 7 Nov · in Nurture since 2 Aug
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0 ml-4">
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs px-2.5 py-1 rounded-[2px] transition-colors" type="button">
+        Message
+      </button>
+<div class="inline-flex rounded-[2px] bg-[#0e6b5c] hover:bg-[#0c594d] text-white">
+<button class="font-label text-xs px-2.5 py-1 transition-colors" type="button">
+          Re-contact · reopen · LINE
+        </button>
+<button class="px-1 border-l border-white/20 flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[13px]">arrow_drop_down</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- GROUP 5: YOUR FOLLOW-UPS (count 1, neutral/gray spine 3px) -->
+<article class="bg-surface border border-line border-l-[3px] border-l-stroke rounded-r-md overflow-hidden">
+<div class="bg-ground text-ink px-3.5 py-1 text-xs font-label flex justify-between items-center border-b border-line">
+<span class="tracking-wide">YOUR FOLLOW-UPS</span>
+<span class="font-mono font-bold">1</span>
+</div>
+<div>
+<div class="px-3.5 py-2 flex items-center justify-between text-body">
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full bg-stroke mt-1.5 shrink-0"></span>
+<div>
+<div class="flex items-center leading-snug">
+<span class="underline font-semibold text-[#18221F] text-[13.5px]">Aiko Suzuki</span>
+<span class="bg-gray-100 text-gray-600 text-[11px] px-1.5 py-0.5 rounded font-normal ml-2">Japan</span>
+</div>
+<p class="font-caption text-caption text-muted mt-0.5 font-numeric">
+          Scheduled for today · Follow up · Negotiating
+        </p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0 ml-4">
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs px-2.5 py-1 rounded-[2px] transition-colors" type="button">
+        Message
+      </button>
+<div class="inline-flex rounded-[2px] bg-[#0e6b5c] hover:bg-[#0c594d] text-white">
+<button class="font-label text-xs px-2.5 py-1 transition-colors" type="button">
+          Followed up · LINE
+        </button>
+<button class="px-1 border-l border-white/20 flex items-center justify-center transition-colors" type="button">
+<span class="material-symbols-outlined text-[13px]">arrow_drop_down</span>
+</button>
+</div>
+<button class="border border-stroke text-ink hover:border-ink font-label text-xs w-7 h-7 flex items-center justify-center rounded-[2px] transition-colors" title="More options" type="button">
+        ⋯
+      </button>
+</div>
+</div>
+</div>
+</article>
+</section>
+<!-- 5. "Coming up" Section -->
+<section class="space-y-2.5 pt-1">
+<!-- Section Header with Segmented Control -->
+<div class="flex items-center justify-between">
+<h2 class="font-section-title text-[15px] font-bold text-ink">Coming up</h2>
+<!-- Segmented Filter Control (Today active) -->
+<div class="inline-flex p-0.5 border border-line bg-surface-container-low rounded-md text-xs font-label">
+<button class="px-2.5 py-0.5 rounded-[4px] bg-surface border border-line/60 text-ink font-semibold shadow-sm" type="button">
+  Today
+</button>
+<button class="px-2.5 py-0.5 rounded-[4px] text-muted hover:text-ink transition-colors" type="button">
+  This week
+</button>
+<button class="px-2.5 py-0.5 rounded-[4px] text-muted hover:text-ink transition-colors" type="button">
+  This month
+</button>
+</div>
+</div>
+<!-- Date Groups Panel -->
+<div class="bg-surface border border-line rounded-lg p-3.5 space-y-2">
+<!-- Header: TODAY · THU 8 OCT -->
+<div class="font-numeric text-caption font-semibold text-muted tracking-wider border-b border-line/60 pb-1 uppercase">
+  TODAY · THU 8 OCT
+</div>
+<!-- Single read-only row with house icon, underlined name, move-in, and NO action buttons -->
+<div class="flex items-center gap-3 py-1 text-body text-[13px] pl-0.5">
+<span class="material-symbols-outlined text-[17px] text-muted">home</span>
+<span class="underline font-semibold text-[#18221F]">Ren Fujita</span>
+<span class="text-muted">·</span>
+<span class="text-ink">Move-in</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+</body></html>
