@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>DVR CRM Demo v2</title>
-<meta name="description" content="Interactive demo of the DVR CRM built to the 2026-10-08 UX spines (DESIGN.md + EXPERIENCE.md). Fictional data, in-memory only.">
+<title>DVR CRM Demo v3</title>
+<meta name="description" content="Interactive demo of the DVR CRM built to the 2026-10-08 UX spines (DESIGN.md + EXPERIENCE.md) — v3: visual polish (wave 1) and layout pass (wave 2) over v2. Fictional data, in-memory only.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;600&display=swap" rel="stylesheet">
@@ -53,7 +53,8 @@ h1,h2,h3,h4,p{margin:0}
 
 /* ===== Shell ===== */
 .app{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:100vh}
-aside{background:var(--surface);border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:16px;position:sticky;top:0;height:100vh}
+aside{background:var(--surface);border-right:1px solid var(--line);min-width:0}
+.aside-in{padding:16px 12px;display:flex;flex-direction:column;gap:16px;position:sticky;top:0;max-height:100vh;overflow-y:auto}
 .brand{font-weight:700;padding:0 8px;display:flex;flex-direction:column}
 .brand small{font-weight:400;font-size:12px;color:var(--muted)}
 nav.side{display:flex;flex-direction:column;gap:2px}
@@ -61,11 +62,9 @@ nav.side a{display:flex;justify-content:space-between;align-items:center;gap:8px
 nav.side a:hover{background:var(--ground);color:var(--ink)}
 nav.side a[aria-current="page"]{background:var(--accent-soft);color:var(--accent);font-weight:600}
 .badge{font:500 11.5px/1 var(--mono);min-width:20px;text-align:center;padding:3px 6px;border-radius:9999px;background:var(--bad);color:var(--surface)}
-.aside-foot{margin-top:auto;padding:0 8px;display:flex;flex-direction:column;gap:6px}
 main{min-width:0;display:flex;flex-direction:column}
 .topbar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;padding:10px 24px;background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
 .topbar h1{font-size:18px;font-weight:700;line-height:1.25;margin-right:auto}
-.topbar .ctl{display:flex;align-items:center;gap:6px}
 .content{padding:20px 24px 72px;display:flex;flex-direction:column;gap:20px;min-width:0}
 .demo-line{font-size:12px;color:var(--muted)}
 
@@ -350,11 +349,130 @@ legend{padding:0;font-size:12.8px;font-weight:600;margin-bottom:4px}
 .toast .lnk{color:var(--surface);text-decoration-color:var(--surface);font-weight:600}
 .toast .lnk:focus-visible{outline-color:var(--surface)}
 
+
+/* ===== v3 polish (wave 1) — CSS-first, DESIGN.md tokens only; no shadows, gradients or new hues ===== */
+/* Rhythm: page padding 24, panels 20 apart, 8–12 inside components */
+.content{padding:24px 24px 80px;gap:20px}
+.panel{padding:16px 20px 18px;gap:14px}
+.panel>h2,.sect-h{font-size:16px;font-weight:700;line-height:1.3;letter-spacing:-.005em}
+.pagehead{gap:8px 14px}
+.pagehead h2{letter-spacing:-.01em}
+.row-flex{gap:8px 10px}
+/* Decision 1 — mono only for table numeric columns, KPI values, figure links, chart values and Lead IDs.
+   Figures inside prose (reminder details, profile values, card meta, captions) stay in the sans stack, tabular. */
+.tn{font-variant-numeric:tabular-nums}
+.rrow .dt b,dl.info .mono,dl.info dd.mono,.lcard .meta .mono,.cap .mono,.hint.mono,.uplist .mono{font-family:var(--sans);font-variant-numeric:tabular-nums}
+.rrow .dt b{font-weight:600;font-size:12.8px;color:var(--ink)}
+/* Decision 2 — nav count badge: neutral pill; rust only when the page holds an overdue item */
+.badge{font:600 11.5px/1 var(--sans);font-variant-numeric:tabular-nums;min-width:22px;padding:4px 7px;background:var(--line);color:var(--ink)}
+.badge.is-od{background:var(--bad);color:var(--surface)}
+nav.side{gap:4px}
+nav.side a{padding:8px 12px}
+/* Today — hierarchy by edge and weight, more air between rows */
+.strip{border-radius:8px}
+.kcell{padding:14px 18px 16px;gap:8px}
+.updates{padding:12px 18px 14px;gap:8px}
+.groups{gap:16px}
+.rgroup>.band{padding:8px 16px}
+.rgroup>.band .c{font:600 12px var(--sans);font-variant-numeric:tabular-nums}
+.rrow{padding:12px 16px;gap:14px}
+.rrow .nm{font-size:14.5px;gap:8px}
+.rrow .nm .tag{font-weight:600}
+.rrow .dt{margin-top:2px;line-height:1.5}
+.rrow .od{margin-top:4px}
+.nextcard{padding:12px 16px 14px;gap:8px}
+.coming{gap:12px}
+.cu{padding:8px 16px 12px}
+.cu li{padding:7px 0}
+/* Pipeline — neutral 3px group rule per stage group; tidier cards (checkbox + up to 3 tags kept) */
+.board{gap:12px}
+.col.g-work{border-top:3px solid var(--ink)}
+.col.g-close{border-top:3px solid var(--stroke)}
+.col.g-end{border-top:3px solid var(--line)}
+.col>header{padding:9px 12px;font-size:12.8px}
+.col>header .num{font:500 12px var(--mono);font-variant-numeric:tabular-nums}
+.col .list{padding:10px 8px;gap:8px}
+.lcard{padding:8px 9px 10px;gap:4px}
+.lcard[aria-selected="true"]{padding:7px 8px 9px}
+.nw{white-space:nowrap}
+.lcard .top{gap:6px;margin-left:-3px}
+.lcard .top .n{font-size:13.5px;line-height:1.35}
+.lcard .meta{font-size:12px;line-height:1.45;font-variant-numeric:tabular-nums}
+.lcard .mv{font-size:12px;line-height:1.45}
+.lcard .tags{gap:4px;margin-top:4px}
+/* Tables — sticky header inside a vertically bounded wrapper; horizontal scroll stays in the wrapper */
+.tw-y table{border-collapse:separate;border-spacing:0}
+.tw-y thead th{position:sticky;top:0;z-index:2;background:var(--ground);border-bottom:1px solid var(--line)}
+.tw-y tbody tr:first-child>*{border-top:0}
+.tw-y{max-height:calc(100vh - 170px);overflow:auto;overscroll-behavior-y:contain}
+th,td{padding:10px 12px}
+td.mono,td .mono{font-size:13px}
+/* Stale units — legend explains the amber wash */
+.stale-legend{display:flex;align-items:center;gap:8px;font-size:12.8px;color:var(--muted);margin:0}
+.stale-legend i{flex:none;width:28px;height:14px;border-radius:2px;background:var(--gate-soft);border:1px solid var(--line)}
+.stale-legend b{color:var(--ink);font-weight:600}
+/* Dashboard */
+.dk{padding:14px 18px;gap:6px}
+.dgrid{gap:20px}
+
+/* ===== v3 layout (wave 2) — demo toolbar, icon sidebar, grouped profile, dashboard banner; DESIGN.md tokens only ===== */
+/* A — two-tier top: demo chrome (dashed = not product, as notice-muted) above the product shell */
+.app{grid-template-rows:auto minmax(0,1fr)}
+.demobar{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:6px 16px;padding:5px 24px;background:var(--ground);border-bottom:1px dashed var(--stroke);font-size:12px;color:var(--muted);min-width:0}
+.demo-k{font:600 11.5px/1.4 var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--ink);border:1px dashed var(--stroke);border-radius:4px;padding:1px 6px;white-space:nowrap}
+.demo-note{flex:1 1 260px;min-width:0}
+.demo-note .mono{font-family:var(--sans);font-variant-numeric:tabular-nums;color:var(--ink)}
+.demo-ctls{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;min-width:0}
+.demobar .ctl{display:flex;align-items:center;gap:6px;min-width:0}
+.demobar select{min-height:28px;padding:3px 8px;font-size:12.8px}
+.demobar .btn.sm{min-height:28px}
+.dn-short{display:none}
+.topbar{flex-wrap:nowrap;gap:12px;min-height:56px}
+.topbar h1{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.topbar #newLeadBtn{flex:none}
+/* B — brand block and monochrome nav icons (inline SVG, currentColor, label kept) */
+.aside-in{gap:12px} /* aside stretches with its grid row (no 100vh under the demo bar); the inner block stays sticky */
+.brand{flex-direction:row;align-items:center;gap:10px;padding:2px 8px 14px;border-bottom:1px solid var(--line)}
+.brand-mark{display:grid;place-items:center;width:30px;height:30px;flex:none;border-radius:6px;background:var(--ink);color:var(--surface);font:700 15px/1 var(--sans);letter-spacing:-.02em}
+.brand-t{display:flex;flex-direction:column;font-size:15.5px;line-height:1.25;letter-spacing:-.01em;min-width:0}
+.brand-t small{font-weight:400;font-size:12px;color:var(--muted);letter-spacing:0}
+nav.side a .nl{display:inline-flex;align-items:center;gap:10px;min-width:0}
+nav.side a svg{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+/* C — Lead profile: one-line action row; Profile tab grouped */
+.dh .acts-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.dh .acts-row .btn.sm{padding:3px 9px}
+.pgroups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-areas:"contact needs" "own needs";gap:18px 24px;align-items:start}
+.pg{display:flex;flex-direction:column;gap:6px;min-width:0}
+.pg.g-contact{grid-area:contact}.pg.g-needs{grid-area:needs}.pg.g-own{grid-area:own}
+.pg>h3{padding-bottom:6px;border-bottom:1px solid var(--line)}
+.pg dl.info{grid-template-columns:minmax(0,1fr);gap:0}
+.pg dl.info dt{padding-top:8px}
+.pg dl.info dt:first-child{padding-top:0}
+.pg dl.info dd{line-height:1.45}
+/* D — sample-data notice as a gate-soft banner; workload fits without sideways scroll at ≥1280px */
+.demo-ctl.sample{background:var(--gate-soft);border-left:3px solid var(--gate);border-radius:0 8px 8px 0;padding:10px 14px;color:var(--ink);font-size:13px}
+.demo-ctl.sample .tag{background:var(--surface);color:var(--gate);border:1px solid var(--gate)}
+.demo-ctl.sample .why{flex:1 1 320px;min-width:0;color:var(--ink)}
+.demo-ctl.sample label{color:var(--ink);font-weight:600}
+@media (min-width:1280px){
+  table.wl th,table.wl td{padding:8px 6px}
+  table.wl th:first-child,table.wl td:first-child{padding-left:12px}
+  table.wl thead tr:not(.grp) th{min-width:48px}
+  table.wl td:nth-child(6),table.wl td.gl.r,table.wl td:last-child{white-space:normal}
+  table.wl td:last-child{min-width:112px}
+  table.wl td:nth-child(6) .fig{text-align:left}
+  .wnote{max-width:150px}
+}
+
 @media (max-width:899px){
   .app{grid-template-columns:minmax(0,1fr)}
   aside{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;padding:8px 16px;gap:8px 12px;border-right:0;border-bottom:1px solid var(--line)}
+  .aside-in{position:static;max-height:none;overflow:visible;flex-direction:row;flex-wrap:wrap;align-items:center;padding:0;gap:8px 12px}
   nav.side{flex-direction:row;flex-wrap:wrap}
-  .aside-foot{display:none}
+  .demobar{padding:6px 16px}
+  .brand{padding:0 8px 0 0;border-bottom:0}
+  .demobar select,.demobar .btn.sm{min-height:40px}
+  .pg dl.info dd{margin-bottom:0}
   .content{padding:16px 16px 80px}
   .topbar{padding:8px 16px}
   .dkpis,.dkpis.agent{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -366,6 +484,7 @@ legend{padding:0;font-size:12.8px;font-weight:600;margin-bottom:4px}
   .sb button,.btn.sm{min-height:40px}
   .sb .sb-caret{min-width:40px}
   nav.side a{min-height:40px}
+  .tw-y{overscroll-behavior-y:auto}
 }
 @media (max-width:639px){
   .strip{grid-template-columns:minmax(0,1fr)}
@@ -373,7 +492,14 @@ legend{padding:0;font-size:12.8px;font-weight:600;margin-bottom:4px}
   .strip.collapsed{display:none}
   .updates:not(.open) li.ext{display:none}
   .upd-more{display:flex}
-  .topbar .ctl label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .demobar .ctl label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .demobar{gap:6px 10px}
+  .demo-ctls{gap:8px}
+  .demo-note{flex-basis:auto}
+  .demobar .dn-long{display:none}
+  .demobar .dn-short{display:inline}
+  .pgroups{grid-template-columns:minmax(0,1fr);grid-template-areas:"contact" "needs" "own"}
+  .brand-mark{width:26px;height:26px;font-size:13px}
   .topbar h1{font-size:16px}
   .content{gap:12px;padding-top:12px}
   .brand small{display:none}
@@ -384,26 +510,34 @@ legend{padding:0;font-size:12.8px;font-weight:600;margin-bottom:4px}
   body.has-sel{scroll-padding-bottom:120px;padding-bottom:120px}
   .hbar{grid-template-columns:minmax(70px,110px) minmax(0,1fr) auto}
   .drawer .dh,.drawer .db{padding-left:16px;padding-right:16px}
+  .content{padding:12px 16px 80px}
+  .rrow{padding:12px 14px;gap:10px 12px}
+  .tw-y{max-height:calc(100vh - 140px)}
 }
 </style>
 </head>
 <body>
 <div class="app" id="app">
+  <div class="demobar" id="demoBar" role="region" aria-label="Demo controls (not part of the product)">
+    <span class="demo-k">Demo controls</span>
+    <span class="cap demo-note"><span class="dn-long">Fictional data · in memory only · simulated now</span><span class="dn-short">Fictional · Simulated now</span> <span class="mono">Thu 8 Oct 2026 09:12</span></span>
+    <div class="demo-ctls">
+      <div class="ctl"><label for="roleSel" class="cap">Signed in as</label>
+        <select id="roleSel"><option value="agent">Saki · Agent</option><option value="manager">Saki Taguchi · Manager</option></select></div>
+      <div class="ctl"><label for="themeSel" class="cap">Appearance</label>
+        <select id="themeSel"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div>
+      <button class="btn sm" data-act="reset" aria-label="Reset sample data">Reset<span class="dn-long"> sample data</span></button>
+    </div>
+  </div>
   <aside>
-    <div class="brand">DVR CRM <small>Rent Team · demo v2</small></div>
+    <div class="aside-in">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">D</span><span class="brand-t">DVR CRM <small>Rent Team · demo v3</small></span></div>
     <nav class="side" id="nav" aria-label="Main"></nav>
-    <div class="aside-foot">
-      <span class="cap">Fictional data · in memory only. Simulated now: <span class="mono">Thu 8 Oct 2026 09:12</span></span>
-      <button class="btn sm" data-act="reset">Reset sample data</button>
     </div>
   </aside>
   <main>
     <header class="topbar">
       <h1 id="pageTitle" tabindex="-1">Today</h1>
-      <div class="ctl"><label for="roleSel" class="cap">Signed in as</label>
-        <select id="roleSel"><option value="agent">Saki · Agent</option><option value="manager">Saki Taguchi · Manager</option></select></div>
-      <div class="ctl"><label for="themeSel" class="cap">Appearance</label>
-        <select id="themeSel"><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div>
       <button class="btn pri" id="newLeadBtn" data-act="newlead">+ New lead</button>
     </header>
     <div class="content" id="view"></div>
@@ -426,6 +560,7 @@ const MONL=['January','February','March','April','May','June','July','August','S
 const WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const CH=['WhatsApp','Zalo','LINE','Messenger','KakaoTalk','Email','Phone'];
 const SOURCES=['Google Form','Referral','Website','Legacy import',...CH];
+const STAGE_GRP={new:'g-work',contacted:'g-work',sent:'g-work',followup:'g-work',viewing:'g-close',nego:'g-close',deposit:'g-close',signed:'g-end',nurture:'g-end',lost:'g-end'}; // v3: neutral 3px group rule (ink / stroke / line)
 const STAGES=[['new','New'],['contacted','Contacted'],['sent','Units sent'],['followup','Following up'],['viewing','Viewing booked'],['nego','Negotiating'],['deposit','Deposit paid'],['signed','Signed'],['nurture','Nurture'],['lost','Lost']];
 const SN=Object.fromEntries(STAGES);
 const OPEN=s=>!['signed','lost'].includes(s);
@@ -560,8 +695,8 @@ function seed(){
 let S=seed();
 
 /* =================== UI state =================== */
-function lsGet(k){try{return localStorage.getItem('dvr-crm-v2:'+k);}catch(e){return null;}}
-function lsSet(k,v){try{localStorage.setItem('dvr-crm-v2:'+k,v);}catch(e){}}
+function lsGet(k){try{return localStorage.getItem('dvr-crm-v3:'+k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem('dvr-crm-v3:'+k,v);}catch(e){}}
 const ui={role:'agent',page:'today',card:null,range:'today',sel:new Set(),anchor:null,boardOwner:'all',bulk:null,drawer:null,uf:{types:[],am:{}},ufDraft:null,
   wlPeriod:'week',wlWeek:'2026-09-28',wlSort:lsGet('wlSort')==='weighted'?'weighted':'name',crPeriod:'golive',trialOff:false,q:'',stageF:'all',lostOpen:{},pendingUndo:null,kpiOpen:false,updOpen:false};
 const ME=()=>ui.role==='agent'?'saki':'taguchi';
@@ -832,14 +967,23 @@ const staleUnits=()=>S.units.filter(u=>diff(u.verified,TODAY)>14);
 
 /* =================== Render shell =================== */
 const PAGES=[['today','Today'],['board','Pipeline'],['leads','Leads'],['units','Units'],['dash','Dashboard']];
+// v3 wave 2: monochrome line icons (currentColor via CSS stroke), decorative — the text label carries the meaning
+const NAV_ICON={
+  today:'<rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M8.5 14.5l2.3 2.3 4.7-4.6"/>',
+  board:'<rect x="3.5" y="4" width="4.5" height="16" rx="1"/><rect x="9.75" y="4" width="4.5" height="11" rx="1"/><rect x="16" y="4" width="4.5" height="7" rx="1"/>',
+  leads:'<circle cx="9" cy="8.5" r="3.5"/><path d="M2.5 20c.6-3.6 3.2-5.5 6.5-5.5s5.9 1.9 6.5 5.5M15.5 5.3a3.4 3.4 0 0 1 0 6.4M18 14.8c1.9.8 3.1 2.5 3.5 5.2"/>',
+  units:'<path d="M4 20.5V8.5l8-5 8 5v12"/><path d="M2.5 20.5h19M9.5 20.5v-5h5v5M8.5 11h1.5M14 11h1.5"/>',
+  dash:'<path d="M3.5 3.5v17h17"/><path d="M8 16.5v-4M12.5 16.5V8M17 16.5v-6"/>'
+};
 function renderNav(){
-  const b=badgeCount(), st=staleUnits().length;
-  $('#nav').innerHTML=PAGES.map(([id,n])=>`<a href="#${id}" data-page="${id}" ${ui.page===id?'aria-current="page"':''}><span>${n}</span>${id==='today'&&b?`<span class="badge" aria-label="${b} actionable">${b}</span>`:''}${id==='units'&&st?`<span class="badge" aria-label="${st} stale">${st}</span>`:''}</a>`).join('');
+  const b=badgeCount(), st=staleUnits().length, g=rowsFor(ME());
+  const tOd=['new','silent','movein'].some(k=>g[k].some(r=>r.age>0)); // Units are never overdue → always neutral
+  $('#nav').innerHTML=PAGES.map(([id,n])=>`<a href="#${id}" data-page="${id}" ${ui.page===id?'aria-current="page"':''}><span class="nl"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${NAV_ICON[id]}</svg><span>${n}</span></span>${id==='today'&&b?`<span class="badge${tOd?' is-od':''}" aria-label="${b} actionable">${b}</span>${tOd?'<span class="sr">, some overdue</span>':''}`:''}${id==='units'&&st?`<span class="badge" aria-label="${st} stale">${st}</span>`:''}</a>`).join('');
 }
 function render(){
   renderNav();
   $('#pageTitle').textContent=Object.fromEntries(PAGES)[ui.page];
-  document.title='DVR CRM Demo v2 · '+Object.fromEntries(PAGES)[ui.page];
+  document.title='DVR CRM Demo v3 · '+Object.fromEntries(PAGES)[ui.page];
   $('#view').innerHTML=({today:vToday,board:vBoard,leads:vLeads,units:vUnits,dash:vDash})[ui.page]();
   document.body.classList.toggle('has-sel',ui.page==='board'&&ui.sel.size>0);
   if(ui.page==='board')wireBoard();
@@ -1008,7 +1152,7 @@ function vBoard(){
   const ownerF=isMgr()?`<label class="ctl cap" style="display:flex;gap:6px;align-items:center">Owner <select id="boardOwner"><option value="all">Everyone</option>${Object.values(USERS).map(u=>`<option value="${u.id}" ${ui.boardOwner===u.id?'selected':''}>${esc(u.name)}</option>`).join('')}</select></label>`:'';
   return `<div class="row-flex"><p class="cap grow">${L.length} leads · click a card to open it; tick the checkbox (or Ctrl/Cmd-click) to select, Shift-click to extend within a column. Drag also works on desktop.</p>${ownerF}</div>
   ${ui.sel.size?selBar():''}
-  <div class="board" id="board" aria-label="Pipeline">${STAGES.map(([id,n])=>{const cs=L.filter(l=>l.stage===id);return `<section class="col ${['nurture','lost','signed'].includes(id)?id:''}" data-stage="${id}" aria-labelledby="ch-${id}"><header><h3 id="ch-${id}" style="font-size:12.8px" tabindex="-1">${n}</h3><span class="num">${cs.length}</span></header><div class="list">${cs.map(cardL).join('')}</div></section>`;}).join('')}</div>`;
+  <div class="board" id="board" aria-label="Pipeline">${STAGES.map(([id,n])=>{const cs=L.filter(l=>l.stage===id);return `<section class="col ${['nurture','lost','signed'].includes(id)?id:''} ${STAGE_GRP[id]}" data-stage="${id}" aria-labelledby="ch-${id}"><header><h3 id="ch-${id}" style="font-size:12.8px" tabindex="-1">${n}</h3><span class="num">${cs.length}</span></header><div class="list">${cs.map(cardL).join('')}</div></section>`;}).join('')}</div>`;
 }
 function stateTag(l){
   if(isMgr()&&l.flag&&!l.flag.confirmed)return `<span class="tag warn">${esc(l.flag.t)}</span>`;
@@ -1021,7 +1165,7 @@ function cardL(l){
   const sel=ui.sel.has(l.id), sh=l.shares[0];
   return `<article class="lcard" draggable="true" tabindex="0" data-card="${l.id}" aria-selected="${sel}" aria-label="${esc(l.name)}, ${SN[l.stage]}">
     <div class="top"><label class="cb" title="Select"><input type="checkbox" data-sel="${l.id}" ${sel?'checked':''} aria-label="Select ${esc(l.name)}"></label><span class="n">${esc(l.name)}</span><span class="av" title="Owner ${esc(USERS[l.owner].name)}" aria-label="Owner ${esc(USERS[l.owner].name)}">${ini(USERS[l.owner].name)}</span></div>
-    <div class="meta">${esc(l.nat)} · ${l.beds}BR · <span class="mono">${M(l.budget)}</span> · ${term(l)}</div>
+    <div class="meta">${esc(l.nat)} · ${l.beds}BR · <span class="mono">${M(l.budget)}</span> · <span class="nw">${term(l)}</span></div>
     <div class="mv">Move-in ${moveinText(l.movein)}</div>
     <div class="tags"><span class="tag">P-${l.priority}</span><span class="tag">${esc(l.source)}</span>${stateTag(l)}${sh?`<span class="share">${esc(sh.user===ME()?'Shared with you':USERS[sh.user].name)} · ${sh.level}</span>`:''}</div></article>`;
 }
@@ -1091,7 +1235,7 @@ function vLeads(){
    <label class="sr" for="stageF">Stage</label><select id="stageF"><option value="all">All stages</option>${STAGES.map(([id,n])=>`<option value="${id}" ${ui.stageF===id?'selected':''}>${n}</option>`).join('')}</select>
    <span class="cap" id="leadCount" aria-live="polite">${all.length} leads · ${L.length} shown</span>
    <button class="btn sm" ${isMgr()?'data-act="export"':'disabled aria-describedby="expD"'}>Export CSV</button>${isMgr()?'':'<span class="cap" id="expD">Only the Manager can export data.</span>'}</div>
-  <div class="tw"><table><thead><tr><th scope="col">Name</th><th scope="col">Nationality</th><th scope="col">Stage</th><th scope="col">Owner</th><th scope="col">Priority</th><th scope="col" class="r">Budget</th><th scope="col">Move-in</th><th scope="col">Last contact</th></tr></thead>
+  <div class="tw tw-y" id="leadsTable"><table><thead><tr><th scope="col">Name</th><th scope="col">Nationality</th><th scope="col">Stage</th><th scope="col">Owner</th><th scope="col">Priority</th><th scope="col" class="r">Budget</th><th scope="col">Move-in</th><th scope="col">Last contact</th></tr></thead>
   <tbody>${L.map(l=>`<tr class="click" tabindex="0" data-row="${l.id}"><td><b>${esc(l.name)}</b></td><td>${esc(l.nat)}</td><td>${SN[l.stage]}</td><td>${esc(USERS[l.owner].name)}</td><td>${l.priority}</td><td class="r mono">${M(l.budget)}</td><td>${moveinText(l.movein)}</td><td class="mono">${l.lastContact?fdm(l.lastContact):'—'}</td></tr>`).join('')||`<tr><td colspan="8">No leads match “${esc(ui.q)}”.</td></tr>`}</tbody></table></div>`;
 }
 
@@ -1104,7 +1248,8 @@ function vUnits(){
   return `<div class="row-flex"><button class="btn" id="filtersBtn" data-act="filters" aria-haspopup="dialog">Filters${fl.length?` <span class="mono">${fl.length}</span>`:''}</button>
     <span class="cap" id="unitCount" tabindex="-1" aria-live="polite">${S.units.length} units · ${U.length} shown</span><span class="cap grow" style="text-align:right">Sorted by Verification Date, oldest first · Stale after 14 days</span></div>
   ${fl.length?`<div class="row-flex" id="fchips">${fl.map(([t,k,n],i)=>`<span class="fchip">${esc(n)}<button data-act="rmfilter" data-t="${t}" data-k="${esc(k)}" data-i="${i}" aria-label="Remove filter ${esc(n)}">×</button></span>`).join('')}<button class="lnk" data-act="clearfilters">Clear all</button></div>`:''}
-  ${U.length?`<div class="tw"><table><thead><tr><th scope="col">Unit</th><th scope="col">Type</th><th scope="col">Location</th><th scope="col" class="r">Beds</th><th scope="col" class="r">Price</th><th scope="col" class="r">Min term</th><th scope="col">Amenities</th><th scope="col">Verified</th><th scope="col"><span class="sr">Action</span></th></tr></thead>
+  ${U.some(u=>diff(u.verified,TODAY)>14)?`<p class="stale-legend" id="staleLegend"><i aria-hidden="true"></i><span>Amber rows were last verified more than 14 days ago and are tagged <b>needs verification</b>. Check the unit, then use <b>Verify today</b>.</span></p>`:''}
+  ${U.length?`<div class="tw tw-y" id="unitsTable"><table><thead><tr><th scope="col">Unit</th><th scope="col">Type</th><th scope="col">Location</th><th scope="col" class="r">Beds</th><th scope="col" class="r">Price</th><th scope="col" class="r">Min term</th><th scope="col">Amenities</th><th scope="col">Verified</th><th scope="col"><span class="sr">Action</span></th></tr></thead>
   <tbody>${U.map(u=>{const age=diff(u.verified,TODAY),st=age>14;return `<tr class="${st?'stale':''}"><td><b>${esc(u.name)}</b></td><td>${u.type}</td><td>${esc(u.loc)}</td><td class="r mono">${u.beds}</td><td class="r mono">${M(u.price)}</td><td class="r mono">${u.minTerm} mo</td><td class="cap" style="white-space:normal;min-width:180px">${AMEN.filter(([k])=>u.am[k]==='yes').map(a=>a[1]).join(', ')||'—'}</td><td><span class="mono">${fdm(u.verified)}</span> ${st?`<span class="tag warn">needs verification · ${age} days ago</span>`:''}</td><td><button class="btn sm" data-act="verify" data-u="${u.id}">Verify today</button></td></tr>`;}).join('')}</tbody></table></div>`
   :`<div class="notice">No units match: ${esc(fl.map(f=>f[2]).join(', '))}. <button class="lnk" data-act="clearfilters">Clear all</button></div>`}`;
 }
@@ -1128,8 +1273,8 @@ const pct=(n,d)=>d<10?null:Math.round(n/d*100);
 function rateHTML(n,d,label,aria,act){const p=pct(n,d);return `<span><button class="fig" data-act="drill" ${act} aria-label="${esc(aria)}">${n} of ${d}</button> ${label} · ${p==null?'<span class="withheld">too few to compare</span>':`<span class="mono">${p}%</span>`}</span>`;}
 function vDash(){
   const mgr=isMgr(), uid=ME();
-  let h=`<div class="demo-ctl"><span class="tag">Sample data</span><span>Fictional figures. Agents in the workload and close-rate views are labeled Agent A–D (PRD anonymization decision).</span>
-    <label style="display:flex;gap:6px;align-items:center;color:var(--ink)"><span class="cb"><input type="checkbox" id="trialOff" ${ui.trialOff?'checked':''}></span>Preview trial (before Go-live)</label></div>`;
+  let h=`<div class="demo-ctl sample" id="sampleNote" role="note" aria-label="Sample data"><span class="tag">Sample data</span><span class="why">Fictional figures. Agents in the workload and close-rate views are labeled Agent A–D (PRD anonymization decision).</span>
+    <label style="display:flex;gap:6px;align-items:center"><span class="cb"><input type="checkbox" id="trialOff" ${ui.trialOff?'checked':''}></span>Preview trial (before Go-live)</label></div>`;
   // KPI row
   const frt=mgr?3.3:1.4, frtPct=Math.min(frt/4,1)*100;
   const frtCell=`<div class="dk"><span class="ov">Avg First Response</span><span class="v"><span class="kv">${frt}</span><em>h</em></span>
@@ -1298,33 +1443,36 @@ function leadView(l,tab,back){
   const qual=l.qualified===true?'<span class="tag ok">Qualified</span>':l.qualified===false?'<span class="tag warn">Not Qualified</span>':`<span class="tag out">Proposed: Qualified</span>`;
   const fwd=FWD[l.stage], blocked=l.qualified==null&&['contacted'].includes(l.stage);
   const notQ=l.qualified===false&&!['nurture','lost'].includes(l.stage);
-  const actions=ed?`<div class="row-flex">${notQ?`<button class="btn pri sm" data-act="stage" data-id="${l.id}" data-to="nurture">→ Nurture</button>`:`<button class="btn pri sm" data-act="stage" data-id="${l.id}" data-to="${fwd}" ${blocked?'disabled aria-describedby="qMiss"':''}>→ ${SN[fwd]}</button>`}
-    ${l.stage!=='nurture'&&!notQ?`<button class="btn sm" data-act="stage" data-id="${l.id}" data-to="nurture">Nurture</button>`:''}${l.stage!=='lost'?`<button class="btn sm danger" data-act="lost" data-id="${l.id}">Lost…</button>`:''}
-    ${isMgr()?`<button class="btn sm" data-act="reassign" data-id="${l.id}" data-from="profile">Reassign to…</button>`:''}</div>
+  const msg=msgBtn(l,null,null,'profile');
+  const actions=ed?`<div class="acts-row" id="profileActs">${notQ?`<button class="btn pri sm" data-act="stage" data-id="${l.id}" data-to="nurture">→ Nurture</button>`:`<button class="btn pri sm" data-act="stage" data-id="${l.id}" data-to="${fwd}" ${blocked?'disabled aria-describedby="qMiss"':''}>→ ${SN[fwd]}</button>`}
+    ${l.stage!=='nurture'&&!notQ?`<button class="btn sm" data-act="stage" data-id="${l.id}" data-to="nurture">Nurture</button>`:''}${isMgr()?`<button class="btn sm" data-act="reassign" data-id="${l.id}" data-from="profile">Reassign to…</button>`:''}${l.stage!=='lost'?`<button class="btn sm danger" data-act="lost" data-id="${l.id}">Lost…</button>`:''}${msg}</div>
     ${blocked?`<p class="cap" id="qMiss">Moving past Contacted needs a qualification. <button class="lnk" data-act="qualify" data-id="${l.id}">Confirm Qualified</button></p>`:''}`
     :`<p class="lbl">You have view access only. ${esc(USERS[l.owner].name)} owns this lead.${l.shares.find(s=>s.user===ME())?' Shared by '+esc(l.shares.find(s=>s.user===ME()).by)+' · view.':''}</p>`;
   const tabs=[['profile','Profile'],['units','Matching units'],['history','History']];
   let body='';
   if(tab==='profile'){
     const req=l.requires.map(k=>amLabel(k)).join(', ');
-    body=`<dl class="info">
+    const viewDD=l.viewing?`<dt>Viewing</dt><dd><span class="mono">${fdm(l.viewing.date)} ${l.viewing.time}</span> · ${esc(S.units.find(u=>u.id===l.viewing.unit).name)}${l.viewing.date<TODAY&&!l.viewing.outcome&&ed?` <span class="row-flex" style="margin-top:4px"><span class="cap">Outcome:</span>${['Attended','No-show','Canceled'].map(o=>`<button class="btn sm" data-act="vout" data-id="${l.id}" data-v="${o}">${o}</button>`).join('')}</span>`:l.viewing.outcome?' · '+esc(l.viewing.outcome):''}</dd>`:'';
+    const grp=(k,t,dl)=>`<section class="pg g-${k}" aria-labelledby="pg-${k}"><h3 class="ov" id="pg-${k}">${t}</h3><dl class="info">${dl}</dl></section>`;
+    body=`<div class="pgroups">${grp('contact','Contact',`
       <dt>Phone</dt><dd><span class="mono">${esc(l.phone||'—')}</span> ${chatCtl(l,{id:'profileChat'})}</dd><dt>Email</dt><dd>${esc(l.email||'—')}</dd>
       <dt>LINE ID</dt><dd class="mono">${esc(l.lineId||'—')}</dd><dt>Messenger</dt><dd class="mono">${esc(l.messenger||'—')}</dd>
-      <dt>Nationality</dt><dd>${esc(l.nat)}</dd><dt>Lead Language</dt><dd>${LANGN[l.lang]}</dd><dt>Lead Source</dt><dd>${esc(l.source)}</dd>
+      <dt>Nationality</dt><dd>${esc(l.nat)}</dd><dt>Lead Language</dt><dd>${LANGN[l.lang]}</dd><dt>Lead Source</dt><dd>${esc(l.source)}</dd>`)}
+      ${grp('needs','Rental needs',`
       <dt>Budget</dt><dd><span class="mono">${VND(l.budget)} / month</span> <span class="cap">entered as “${esc(l.budgetRaw)}”</span></dd>
       <dt>Property type</dt><dd>${l.types.length?l.types.join(', '):'Any'}</dd>
-      <dt>Term</dt><dd class="mono">${l.termFrom}–${l.termTo} months${l.termFrom===l.termTo?' (single term)':''}</dd>
+      <dt>Term</dt><dd class="tn" id="profileTerm">${l.termFrom===l.termTo?l.termTo+' months':l.termFrom+'–'+l.termTo+' months'}</dd>
       <dt>Move-in</dt><dd>${moveinText(l.movein)} <span class="cap">· precision: ${{date:'exact date',month:'month and year',asap:'as soon as possible',undecided:'not decided'}[l.movein.p]}</span>${l.moveinNote?` <span class="cap">· ${esc(l.moveinNote)}</span>`:''}</dd>
       <dt>Area</dt><dd>${l.noPref||!l.area?'No preference':esc(l.area)}</dd>
       <dt>Bedrooms · occupants</dt><dd class="mono">${l.beds} · ${l.occ}</dd>
       <dt>Children</dt><dd>${l.children?'Yes':'No'}</dd><dt>Pets</dt><dd>${l.pets?'Yes':'No'}</dd>
       <dt>Required amenities</dt><dd>${req||'—'}</dd>
       <dt>Other requirements</dt><dd ${l.other&&/[぀-ヿ一-鿿]/.test(l.other)?'lang="ja"':''}>${esc(l.other||'—')}</dd>
-      <dt>Priority</dt><dd>${l.priority}</dd><dt>Owner</dt><dd>${esc(USERS[l.owner].name)}</dd>
+      ${viewDD}`)}
+      ${grp('own','Ownership',`
+      <dt>Owner</dt><dd>${esc(USERS[l.owner].name)}</dd><dt>Priority</dt><dd>${l.priority}</dd>
       <dt>Shared with</dt><dd>${l.shares.length?l.shares.map(s=>`<span class="share">${esc(USERS[s.user].name)} · ${s.level}</span>`).join(' '):'<span class="cap">Not shared</span>'}</dd>
-      ${l.viewing?`<dt>Viewing</dt><dd><span class="mono">${fdm(l.viewing.date)} ${l.viewing.time}</span> · ${esc(S.units.find(u=>u.id===l.viewing.unit).name)}${l.viewing.date<TODAY&&!l.viewing.outcome&&ed?` <span class="row-flex" style="margin-top:4px"><span class="cap">Outcome:</span>${['Attended','No-show','Canceled'].map(o=>`<button class="btn sm" data-act="vout" data-id="${l.id}" data-v="${o}">${o}</button>`).join('')}</span>`:l.viewing.outcome?' · '+esc(l.viewing.outcome):''}</dd>`:''}
-      ${l.lostReason?`<dt>Lost Reason</dt><dd>${esc(l.lostReason)}</dd>`:''}
-    </dl>`;
+      ${l.lostReason?`<dt>Lost Reason</dt><dd>${esc(l.lostReason)}</dd>`:''}`)}</div>`;
   }
   if(tab==='units'){
     const {list,empty}=matchUnits(l);
@@ -1346,11 +1494,11 @@ function leadView(l,tab,back){
      <section aria-labelledby="tlH"><h3 id="tlH" class="ov" style="margin-bottom:8px">Timeline</h3><ul class="tl">${l.timeline.slice().sort((a,b)=>b.at.localeCompare(a.at)).map(e=>`<li><span class="mk ${e.type==='Stage'?'stage':['System','Follow-up','Share','Attachment'].includes(e.type)?'sys':''}" aria-hidden="true"></span><div><span class="ov">${e.type}</span><div ${e.type==='Stage'?'class="lbl"':''}>${esc(e.text)}</div><div class="w">${esc(e.actor)} · <span class="mono">${fdm(e.at)} ${e.at.slice(11,16)}</span></div></div></li>`).join('')}</ul></section>`;
   }
   return `${back?`<div style="padding:10px 20px 0">${back}</div>`:''}${ui.prompt&&ui.prompt.origin==='profile'&&ui.prompt.id===l.id?`<div style="padding:12px 20px 0">${promptHTML()}</div>`:''}<div class="dh"><div class="t"><h2 id="dTitle" tabindex="-1"><span lang="${l.lang==='ja'&&/[぀-ヿ一-鿿]/.test(l.name)?'ja':'en'}">${esc(l.name)}</span> <span class="cap mono">${l.id}</span></h2><button class="btn sm icon" data-act="close-drawer" aria-label="Close">×</button></div>
-    <div class="row-flex">${qual}<span class="tag info">${SN[l.stage]}</span><span class="cap">Owner ${esc(USERS[l.owner].name)} · P-${l.priority}</span>${isMgr()&&l.flag&&!l.flag.confirmed?`<span class="tag warn">${esc(l.flag.t)}</span>`:''}</div>${actions}
-    ${(()=>{const vtm=l.viewing&&l.viewing.date===add(TODAY,1), vt=vtm&&!l.cleared.view&&ed, ct=msgBtn(l,null,null,'profile');
+    <div class="row-flex">${qual}<span class="tag info">${SN[l.stage]}</span><span class="cap">Owner ${esc(USERS[l.owner].name)} · P-${l.priority}</span>${isMgr()&&l.flag&&!l.flag.confirmed?`<span class="tag warn">${esc(l.flag.t)}</span>`:''}</div>
+    ${(()=>{const vtm=l.viewing&&l.viewing.date===add(TODAY,1), vt=vtm&&!l.cleared.view&&ed;
       const vu=vtm?S.units.find(u=>u.id===l.viewing.unit):null;
       const vl=vtm?`<span class="lbl" id="viewLine" tabindex="-1" style="color:var(--info)">Viewing tomorrow <span class="mono">${l.viewing.time}</span> · ${esc(vu.name)}${l.cleared.view?' · unit checked':''}</span>`:'';
-      return ct||vl?`<div class="row-flex">${vl}${vt?`<button class="btn sm" id="profileUnitChecked" data-act="unit-checked" data-id="${l.id}" data-from="profile"><span aria-hidden="true">✓</span> Unit checked</button>`:''}${ct}</div>`:'';})()}
+      return vl?`<div class="row-flex">${vl}${vt?`<button class="btn sm" id="profileUnitChecked" data-act="unit-checked" data-id="${l.id}" data-from="profile"><span aria-hidden="true">✓</span> Unit checked</button>`:''}</div>`:'';})()}${actions}${!ed&&msg?`<div class="row-flex">${msg}</div>`:''}
         <div class="tabs" role="tablist" aria-label="Lead profile">${tabs.map(([k,n])=>`<button role="tab" id="tab-${k}" aria-selected="${tab===k}" aria-controls="tabpanel" tabindex="${tab===k?0:-1}" data-act="tab" data-v="${k}">${n}</button>`).join('')}</div></div>
     <div class="db" role="tabpanel" id="tabpanel" aria-labelledby="tab-${tab}">${body}</div>`;
 }
